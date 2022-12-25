@@ -50,31 +50,27 @@ app.delete(
     (req,res)=>{
     const body = req.body;
     remove(body.id);
-    console.log("fron front end", req.body);
+    // console.log("fron front end", req.body);
     res.json( {success : "success" } );
     }
 );
 
-app.get("/users" , (req,res)=>{
-   pool.query('SELECT * FROM firstdb.users', (err,result)=>{
-    if (err) {
-     console.log("panic",err)   
-    }else {
-        console.log("result",result);
-        res.json( 
+app.get("/users" , async function(req,res) {
+
+const promise= pool.promise()
+var sql = "SELECT * FROM firstdb.users"
+const [rows,field] = await promise.execute(sql)
+res.json( 
         {
         details : "sucessful read", 
-        data:result
+        data:rows
         });
-    return result;
-    }
-   });
+console.log("new",rows);        
+// res.send(rows);
 });
-// app.get("/list" , (req,res)=>{
-//     // insert(req.params.name,030);
-//     console.log(req.params.name)
-//     // res.render("index" );
-// });
+
+
+
 app.get("/home" , (req,res)=>{
     // res.send("Hello World Alhamdullah");
     res.json( {message : "Stay Strong" } );
