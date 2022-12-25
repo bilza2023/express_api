@@ -1,4 +1,23 @@
 
+document.getElementById("btnInsert")
+.addEventListener("click" , ( )=> {
+    fetch("http://localhost:8080/add",{
+        headers:{
+            'Content-type' : "application/json"
+        },
+        method : "POST",
+        body : JSON.stringify({ name : "bla bla bla"})
+    
+    });
+    // .then(response => response.json())
+    // .then(data => {
+    //     console.log("data : " , data);
+    // });
+
+    // console.log("index.html loaded");
+
+});
+///////////////////////////////////////////////////
 const btn = document.getElementById("btn");
 btn.addEventListener("click" , ( )=> {
     fetch("http://localhost:8080/home")

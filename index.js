@@ -27,6 +27,18 @@ app.post(
     }
 );
 
+app.post(
+"/add" , 
+    (req,res)=>{
+    const body = req.body;
+     insert(body.name,333);
+    console.log("fron front end", req.body);
+    // insert(req.params.name,req.params.age);
+    // console.log(req.params.name)
+    // listAll();
+    }
+);
+
 app.get("/users" , (req,res)=>{
    pool.query('SELECT * FROM firstdb.users', (err,result)=>{
     if (err) {
