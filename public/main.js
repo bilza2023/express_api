@@ -1,4 +1,26 @@
 
+document.getElementById("btnRemove")
+.addEventListener("click" , ( )=> {
+    // const name = document.getElementById("name").value;
+    // const age = document.getElementById("age").value;
+    const id = document.getElementById("id").value;
+    fetch("http://localhost:8080/delete",{
+        headers:{
+            'Content-type' : "application/json"
+        },
+        method : "DELETE",
+        body : JSON.stringify({ id:id})
+    
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.success)
+    });
+});
+
+
+
+
 document.getElementById("btnPatch")
 .addEventListener("click" , ( )=> {
     const name = document.getElementById("name").value;
@@ -11,11 +33,12 @@ document.getElementById("btnPatch")
         method : "PATCH",
         body : JSON.stringify({ id:id, name : name, age : age})
     
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.success)
+        // console.log("data : " , data);
     });
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log("data : " , data);
-    // });
 
     // console.log("index.html loaded");
 

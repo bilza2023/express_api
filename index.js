@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const {update,insert,listAll,pool} = require("./database/database");
+const {remove,update,insert,listAll,pool} = require("./database/database");
 const logger = require("./middleware/logger");
 
 //---setting up Middle ware 
@@ -42,6 +42,16 @@ app.patch(
     const body = req.body;
     update(body.id,body.name , body.age);
     console.log("fron front end", req.body);
+    res.json( {success : "success" } );
+    }
+);
+app.delete(
+"/delete" , 
+    (req,res)=>{
+    const body = req.body;
+    remove(body.id);
+    console.log("fron front end", req.body);
+    res.json( {success : "success" } );
     }
 );
 
@@ -74,6 +84,5 @@ app.get("/home" , (req,res)=>{
 
 
 /////////////////////////////////////
-
 /////////////////////////////////////
 app.listen(process.env.PORT_NUMBER);

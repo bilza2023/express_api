@@ -56,7 +56,23 @@ function update(id,name,age){
  );
 }
 
-module.exports = {update,insert,listAll,pool};
+function remove(id){
+
+ pool.query(
+
+ 'DELETE FROM firstdb.users WHERE id= ?',
+ [id], 
+   (err,result)=>{
+      if (err) {
+         console.log("panic",err)   
+      }else {
+         console.log(result);
+      }
+   }
+ );
+}
+
+module.exports = {remove,update,insert,listAll,pool};
 
 
 // module.exports = logger;
