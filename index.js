@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const {insert,listAll,pool} = require("./database/database");
+const {update,insert,listAll,pool} = require("./database/database");
 const logger = require("./middleware/logger");
 
 //---setting up Middle ware 
@@ -31,11 +31,17 @@ app.post(
 "/add" , 
     (req,res)=>{
     const body = req.body;
-     insert(body.name,333);
+     insert(body.name,body.age);
     console.log("fron front end", req.body);
-    // insert(req.params.name,req.params.age);
-    // console.log(req.params.name)
-    // listAll();
+    }
+);
+
+app.patch(
+"/patch" , 
+    (req,res)=>{
+    const body = req.body;
+    update(body.id,body.name , body.age);
+    console.log("fron front end", req.body);
     }
 );
 
@@ -67,5 +73,7 @@ app.get("/home" , (req,res)=>{
 });
 
 
+/////////////////////////////////////
 
+/////////////////////////////////////
 app.listen(process.env.PORT_NUMBER);

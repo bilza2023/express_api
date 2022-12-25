@@ -41,7 +41,22 @@ function insert(name,age){
  );
 }
 
-module.exports = {insert,listAll,pool};
+function update(id,name,age){
+ pool.query(
+ 
+ 'UPDATE firstdb.users SET name = ?, age = ? WHERE id= ?',
+ [name,age,id], 
+   (err,result)=>{
+      if (err) {
+         console.log("panic",err)   
+      }else {
+         console.log(result);
+      }
+   }
+ );
+}
+
+module.exports = {update,insert,listAll,pool};
 
 
 // module.exports = logger;

@@ -1,12 +1,36 @@
 
+document.getElementById("btnPatch")
+.addEventListener("click" , ( )=> {
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
+    const id = document.getElementById("id").value;
+    fetch("http://localhost:8080/patch",{
+        headers:{
+            'Content-type' : "application/json"
+        },
+        method : "PATCH",
+        body : JSON.stringify({ id:id, name : name, age : age})
+    
+    });
+    // .then(response => response.json())
+    // .then(data => {
+    //     console.log("data : " , data);
+    // });
+
+    // console.log("index.html loaded");
+
+});
+
 document.getElementById("btnInsert")
 .addEventListener("click" , ( )=> {
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
     fetch("http://localhost:8080/add",{
         headers:{
             'Content-type' : "application/json"
         },
         method : "POST",
-        body : JSON.stringify({ name : "bla bla bla"})
+        body : JSON.stringify({ name : name, age : age})
     
     });
     // .then(response => response.json())
