@@ -13,20 +13,8 @@ dotEnv.config();
  });
 
 
-function listAll(){
- pool.query('SELECT * FROM firstdb.users', (err,result)=>{
-    if (err) {
-    console.log("panic",err)   
-    }else {
-   console.log("successful read from DB");
-    return result;
-    }
  
- });
-}
- 
-
-
+//========================================================
 function insert(name,age){
  pool.query(
  'INSERT INTO firstdb.users (name,age)  VALUES ( ? , ?)',
@@ -40,7 +28,7 @@ function insert(name,age){
    }
  );
 }
-
+//=========================================================
 function update(id,name,age){
  pool.query(
  
@@ -55,13 +43,11 @@ function update(id,name,age){
    }
  );
 }
-
+//=============================================================
 function remove(id){
-
- pool.query(
-
- 'DELETE FROM firstdb.users WHERE id= ?',
- [id], 
+   pool.query(
+   'DELETE FROM firstdb.users WHERE id= ?',
+   [id], 
    (err,result)=>{
       if (err) {
          console.log("panic",err)   
@@ -72,7 +58,5 @@ function remove(id){
  );
 }
 
-module.exports = {remove,update,insert,listAll,pool};
-
-
-// module.exports = logger;
+//=========================================================
+module.exports = {remove,update,insert,pool};
