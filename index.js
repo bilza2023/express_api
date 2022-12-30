@@ -1,6 +1,5 @@
-const express = require('express')
-const mysql = require('mysql2');
-
+import express  from 'express';
+import mysql from 'mysql2';
 
 const connection = mysql.createConnection({
   host: '127.0.0.1',
