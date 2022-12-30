@@ -3,7 +3,7 @@ const Model = require('../database/baseModal');
 
 
 ////////////////////////////////////////////////
-const model = new Model("firstdb","users");
+const model = new Model("bilzaDb","users");
 ////////////////////////////////////////////////
 
 const theTblRouter = express.Router();

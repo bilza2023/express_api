@@ -44,6 +44,21 @@ const pro = new Promise( (resolve, reject) =>{
 });
     return pro;
 }
+/////////////////////////////////////////////////
+////////-----------------READ BY ID-----/////////
+////////////////////////////////////////////////
+getById(id){
+const pro = new Promise( (resolve, reject) =>{
+pool.query(`SELECT * FROM ${this.databaseName}.${this.tableName} WHERE id = ?`,[id], (err,result)=>{
+            if (err) {
+                reject(err)   
+            }else {
+                resolve(result);
+            }
+        });
+});
+    return pro;
+}
 
 
 /////////////////////////////////////////////////

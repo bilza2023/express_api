@@ -1,73 +1,84 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const axios = require('axios');
-const app = express();
-const theTblRouter = require("./routes/theTbl");
-const jwt = require('jsonwebtoken');
+const express = require('express')
+const mysql = require('mysql2');
 
-////////////////////////////////////////////////////////////
-app.use(express.json());
-const logger = require("./middleware/logger");
-//---setting up Middle ware 
-app.use(cors());
-app.use(express.urlencoded({  extended:false }));
-//.. Route middlewares
-app.use("",theTblRouter);
-//.. static files
-app.use(express.static(path.join(__dirname,"public")));
-//.. Templating Engine
-app.set("view engine" , "ejs");
 
-app.use(logger);
+const connection = mysql.createConnection({
+  host: '127.0.0.1',
+  port: '13306',
+  user: 'root',
+  password: 'bils32611',
+  database: 'bilzadb'
+});
 
-/////////////////////////////////////
-const posts = [
-{ userId : 1, title : "post 1", content : "post 1 content" },
-{ userId : 1, title : "post 2", content : "post 2 content" },
-{ userId : 1, title : "post 3", content : "post 3 content" },
-{ userId : 2, title : "post 4", content : "post 4 content" },
-{ userId : 2, title : "post 5", content : "post 5 content" },
-];
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log('Connected to MySQL');
+  connection.query('SELECT * FROM bilzadb.users', function (error, results, fields) {
+  if (error) throw error;
+  console.log(results);
+});
 
-app.get('/posts', (req, res) => {
-const body = req.body;
-const accessToken = body.accessToken;
-    jwt.verify(accessToken, process.env.JWT_TOKEN, (err, user) => {
-        if (err) {
-            console.log(err);
-        }else {
-        const userPosts = getPostsByUser( user.userId );
-        res.json({userPosts,user});
-        }
+});
+
+
+let con = null
+
+const app = express()
+
+// // respond with "hello world" when a GET request is made to the homepage
+app.get('/', function (req, res) {
+  res.send('hello world')
+})
+
+// app.get('/connect', function (req, res) {
+//   con =  mysql.createConnection(mysqlConfig);
+//   con.connect(function(err) {
+//     if (err) throw err;
+//     res.send('connected')
+//   });
+// })
+
+// app.get('/create-table', function (req, res) {
+//   con.connect(function(err) {
+//     if (err) throw err;
+//     const sql = `
+//     CREATE TABLE IF NOT EXISTS numbers (
+//       id INT AUTO_INCREMENT PRIMARY KEY,
+//       number INT NOT NULL,
+//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+//     )  ENGINE=INNODB;
+//   `;
+//     con.query(sql, function (err, result) {
+//       if (err) throw err;
+//       res.send("numbers table created");
+//     });
+//   });
+// })
+
+// app.get('/insert', function (req, res) {
+//   const number = Math.round(Math.random() * 100)
+//   con.connect(function(err) {
+//     if (err) throw err;
+//     const sql = `INSERT INTO numbers (number) VALUES (${number})`
+//     con.query(sql, function (err, result) {
+//       if (err) throw err;
+//       res.send(`${number} inserted into table`)
+//     });
+//   })
+// })
+
+app.get('/fetch', function (req, res) {
+  con.connect(function(err) {
+    if (err) throw err;
+    const sql = `SELECT * FROM bilzadb.users`
+    con.query(sql, function (err, result, fields) {
+      if (err) throw err;
+      res.send(JSON.stringify(result))
     });
-});
-//---------------------------------------
-app.get('/login', (req, res) => {
-const body = req.body;
-const email = body.email;
-const password = body.password;
-const userId = 1; // This has to be obtained from the database
-const user = {userId,email, password};
+  });
+})
 
-//---AUTHENTICATION
-const accessToken = jwt.sign(user, process.env.JWT_TOKEN);
+app.listen(3000)
 
-res.json({accessToken});
-});
-
-/////////////////////////////////////
-function getPostsByUser(userId){
-let userPosts = [];
-    for (let i = 0; i < posts.length; i++) {
-        if (posts[i].userId ===  userId) {
-        console.log(posts[i]);
-        userPosts.push(posts[i]);
-        }
-    }
-return userPosts;    
-}
-/////////////////////////////////////
-app.listen(process.env.PORT_NUMBER);
-
+console.log("listening on port 3000")
 
