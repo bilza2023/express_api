@@ -1,5 +1,9 @@
 import express  from 'express';
 import mysql from 'mysql2';
+// import Sequelize from 'sequelize';
+
+// const sequelize = new Sequelize({
+// })
 
 const connection = mysql.createConnection({
   host: '127.0.0.1',
