@@ -1,0 +1,1 @@
+import sequelizeCon from "../database/sequelizeCon.js";

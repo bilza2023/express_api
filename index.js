@@ -1,27 +1,69 @@
 import express  from 'express';
 import mysql from 'mysql2';
-// import Sequelize from 'sequelize';
+import Sequelize from 'sequelize';
 
-// const sequelize = new Sequelize({
+const sequelize = new Sequelize("bilzadb","root", "bils32611",{
+dialect: "mysql",
+host: "127.0.0.1",
+port: '13306'
+});
+
+const Customer = sequelize.define('customer', 
+{
+  id : {
+  type : Sequelize.INTEGER,
+
+  autoIncrement : true,
+  allowNull : false,
+  primaryKey : true,
+
+  },
+  name : {
+    type : Sequelize.STRING,
+    allowNull : false,
+    }
+
+});
+
+sequelize.sync()
+// .then((result) => {
+// Customer.create({name :"aaaaa"});
+// Customer.create({name :"bbb"});
+// Customer.create({name :"ccccc"});
+// Customer.create({name :"dddddd"});
+// Customer.create({name :"eeeeee"});
+// Customer.create({name :"fffffff"});
+// return Customer.create({name :"gggggg"});
+// console.log(result);
 // })
+.then((result) => {
+console.log("database setup complete.");
+    Customer.findAll()
+  .then((allCustomes) => {
+    console.log(allCustomes);
+    });
+})
 
-const connection = mysql.createConnection({
-  host: '127.0.0.1',
-  port: '13306',
-  user: 'root',
-  password: 'bils32611',
-  database: 'bilzadb'
+.catch ( err => {
+throw new Error( "Database failure");
 });
+// const connection = mysql.createConnection({
+//   host: '127.0.0.1',
+//   port: '13306',
+//   user: 'root',
+//   password: 'bils32611',
+//   database: 'bilzadb'
+// });
 
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log('Connected to MySQL');
-  connection.query('SELECT * FROM bilzadb.users', function (error, results, fields) {
-  if (error) throw error;
-  console.log(results);
-});
+// connection.connect(function(err) {
+//   if (err) throw err;
+//   console.log('Connected to MySQL');
+//   connection.query('SELECT * FROM bilzadb.users', function (error, results, fields) {
+//   if (error) throw error;
+//   console.log(results);
+// });
 
-});
+// });
 
 
 let con = null
