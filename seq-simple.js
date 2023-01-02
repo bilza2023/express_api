@@ -1,12 +1,12 @@
 const Sequelize =  require('sequelize');
 
-const sequelize = new Sequelize("bilzadb","root", "bils32611",{
+const db = new Sequelize("bilzadb","root", "bils32611",{
 dialect: "mysql",
 host: "127.0.0.1",
 port: '13306'
 });
 
-const Customer = sequelize.define('customer', 
+const Customer = db.define('customer', 
 {
   id : {
     type : Sequelize.INTEGER,
@@ -22,7 +22,7 @@ const Customer = sequelize.define('customer',
 
 });
 
-sequelize.sync()
+db.sync()
 .then((result) => {
 // Customer.create({name :"aaaaa"});
 // Customer.create({name :"bbb"});

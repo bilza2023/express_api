@@ -1,11 +1,9 @@
 const  express  =require('express');
 const cors = require('cors');
 const PORT = process.env.PORT || 8080;
-const getDb = require('./database/db.js');
+const {db,User} = require('./database/db.js');
 
-// const {addUser,getAllUsers} = require('./controllers/userController.js');
-
-
+User.create( {name : "Tarzan" , email : "abc@xyz.com"} );
 ////////////////////////////////////////////////////
 const app = express()
 
@@ -16,10 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 ////////////////////////////////////////////////////
 
 //..Authenticate DB
-const {sequelize,User} = getDb();
 
 
-User.create({name : "bbb44"});
+// User.create({name : "bbb44"});
 // db.then(db => {
 // db.u
 // // console.log(db);
