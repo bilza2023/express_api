@@ -1,4 +1,7 @@
-const Sequelize =  require('sequelize');
+const {Sequelize,DataTypes} =  require('sequelize');
+const getUser = require('./userModel.js');
+const getProject = require('./projectModel.js');
+
 
 const db = new Sequelize("bilzadb","root", "bils32611",{
 dialect: "mysql",
@@ -6,48 +9,10 @@ host: "127.0.0.1",
 port: '13306'
 });
 ////////////////////--user model--////////////////////////
-const User = db.define('user', 
-{
-  id : {
-    type : Sequelize.INTEGER,
-    autoIncrement : true,
-    allowNull : false,
-    primaryKey : true,
+const User = getUser( db , DataTypes)
+const Project = getProject( db , DataTypes)
 
-    },
-  name : {
-    type : Sequelize.STRING,
-    allowNull : false,
-    },
-  email : {
-    type : Sequelize.STRING,
-    allowNull : false,
-    }
 
-});
-////////////////////--user model ends--////////////////////////
-
-////////////////////--project model--////////////////////////
-const Project = db.define('project', 
-{
-  id : {
-    type : Sequelize.INTEGER,
-    autoIncrement : true,
-    allowNull : false,
-    primaryKey : true,
-
-    },
-  name : {
-    type : Sequelize.STRING,
-    allowNull : false,
-    },
-  data : {
-    type : Sequelize.JSON,
-    allowNull : true, // change this to false
-    }
-
-});
-////////////////////--project model ends --////////////////////////
 //..Relationship
 User.hasMany(Project);
 
@@ -62,7 +27,7 @@ db.sync({forced: false})
 //   });
 // });
 
-// console.log("database setup complete.");
+console.log("database setup complete.");
 
 })
 .catch ( err => {
