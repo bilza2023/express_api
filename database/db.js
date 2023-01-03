@@ -25,11 +25,45 @@ const User = db.define('user',
     }
 
 });
-////////////////////--user model--////////////////////////
-db.sync({forced: false})
+////////////////////--user model ends--////////////////////////
 
+////////////////////--project model--////////////////////////
+const Project = db.define('project', 
+{
+  id : {
+    type : Sequelize.INTEGER,
+    autoIncrement : true,
+    allowNull : false,
+    primaryKey : true,
+
+    },
+  name : {
+    type : Sequelize.STRING,
+    allowNull : false,
+    },
+  data : {
+    type : Sequelize.JSON,
+    allowNull : true, // change this to false
+    }
+
+});
+////////////////////--project model ends --////////////////////////
+//..Relationship
+User.hasMany(Project);
+
+
+db.sync({forced: false})
 .then((result) => {
-console.log("database setup complete.");
+// User.create({name :"hasMany" , email:"hasMany@gmail.com"})
+// .then((user) => {
+//   user.createProject({
+//   name : "Project1",
+//   data : {somedata : 66 }
+//   });
+// });
+
+// console.log("database setup complete.");
+
 })
 .catch ( err => {
 throw new Error( "Database failure",err);
