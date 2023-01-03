@@ -35,7 +35,7 @@ console.log("database setup complete.");
 throw new Error( "Database failure",err);
 });
 
-// User.create( {name : "54rr"} );
+// User.create( {name : "Old Wine"} );
 //  User.update({ name: 'Jane' }, { where: { id: 1 } });
 // User.destroy({ where: { id: 1 } });
 

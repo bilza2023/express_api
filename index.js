@@ -3,7 +3,7 @@ const cors = require('cors');
 const PORT = process.env.PORT || 8080;
 const {db,User} = require('./database/db.js');
 
-User.create( {name : "Tarzan" , email : "abc@xyz.com"} );
+
 ////////////////////////////////////////////////////
 const app = express()
 
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 ////////////////////////////////////////////////////
 
 app.get('/', async (req, res) =>{
-
+User.create( {name : "input" , email : "abc@xyz.com"} );
   res.status(200).send('hello world')
 });
 
