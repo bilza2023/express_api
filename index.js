@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const PORT = process.env.PORT || 8080;
 const {db,User} = require('./database/db.js');
+const userRouter = require('./routes/userRoutes.js');
 
 // const theTblRouter = require("./routes/theTbl");
 const jwt = require('jsonwebtoken');
@@ -14,7 +15,7 @@ app.use(cors({origin:'https://localhost:8080'}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //.. Route middlewares
-// app.use("",theTblRouter);
+app.use("/users",userRouter);
 //.. static files
 app.use(express.static(path.join(__dirname,"public")));
 //.. Templating Engine
