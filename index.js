@@ -4,8 +4,8 @@ const path = require('path');
 const PORT = process.env.PORT || 8080;
 const {db,User} = require('./database/db.js');
 const userRouter = require('./routes/userRoutes.js');
-
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 ////////////////////////////////////////////////////
 const app = express()
 
@@ -20,6 +20,28 @@ app.use(express.static(path.join(__dirname,"public")));
 app.set("view engine" , "ejs");
 ////////////////////////////////////////////////////
 
+
+app.post('/login', async (req, res) =>{
+const name = req.body.name;
+const user  = {name};
+const accessToken = jwt.sign(user,process.env.JWT_TOKEN);
+res.status(200).json({  accessToken});
+});
+
+app.get('/proctected', async (req, res) =>{
+
+const authHeader = req.headers['authorization'] ;
+// console.log(authHeader);
+const token = authHeader.split(' ')[1];
+
+jwt.verify(token,process.env.JWT_TOKEN, (err, user)=>{
+
+  if(err){res.status(401).json({failed:true});  }
+  res.user = user;
+  res.status(200).send(user);
+});
+
+});
 
 app.get('/', async (req, res) =>{
 
