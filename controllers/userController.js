@@ -11,14 +11,23 @@ const email = body.email;
 
 const user = await User.create({name,email});
 res.status(201).json({user});
+}
 
-    // res.status(200).send(user);
-// return user;
+const deleteUser = async (req, res ) => {
+const id = req.body.id;
+console.log(id);
 
-// // const password = body.password;
-
-// const rez = User.create({ name , email } );
-// res.status(200).json({ name , email });
+User.destroy({
+  where: {
+    id: id
+  }
+}).then(function() {
+res.status(200).json({message:"success"});
+  // The user with an id of 123 has been deleted
+})
+.catch(function(err) {
+res.status(404).json({message: err.message});
+});
 
 }
 
@@ -33,5 +42,6 @@ const getAllUsers = async (req, res) => {
 
 module.exports = {
 addUser,
-getAllUsers
+getAllUsers,
+deleteUser
 }

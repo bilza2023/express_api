@@ -26,7 +26,8 @@
         <td>
           <button type="button" class="btn btn-outline-info btn-sm mr-2"><i class="bi-eye-fill"></i> View</button>
           <button type="button" class="btn btn-outline-success btn-sm mr-2"><i class="bi-pencil-fill"></i> Edit</button>
-          <button type="button" class="btn btn-outline-danger btn-sm"><i class="bi-trash-fill"></i> Delete</button>
+
+          <button type="button" class="deleteButton btn btn-outline-danger btn-sm" data-id="{{id}}"><i class="bi-trash-fill"></i> Delete</button>
         </td>
       </tr>
     {{/each}}
@@ -54,4 +55,29 @@
      
    
 });
+
+///////////////--delelte button
+const buttons = document.querySelectorAll('.deleteButton');
+
+for (let button of buttons) {
+  button.addEventListener('click', function() {
+    const id = parseInt(this.getAttribute('data-id'));
+    console.log(id);
+              axios.post('http://localhost:8080/deleteUser', {
+                 id : id
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+  });
+}
+
+
+
+
+
 </script>
+<script src="./samples.js"></script>

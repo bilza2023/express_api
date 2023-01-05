@@ -71,6 +71,13 @@ app.post('/addUser', function (req, res) {
 UserController.addUser(req, res);
 });
 
+app.post('/deleteUser', function (req, res) {
+const id = req.body.id;
+// console.log(id);
+// res.status(200).send("the id is : " + id);
+UserController.deleteUser(req, res);
+});
+
 app.post('/fakeJson', function (req, res) {
 const fakeData = { name : "Bill" , email : "bill@bill.com" };
 
