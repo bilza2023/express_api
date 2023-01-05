@@ -4,131 +4,17 @@
 
 <h1 class="mx-auto">Users</h1>
 
-<h1 class="mx-auto">Add User</h1>
-<table class="table table-dark table-striped">
-
-<tr>
-<td>
-<input class="form-control" type="text" name="name" id="name" placeholder="name">
-</td>
-</tr>
-
-<tr><td>
-<input class="form-control" type="text" name="email" id="email"  placeholder="email">
-</td></tr>
-
-<tr><td>
- <button id="addUserBtn" type="button" class="btn btn-outline-success btn-sm"><i class="bi-database-add"></i> Add User</button>
-</td></tr>
 
 
-</table>
-<hr>
+<!-- main template -->
+{{> addUser}}
+{{> updateUser}}
+{{> usersList}}
 
-
-
-
-
-<h1 class="mx-auto">Update User</h1>
-<table class="table table-dark table-striped">
-
-<tr>
-<td>
-<input class="form-control" type="text" name="update_id" id="update_id" placeholder="id">
-</td>
-</tr>
-<tr>
-<td>
-<input class="form-control" type="text" name="update_name" id="update_name" placeholder="update_name">
-</td>
-</tr>
-
-<tr><td>
-<input class="form-control" type="text" name="update_email" id="update_email"  placeholder="update_email">
-</td></tr>
-
-<tr><td>
- <button id="updateUserBtn" type="button" class="btn btn-outline-success btn-sm"><i class="bi-database-add"></i> Add User</button>
-</td></tr>
-
-
-</table>
-<hr>
-
-
-
-<h1 class="h2">Users List</h1>
-
-<table class="table table-dark table-striped">
-  <thead>
-    <td>First Name</td>
-    <td>Last Name</td>
-    <td>Email</td>
-    <td>Action</td>
-  </thead>
-  <tbody>
-    {{#each users}}
-      <tr>
-        <td>{{id}}: {{name}}</td>
-        <td>{{lastName}}</td>
-        <td>{{email}}</td>
-        <td>
-          <button type="button" class="btn btn-outline-info btn-sm mr-2"><i class="bi-eye-fill"></i> View</button>
-          <button type="button" class="btn btn-outline-success btn-sm mr-2"><i class="bi-pencil-fill"></i> Edit</button>
-
-          <button type="button" class="deleteButton btn btn-outline-danger btn-sm" data-id="{{id}}"><i class="bi-trash-fill"></i> Delete</button>
-        </td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
 
 <script>
 
-//create user
-    document.getElementById("addUserBtn")
-        .addEventListener("click", e =>{
-            // console.log("add new user");
-            const name = document.getElementById("name").value;
-             document.getElementById("name").value = "";
-            const email = document.getElementById("email").value;
-            document.getElementById("email").value="";
-            axios.post('http://localhost:8080/addUser', {
-                  name,
-                  email
-              })
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-     
-   
-});
-//update-user
-    document.getElementById("updateUserBtn")
-        .addEventListener("click", e =>{
-            // console.log("add new user");
-            const update_id = parseInt(document.getElementById("update_id").value);
-             document.getElementById("update_id").value = "";
-            const update_name = document.getElementById("update_name").value;
-             document.getElementById("update_name").value = "";
-            const update_email = document.getElementById("update_email").value;
-            document.getElementById("update_email").value="";
-            axios.post('http://localhost:8080/updateUser', {
 
-                  id    :update_id,
-                  name  : update_name,
-                  email : update_email
-              })
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              }); 
-});
 
 ///////////////--delelte button
 const buttons = document.querySelectorAll('.deleteButton');
