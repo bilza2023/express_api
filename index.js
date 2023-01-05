@@ -35,7 +35,6 @@ app.get('/', (req, res) => {
     res.render('indexPage', { title :"App" , users });
   });
 });
-
 ////////////////////////////////////////////////////
 app.get('/new', (req, res) => {
   res.render('new', {
@@ -45,11 +44,6 @@ app.get('/new', (req, res) => {
   });
 });
 ////////////////////////////////////////////////////
-
-app.get('/handlebars', (req, res) => {
-  res.render('home');
-});
-
 
 app.post('/login', async (req, res) =>{
 const name = req.body.name;
@@ -73,21 +67,16 @@ jwt.verify(token,process.env.JWT_TOKEN, (err, user)=>{
 
 });
 
-app.get('/message', async (req, res) =>{
-
-  res.status(200).send('bilza project 5-Jan-2023');
-});
-
 app.post('/addUser', function (req, res) {
 UserController.addUser(req, res);
+});
 
-// const body = req.body;
-// const name = body.name;
-// const email = body.email;
-// // const password = body.password;
+app.post('/fakeJson', function (req, res) {
+const fakeData = { name : "Bill" , email : "bill@bill.com" };
 
-// const rez = User.create({ name , email } );
-// res.status(200).json({ name , email });
+const json = JSON.stringify(fakeData);
+res.status(200).json(json);
+
 });
 
 app.listen(PORT);

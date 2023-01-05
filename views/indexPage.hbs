@@ -1,7 +1,13 @@
 <!-- home.handlebars -->
 
 {{!< layout}}
+<h1 class="">Add User</h1>
+<input class="input" type="text" name="name" id="name" placeholder="name">
+<input class="input" type="text" name="email" id="email"  placeholder="email">
+ 
+ <button id="addUserBtn" type="button" class="btn btn-outline-success btn-sm"><i class="bi-database-add"></i> Add User</button>
 
+<hr>
 <h1 class="">Users List</h1>
 
 <table class="table table-dark table-striped">
@@ -27,4 +33,25 @@
   </tbody>
 </table>
 
-
+<script>
+    document.getElementById("addUserBtn")
+        .addEventListener("click", e =>{
+            // console.log("add new user");
+            const name = document.getElementById("name").value;
+             document.getElementById("name").value = "";
+            const email = document.getElementById("email").value;
+            document.getElementById("email").value="";
+            axios.post('http://localhost:8080/addUser', {
+                  name,
+                  email
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+     
+   
+});
+</script>
