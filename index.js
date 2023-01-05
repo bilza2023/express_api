@@ -27,11 +27,23 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 ////////////////////////////////////////////////////
+
 app.get('/', (req, res) => {
-  res.render('templ2', {
-    items: ['item 1', 'item 2', 'item 3']
+  User.findAll()
+  .then(usersFromDb => {
+    // for (let i = 0; i < users.length; i++) {
+    //   const user = users[i];
+    //   console.log(user.name + ' - ' + user.email);
+    // }
+
+   const users = usersFromDb.map(user => user.toJSON());
+    //  const plainUsers = users.map(user => user.toJSON());
+    res.render('indexPage', { title :"App" , users });
+
+    // res.render('indexPage', { users });
   });
 });
+
 ////////////////////////////////////////////////////
 app.get('/new', (req, res) => {
   res.render('new', {
