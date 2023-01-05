@@ -3,7 +3,7 @@ const  {db,User} = require('../database/db.js');
 // const User = db.users;
 const Projects = db.projects;
 //-----------------------------------
-
+////////////////////////////////////////////////
 const addUser = async (req, res ) => {
 const body = req.body;
 const name = body.name;
@@ -12,10 +12,10 @@ const email = body.email;
 const user = await User.create({name,email});
 res.status(201).json({user});
 }
-
+////////////////////////////////////////////////
 const deleteUser = async (req, res ) => {
 const id = req.body.id;
-console.log(id);
+// console.log(id);
 
 User.destroy({
   where: {
@@ -30,7 +30,28 @@ res.status(404).json({message: err.message});
 });
 
 }
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+const updateUser = async (req, res ) => {
+const id = req.body.id;
+const name = req.body.name;
+const email = req.body.email;
+// console.log(id);
 
+User.update(
+  { name , email },
+  { where: { id } }
+).then(function() {
+
+res.status(200).json({message:"success"});
+  // The user with an id of 123 has been deleted
+})
+.catch(function(err) {
+res.status(404).json({message: err.message});
+});
+
+}
+////////////////////////////////////////////////
 const getAllUsers = async (req, res) => {
 
     const users = await User.findAll({});
@@ -43,5 +64,6 @@ const getAllUsers = async (req, res) => {
 module.exports = {
 addUser,
 getAllUsers,
-deleteUser
+deleteUser,
+updateUser
 }

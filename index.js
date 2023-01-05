@@ -71,6 +71,18 @@ app.post('/addUser', function (req, res) {
 UserController.addUser(req, res);
 });
 
+
+
+app.post('/updateUser', function (req, res) {
+// const id = req.body.id;
+// const name = req.body.name;
+// const email = req.body.email;
+// console.log(id,name,email);
+UserController.updateUser(req, res);
+});
+
+
+
 app.post('/deleteUser', function (req, res) {
 const id = req.body.id;
 // console.log(id);
