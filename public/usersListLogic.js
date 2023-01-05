@@ -1,5 +1,16 @@
 
 
+const populateOne = ( ) =>{
+axios.get('http://localhost:8080/allUsers')
+              .then(function (response) {
+                populate(response.data.users);
+                addDeleteBtnEvents();
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+}
 const populate = data =>{
 document.getElementById("usersListDiv").innerHTML = "<p>...</p>";
 let str = `<table class="table table-dark table-striped">`;
@@ -46,7 +57,8 @@ for (let button of buttons) {
                  id : id
               })
               .then(function (response) {
-                console.log(response);
+                //console.log(response);
+                populateOne();
               })
               .catch(function (error) {
                 console.log(error);
@@ -61,16 +73,4 @@ for (let button of buttons) {
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-
-document.getElementById("show").addEventListener("click", e =>{
-  axios.get('http://localhost:8080/allUsers')
-              .then(function (response) {
-                populate(response.data.users);
-                addDeleteBtnEvents();
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-
-});
 

@@ -5,13 +5,24 @@
 <h1 class="mx-auto">Users</h1>
 
 
+<script src="./usersListLogic.js"></script>
 
 <!-- main template -->
 {{> addUser}}
 {{> updateUser}}
-{{> usersList}}
+
+<h1 class="h2">Users List</h1>
+
+<div id="usersListDiv">
+</div>
+
 
 <button class="btn btn-sm btn-success" id="show">Refresh</button>
 
 
-<script src="./usersListLogic.js"></script>
+<script>
+document.getElementById("show").addEventListener("click", e =>{
+  populateOne();
+});
+populateOne();
+</script>
