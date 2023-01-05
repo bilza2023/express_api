@@ -1,3 +1,4 @@
+require('dotenv').config();
 const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
@@ -5,7 +6,7 @@ const PORT = process.env.PORT || 8080;
 const {db,User} = require('./database/db.js');
 const userRouter = require('./routes/userRoutes.js');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const  { engine } =  require('express-handlebars');
 ////////////////////////////////////////////////////
 const UserController = require('./controllers/userController');
 
@@ -19,9 +20,31 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/users",userRouter);
 //.. static files
 app.use(express.static(path.join(__dirname,"public")));
+
 //.. Templating Engine
-app.set("view engine" , "ejs");
+app.engine('hbs', engine({ extname: '.hbs' }));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
+
 ////////////////////////////////////////////////////
+app.get('/', (req, res) => {
+  res.render('templ2', {
+    items: ['item 1', 'item 2', 'item 3']
+  });
+});
+////////////////////////////////////////////////////
+app.get('/new', (req, res) => {
+  res.render('new', {
+    title: 'My New Page',
+    body: 'This is the body of my new page.',
+    items: ['item 1', 'item 2', 'item 3']
+  });
+});
+////////////////////////////////////////////////////
+
+app.get('/handlebars', (req, res) => {
+  res.render('home');
+});
 
 
 app.post('/login', async (req, res) =>{
@@ -46,9 +69,9 @@ jwt.verify(token,process.env.JWT_TOKEN, (err, user)=>{
 
 });
 
-app.get('/', async (req, res) =>{
+app.get('/message', async (req, res) =>{
 
-  res.status(200).send('hello world')
+  res.status(200).send('bilza project 5-Jan-2023');
 });
 
 app.post('/addUser', function (req, res) {
