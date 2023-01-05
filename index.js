@@ -28,6 +28,14 @@ app.set('views', path.join(__dirname, 'views'));
 
 ////////////////////////////////////////////////////
 
+app.get('/allUsers', (req, res) => {
+  User.findAll()
+  .then(usersFromDb => {
+   const users = usersFromDb.map(user => user.toJSON());
+    res.status(200).json({users});
+  });
+});
+
 app.get('/', (req, res) => {
   User.findAll()
   .then(usersFromDb => {
@@ -101,4 +109,5 @@ res.status(200).json(json);
 app.listen(PORT);
 
 console.log(`listening on port ${PORT}`);
+
 

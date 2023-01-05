@@ -11,33 +11,7 @@
 {{> updateUser}}
 {{> usersList}}
 
-
-<script>
-
+<button class="btn btn-sm btn-success" id="show">Refresh</button>
 
 
-///////////////--delelte button
-const buttons = document.querySelectorAll('.deleteButton');
-
-for (let button of buttons) {
-  button.addEventListener('click', function() {
-    const id = parseInt(this.getAttribute('data-id'));
-    console.log(id);
-              axios.post('http://localhost:8080/deleteUser', {
-                 id : id
-              })
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-  });
-}
-
-
-
-
-
-</script>
-<script src="./samples.js"></script>
+<script src="./usersListLogic.js"></script>
