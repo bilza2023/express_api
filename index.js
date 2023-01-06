@@ -3,12 +3,12 @@ const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
 const PORT = process.env.PORT || 8080;
-const {db,User} = require('./database/db.js');
+const {User} = require('./database/db.js');
 const userRouter = require('./routes/userRoutes.js');
 const jwt = require('jsonwebtoken');
 const  { engine } =  require('express-handlebars');
 
-
+// var bcrypt = require('bcryptjs');
 ////////////////////////////////////////////////////
 const UserController = require('./controllers/userController');
 

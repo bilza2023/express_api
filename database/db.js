@@ -1,13 +1,14 @@
+// require('dotenv').config();
 
 const {Sequelize,DataTypes} =  require('sequelize');
 const getUser = require('./userModel.js');
 const getProject = require('./projectModel.js');
 
-
-const db = new Sequelize("bilzadb","root", "bils32611",{
+////////////////////--database connection--////////////////////////
+const db = new Sequelize(process.env.MYSQL_DATABASENAME,process.env.MYSQL_USER, process.env.MYSQL_PASSWORD,{
 dialect: "mysql",
 host: "127.0.0.1",
-port: '13306'
+port: process.env.MYSQL_PORT
 });
 ////////////////////--user model--////////////////////////
 const User = getUser( db , DataTypes)
@@ -34,5 +35,6 @@ throw new Error( "Database failure",err);
 //................
 module.exports = {
 db,
-User
+User,
+Project
 }
