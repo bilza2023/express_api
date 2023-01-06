@@ -8,6 +8,8 @@ const userRouter = require('./routes/userRoutes.js');
 const jwt = require('jsonwebtoken');
 const  { engine } =  require('express-handlebars');
 
+const faker = require('faker');
+
 // var bcrypt = require('bcryptjs');
 ////////////////////////////////////////////////////
 const UserController = require('./controllers/userController');
@@ -109,6 +111,21 @@ res.status(200).json(json);
 });
 
 app.listen(PORT);
+
+// const addFakerUsers = async () => {
+// for (let i = 0; i < 1000; i++) {
+//   // User.create({ });
+//   const name = faker.name.firstName();
+//   const email = faker.commerce.product();
+
+// await User.create({name, email });
+// }
+// }
+
+// addFakerUsers();
+
+
+
 
 console.log( `listening on port ${PORT}`  );
 
