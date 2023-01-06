@@ -7,6 +7,8 @@ const {db,User} = require('./database/db.js');
 const userRouter = require('./routes/userRoutes.js');
 const jwt = require('jsonwebtoken');
 const  { engine } =  require('express-handlebars');
+
+
 ////////////////////////////////////////////////////
 const UserController = require('./controllers/userController');
 
@@ -108,6 +110,6 @@ res.status(200).json(json);
 
 app.listen(PORT);
 
-console.log(`listening on port ${PORT}`);
+console.log( `listening on port ${PORT}`  );
 
 
