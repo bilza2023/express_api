@@ -8,7 +8,9 @@ const userRouter = require('./routes/userRoutes.js');
 const UserController = require('./controllers/userController');
 const signupController = require('./controllers/signupController');
 const signinController = require('./controllers/signinController');
+const signoutController = require('./controllers/signoutController');
 const  { engine } =  require('express-handlebars');
+const cookieParser = require('cookie-parser');
 
 ////////////////////////////////////////////////////
 const app = express()
@@ -18,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //.. Route middlewares
 app.use("/users",userRouter);
+app.use(cookieParser());
 //.. static files
 app.use(express.static(path.join(__dirname,"public")));
 
@@ -27,6 +30,17 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 /////////////////////////////////////////////////////////////
+app.get('/setcookie', (req, res) => {
+    res.cookie(`accessToken`,`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InMxQGcuY29tIiwiaWQiOjIwLCJpYXQiOjE2NzMxNzc1NTV9.qZQQNZZiqdmQNewyFRECIxUNK_yxYLpslJk39TZpMNI`);
+
+
+    res.send('Cookie have been saved successfully');
+});
+app.get('/getcookie', (req, res) => {
+    //show the saved cookies
+    console.log(req.cookies)
+    res.send(req.cookies);
+});
 /////////////////////////////////////////////////////////////
 app.post('/signup', async (req, res) =>{
 signupController(req, res);
