@@ -5,14 +5,10 @@ const path = require('path');
 const PORT = process.env.PORT || 8080;
 const {User} = require('./database/db.js');
 const userRouter = require('./routes/userRoutes.js');
-const jwt = require('jsonwebtoken');
-const  { engine } =  require('express-handlebars');
-
-const faker = require('faker');
-
-// var bcrypt = require('bcryptjs');
-////////////////////////////////////////////////////
 const UserController = require('./controllers/userController');
+const signupController = require('./controllers/signupController');
+const signinController = require('./controllers/signinController');
+const  { engine } =  require('express-handlebars');
 
 ////////////////////////////////////////////////////
 const app = express()
@@ -30,38 +26,16 @@ app.engine('hbs', engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-////////////////////////////////////////////////////
-
-app.get('/allUsers', (req, res) => {
-  User.findAll()
-  .then(usersFromDb => {
-   const users = usersFromDb.map(user => user.toJSON());
-    res.status(200).json({users});
-  });
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+app.post('/signup', async (req, res) =>{
+signupController(req, res);
 });
-
-app.get('/', (req, res) => {
-  User.findAll()
-  .then(usersFromDb => {
-   const users = usersFromDb.map(user => user.toJSON());
-    res.render('indexPage', { title :"App" , users });
-  });
+app.post('/signin', async (req, res) =>{
+signinController(req, res);
 });
-////////////////////////////////////////////////////
-app.get('/new', (req, res) => {
-  res.render('new', {
-    title: 'My New Page',
-    body: 'This is the body of my new page.',
-    items: ['item 1', 'item 2', 'item 3']
-  });
-});
-////////////////////////////////////////////////////
-
-app.post('/login', async (req, res) =>{
-const name = req.body.name;
-const user  = {name};
-const accessToken = jwt.sign(user,process.env.JWT_TOKEN);
-res.status(200).json({  accessToken});
+app.post('/signout', async (req, res) =>{
+signoutController(req, res);
 });
 
 app.get('/proctected', async (req, res) =>{
@@ -79,12 +53,8 @@ jwt.verify(token,process.env.JWT_TOKEN, (err, user)=>{
 
 });
 
-app.post('/addUser', function (req, res) {
-UserController.addUser(req, res);
-});
 
-
-
+//---------------------------------------------
 app.post('/updateUser', function (req, res) {
 // const id = req.body.id;
 // const name = req.body.name;
@@ -111,18 +81,6 @@ res.status(200).json(json);
 });
 
 app.listen(PORT);
-
-// const addFakerUsers = async () => {
-// for (let i = 0; i < 1000; i++) {
-//   // User.create({ });
-//   const name = faker.name.firstName();
-//   const email = faker.commerce.product();
-
-// await User.create({name, email });
-// }
-// }
-
-// addFakerUsers();
 
 
 
