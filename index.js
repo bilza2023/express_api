@@ -52,53 +52,19 @@ app.post('/signout', async (req, res) =>{
 signoutController(req, res);
 });
 
-app.get('/proctected', async (req, res) =>{
 
-const authHeader = req.headers['authorization'] ;
-// console.log(authHeader);
-const token = authHeader.split(' ')[1];
 
-jwt.verify(token,process.env.JWT_TOKEN, (err, user)=>{
+app.get('/', async (req, res) =>{
 
-  if(err){res.status(401).json({failed:true});  }
-  res.user = user;
-  res.status(200).send(user);
+return res.status(200).render('index');
 });
 
-});
-
-
-//---------------------------------------------
-app.post('/updateUser', function (req, res) {
-// const id = req.body.id;
-// const name = req.body.name;
-// const email = req.body.email;
-// console.log(id,name,email);
-UserController.updateUser(req, res);
-});
-
-
-
-app.post('/deleteUser', function (req, res) {
-const id = req.body.id;
-// console.log(id);
-// res.status(200).send("the id is : " + id);
-UserController.deleteUser(req, res);
-});
-
-app.post('/fakeJson', function (req, res) {
-const fakeData = { name : "Bill" , email : "bill@bill.com" };
-
-const json = JSON.stringify(fakeData);
-res.status(200).json(json);
-
-});
-
-app.listen(PORT);
+///////////////////////////////////////
+app.listen(PORT, ()=>{console.log(`listening on port ${PORT}`)});
 
 
 
 
-console.log( `listening on port ${PORT}`  );
+
 
 
