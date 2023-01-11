@@ -1,8 +1,15 @@
 require('dotenv').config();
+process.on('uncaughtException', function (err) {
+    console.error((new Date).toUTCString() + ' uncaughtException:', err.message);
+    console.error(err.stack);
+    process.exit(1);
+});
+//.......................................................
+
 const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 80;
 const {User} = require('./database/db.js');
 const userRouter = require('./routes/userRoutes.js');
 const UserController = require('./controllers/userController');
@@ -15,7 +22,7 @@ const cookieParser = require('cookie-parser');
 ////////////////////////////////////////////////////
 const app = express()
 
-app.use(cors({origin:'https://localhost:8080'}));
+app.use(cors({origin:'https://localhost'}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //.. Route middlewares
@@ -42,9 +49,21 @@ app.get('/getcookie', (req, res) => {
     res.send(req.cookies);
 });
 /////////////////////////////////////////////////////////////
+
+app.get('/signupform', (req, res) => {
+    // console.log(req.body.jsonData)
+// return    res.status(200).json(req.body.jsonData)
+
+return res.status(200).render('signupform');
+});
+
+
 app.post('/signup', async (req, res) =>{
+
+// return res.status(200).json({"message":"success"});
 signupController(req, res);
 });
+
 app.post('/signin', async (req, res) =>{
 signinController(req, res);
 });
