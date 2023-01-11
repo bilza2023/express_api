@@ -12,23 +12,23 @@ const email = req.body.email;
 const password = req.body.password;
 //--
 if (email === undefined){
-return res.status(404).json({ "message" : "email is missing"  });
+return res.status(404).json({ "message" : "email is missing."  });
 }
 if (password === undefined){
-return res.status(404).json({ "message" : "password is missing"  });
+return res.status(404).json({ "message" : "password is missing."  });
 }
 //--
 if (isValidEmail(email) === false) {
-return res.status(404).json({ "message" : "email is not in correct format"  });
+return res.status(404).json({ "message" : "email is not in correct format."  });
 }
 //--
 if (isValidPassword(password) === false) {
-return res.status(404).json({ "message" : "password is not valid"  });
+return res.status(400).json({ "message" : "password is not valid."  });
 }
 //--
 const isUnique = await isEmailUnique(email);
     if (isUnique==false) {
-    return res.status(400).json({"message" : "Email is already taken"});
+    return res.status(400).json({"message" : "Email is already taken."});
     }
 //--
 const hasedPassword = await bcrypt.hash(password, 2);
@@ -43,7 +43,7 @@ const hasedPassword = await bcrypt.hash(password, 2);
 }//try end
 
   catch(err){
-    return res.status(404).json({  "message" : "failed to singup :" + err });
+    return res.status(400).json({  "message" : "failed to singup :" + err });
   }
 
 }

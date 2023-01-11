@@ -21,7 +21,6 @@
                         type="password"
                         class="block border border-grey-light w-full p-3 rounded mb-4"
                         name="password"
-                        value="12345678"
                         placeholder="Password" />
                     <input 
                         type="password"
@@ -55,25 +54,11 @@
 
 {{> footer}}
 
+<script   src="./signupLogic.js"></script>
 <script>
+
+///////////////////////////
 const btn = document.getElementById('createAccountBtn');
-btn.addEventListener('click',function(e){
-const r = {};
-r.email = document.getElementById('emailInput').value;
-r.password = document.getElementById('passwordInput').value;
-//console.log(r);
-////////////////---axios////////////////
-axios.post('http://localhost/signup', r)
-.then(function (response) {
-  alert(response.data.message);
-  //console.log(response);
+btn.addEventListener('click',signupLogic);
 
-})
-.catch(function (error) {
-  const err = JSON.parse(error.request.responseText).message;
-      alert(err);
-});
-
-////////////////---axios////////////////
-});
 </script>
