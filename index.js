@@ -69,6 +69,7 @@ signupController(req, res);
 app.post('/signin', async (req, res) =>{
 signinController(req, res);
 });
+
 app.post('/signout', async (req, res) =>{
 signoutController(req, res);
 });

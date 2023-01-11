@@ -36,8 +36,6 @@ const hasedPassword = await bcrypt.hash(password, 2);
   const userObj  = {email,password:hasedPassword};
   await User.create(userObj);
 
-        const accessToken = jwt.sign(userObj,process.env.JWT_SECRET);
- 
  return res.status(201).redirect("/loginform");
         // return res.status(201).json({  accessToken , email, password,hasedPassword, "message" : "account created successfully" });
 

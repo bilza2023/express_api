@@ -22,14 +22,18 @@ return res.status(404).json({ "error" : "password is missing"  });
 const user = await User.findOne({ email: email });
 
 if (await bcrypt.compare(passwordRec, user.password)){
-// const jwtUser = {email: user.email };
-const accessToken = jwt.sign({ "email": user.email,"id" : user.id }, process.env.JWT_SECRET);
+
+const accessToken = jwt.sign({ "email": user.email,"id" : user.id },process.env.JWT_SECRET);
+ 
 return res.status(200).json({"message" : "success" , accessToken});
+}else {
+
+return res.status(400).json({  message : "failed to singin :" });
 }
 
 ///////////////////////////////////////////////////////////////////
 } catch(err){
-    return res.status(404).json({  message : "failed to singin :" + err });
+    return res.status(400).json({  message : "failed to singin :" + err });
 }
 
 }
