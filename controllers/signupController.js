@@ -37,8 +37,9 @@ const hasedPassword = await bcrypt.hash(password, 2);
   await User.create(userObj);
 
         const accessToken = jwt.sign(userObj,process.env.JWT_SECRET);
-
-        return res.status(201).json({  accessToken , email, password,hasedPassword, "message" : "account created successfully" });
+ 
+ return res.status(201).redirect("/loginform");
+        // return res.status(201).json({  accessToken , email, password,hasedPassword, "message" : "account created successfully" });
 
 }//try end
 
@@ -62,9 +63,16 @@ const user  = await User.findOne({where: { email }});
   }
 }
 
-const isValidPassword =  (password)=> {
-if (password.length >= 8) {return true;} else {return false;}
+const isValidPassword =(password)=> {
+    if(/\s/.test(password)) {
+      return { status: false, message: "Password must not contain any whitespace characters" }
+    }
+    if(password.length < 6) {
+      return { status: false, message: "Password must be at least 6 characters long" }
+    }
+    return { status: true, message: "Password is valid" }
 }
+
 
 
 

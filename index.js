@@ -58,9 +58,11 @@ return res.status(200).render('signupform');
 });
 
 
-app.post('/signup', async (req, res) =>{
+app.get('/loginform', async (req, res) =>{
+res.status(200).render('loginform');
+});
 
-// return res.status(200).json({"message":"success"});
+app.post('/signup', async (req, res) =>{
 signupController(req, res);
 });
 
