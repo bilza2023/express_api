@@ -51,10 +51,10 @@ app.get('/getcookie', (req, res) => {
 /////////////////////////////////////////////////////////////
 
 app.get('/signupform', (req, res) => {
-    // console.log(req.body.jsonData)
-// return    res.status(200).json(req.body.jsonData)
-
 return res.status(200).render('signupform');
+});
+app.post('/signup', async (req, res) =>{
+signupController(req, res);
 });
 
 
@@ -62,9 +62,6 @@ app.get('/loginform', async (req, res) =>{
 res.status(200).render('loginform');
 });
 
-app.post('/signup', async (req, res) =>{
-signupController(req, res);
-});
 
 app.post('/signin', async (req, res) =>{
 signinController(req, res);
