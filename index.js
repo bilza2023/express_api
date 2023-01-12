@@ -18,7 +18,7 @@ const signinController = require('./controllers/signinController');
 const signoutController = require('./controllers/signoutController');
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
-
+const jwt = require('jsonwebtoken')
 ////////////////////////////////////////////////////
 const app = express()
 
@@ -37,12 +37,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 /////////////////////////////////////////////////////////////
-app.get('/setcookie', (req, res) => {
-    res.cookie(`accessToken`,`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InMxQGcuY29tIiwiaWQiOjIwLCJpYXQiOjE2NzMxNzc1NTV9.qZQQNZZiqdmQNewyFRECIxUNK_yxYLpslJk39TZpMNI`);
 
-
-    res.send('Cookie have been saved successfully');
-});
 app.get('/getcookie', (req, res) => {
     //show the saved cookies
     console.log(req.cookies)
@@ -74,8 +69,25 @@ signoutController(req, res);
 
 
 app.get('/', async (req, res) =>{
+// console.log(req.cookies.accessToken);
+//---------------------------
+// const authHeader = req.headers['authorization'] ;
+// console.log(authHeader);
+// const token = authHeader.split(' ')[1];
+const token = req.cookies.accessToken;
 
-return res.status(200).render('index');
+    jwt.verify(token,process.env.JWT_SECRET, (err, user)=>{
+    if(err){
+    res.user = null;
+        return res.status(200).render('index',{"login":false});
+    }else {
+    res.user = user;
+        return res.status(200).render('index',{"login":true , user});
+    }
+//   console.log(user)
+//   res.status(200).send(user);
+    });
+//---------------------------
 });
 
 ///////////////////////////////////////

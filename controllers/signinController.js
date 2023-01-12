@@ -24,8 +24,10 @@ const user = await User.findOne({ email: email });
 if (await bcrypt.compare(passwordRec, user.password)){
 
 const accessToken = jwt.sign({ "email": user.email,"id" : user.id },process.env.JWT_SECRET);
- 
+ //--This will set the access token cookie on the frontend
+res.cookie(`accessToken`, accessToken );
 return res.status(200).json({"message" : "success" , accessToken});
+
 }else {
 
 return res.status(400).json({  message : "failed to singin :" });
