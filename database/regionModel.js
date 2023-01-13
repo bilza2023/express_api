@@ -1,32 +1,27 @@
 
 
-const getProject =  (db,DataTypes) =>{
-const Project = db.define('projects', 
+const getRegion =  (db,DataTypes) =>{
+
+const Region = db.define('regions', 
 {
   id : {
     type : DataTypes.INTEGER,
     autoIncrement : true,
     allowNull : false,
     primaryKey : true,
-
     },
   name : {
     type : DataTypes.STRING,
     allowNull : false,
-    },
-  data : {
-    type : DataTypes.JSON,
-    allowNull : true, // change this to false
     },
   description : {
    type : DataTypes.TEXT,
    allowNull : true,
   }
 
-
 });
  
-return Project;
+return Region;
 }
 //------------------------------
-module.exports = getProject;
+module.exports = getRegion;

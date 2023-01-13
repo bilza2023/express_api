@@ -20,7 +20,11 @@ const User = db.define('users',
   password : {
     type : DataTypes.STRING,
     allowNull : false,
-    }
+    },
+  description : {
+   type : DataTypes.TEXT,
+   allowNull : true,
+  }
 
 });
  

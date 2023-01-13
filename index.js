@@ -10,12 +10,14 @@ const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
 const PORT = process.env.PORT || 80;
-const {User} = require('./database/db.js');
+// const  {db,User,State} = require('./database/db.js');
+// const {User} = require('./database/db.js');
+const migration = require('./database/migration.js');
 const userRouter = require('./routes/userRoutes.js');
-const UserController = require('./controllers/userController');
+// const UserController = require('./controllers/userController');
 const signupController = require('./controllers/signupController');
 const signinController = require('./controllers/signinController');
-const signoutController = require('./controllers/signoutController');
+// const signoutController = require('./controllers/signoutController');
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken')
@@ -62,8 +64,9 @@ app.post('/signin', async (req, res) =>{
 signinController(req, res);
 });
 
-app.post('/signout', async (req, res) =>{
-signoutController(req, res);
+app.get('/signout', async (req, res) =>{
+res.cookie(`accessToken`, "" );
+// signoutController(req, res);
 });
 
 
@@ -90,6 +93,12 @@ const token = req.cookies.accessToken;
 //---------------------------
 });
 
+// --dont delete 
+// app.get('/migration', async (req, res) =>{
+// migration().then(()=>{
+// res.status(200).json({"message": "DB Insert Success"});
+// });
+// });
 ///////////////////////////////////////
 app.listen(PORT, ()=>{console.log(`listening on port ${PORT}`)});
 

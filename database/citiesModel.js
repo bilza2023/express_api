@@ -1,7 +1,8 @@
 
 
-const getProject =  (db,DataTypes) =>{
-const Project = db.define('projects', 
+const getCity =  (db,DataTypes) =>{
+
+const City = db.define('cities', 
 {
   id : {
     type : DataTypes.INTEGER,
@@ -14,19 +15,13 @@ const Project = db.define('projects',
     type : DataTypes.STRING,
     allowNull : false,
     },
-  data : {
-    type : DataTypes.JSON,
-    allowNull : true, // change this to false
-    },
   description : {
    type : DataTypes.TEXT,
    allowNull : true,
   }
-
-
 });
  
-return Project;
+return City;
 }
 //------------------------------
-module.exports = getProject;
+module.exports = getCity;
