@@ -31,8 +31,8 @@ User.belongsTo(Region);
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
-const forcedFlag = true;
-// const forcedFlag = false;
+// const forcedFlag = true;
+const forcedFlag = false;
 db.sync({forced: forcedFlag})
 .then((result) => {
 

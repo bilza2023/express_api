@@ -2,12 +2,25 @@
 
 <header class="bg-blue-700 flex justify-between text-white px-4 py-2">
 
-<a href="" class="text-lg font-bold">Logo</a>
+<a href="" class="text-lg font-bold">Fill4</a>
 
 <ul  class="hidden md:flex flex-row gap-6 ">
-<li><a href="http://localhost/signupform" id="signupBtn" class="bg-blue-900  text-white py-2 my-2  px-4 rounded-md hover:bg-blue-200">signup</a></li>
-<li><a href="http://localhost/loginform" id="signinBtn" class="bg-blue-900  text-white py-2 my-2  px-4 rounded-md hover:bg-blue-200" >signin</a></li>
-<li><a href="#" id="signoutBtn" class="bg-blue-900  text-white py-2 my-2  px-4 rounded-md hover:bg-blue-200" >signout</a></li>
+
+
+{{#if login}}
+<li><a href="http://localhost/signout" id="signoutBtn" class="  text-white py-2 my-2  px-4 rounded-md " >{{ user.email }}</a></li>
+
+<li><a href="http://localhost/signout" id="signoutBtn" class="  text-white py-2 my-2  px-4 rounded-md hover:bg-blue-200" >signout</a></li>
+
+{{else}}
+
+<li><a href="http://localhost/loginform" id="signinBtn" class="text-white py-2 my-2  px-4 rounded-md hover:bg-blue-200" >signin</a></li>
+
+<li><a href="http://localhost/signupform" id="signupBtn" class="text-white py-2 my-2  px-2 rounded-md hover:bg-blue-200">signup</a></li>
+
+{{/if}}
+
+
 </ul>
 
 <button class="md:hidden">

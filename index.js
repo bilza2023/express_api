@@ -64,20 +64,19 @@ app.post('/signin', async (req, res) =>{
 signinController(req, res);
 });
 
+//--
 app.get('/signout', async (req, res) =>{
 res.cookie(`accessToken`, "" );
+return res.status(200).render('index',{"login":false});
 // signoutController(req, res);
 });
 
 
 
 app.get('/', async (req, res) =>{
-// console.log(req.cookies.accessToken);
-//---------------------------
 // const authHeader = req.headers['authorization'] ;
-// console.log(authHeader);
 // const token = authHeader.split(' ')[1];
-const token = req.cookies.accessToken;
+    const token = req.cookies.accessToken;
 
     jwt.verify(token,process.env.JWT_SECRET, (err, user)=>{
     if(err){

@@ -25,6 +25,7 @@ const provincesData = [
     {id : 2 , name : "Khyber-Pakhtunkhwa"},
     {id : 3 , name : "Sind"},
     {id : 4 , name : "Balochistan"},
+    {id : 5 , name : "Gilgit-Baltistan"},
 ];
 await Province.bulkCreate(provincesData);
 }
