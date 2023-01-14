@@ -20,6 +20,8 @@ const migration = require('./database/migration.js');
 // const UserController = require('./controllers/userController');
 const signupController = require('./controllers/signupController');
 const signinController = require('./controllers/signinController');
+const homeController = require('./controllers/homeController.js');
+const regionsController = require('./controllers/regionsController.js');
 // const signoutController = require('./controllers/signoutController');
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
@@ -50,26 +52,14 @@ app.get('/getcookie', (req, res) => {
     console.log(req.cookies)
     res.send(req.cookies);
 });
-///////////////////////////////////////////////////////////////
-// app.post('/upload', upload.single('image'), (req, res) => {
-//   try {
-//     // move the uploaded file to a permanent location
-//     fs.renameSync(req.file.path, 'public/images/' + req.file.originalname);
 
-//     // return a success response to the client
-//     res.status(200).json({ message: 'Image uploaded successfully' });
-//   } catch (err) {
-//     // handle any errors
-//     console.error(err);
-//     res.status(500).json({ message: 'Error uploading image' });
-//   }
-// });
 
 /////////////////////////////////////////////////////////////
 
 app.get('/signupform', (req, res) => {
 return res.status(200).render('signupform');
 });
+
 app.post('/signup', async (req, res) =>{
 signupController(req, res);
 });
@@ -84,7 +74,11 @@ app.post('/signin', async (req, res) =>{
 signinController(req, res);
 });
 
-//--
+app.post('/getRegions', async (req, res) =>{
+regionsController(req, res);
+});
+
+
 app.get('/signout', async (req, res) =>{
 res.cookie(`accessToken`, "" );
 return res.status(200).render('index',{"login":false});
@@ -94,39 +88,7 @@ return res.status(200).render('index',{"login":false});
 
 
 app.get('/', async (req, res) =>{
-// const authHeader = req.headers['authorization'] ;
-// const token = authHeader.split(' ')[1];
-    const token = req.cookies.accessToken;
-
-    jwt.verify(token,process.env.JWT_SECRET, (err, user)=>{
-    if(err){
-    res.user = null;
-
-    const citiesArray = [
-    "Lahore",
-    "Rawalpindi",
-    "Multan"    
-    ];
-    const regionsArray = [
-    "sadar",
-    "cant",
-    "bahria town"    
-    ];
-    const businessArray = [
-    "Plumber",
-    "Electrition",    
-    "Painter",    
-    "Teacher",    
-    ];
-        return res.status(200).render('index',{"login":false,
-        regionsArray,citiesArray , businessArray});
-    }else {
-    res.user = user;
-        return res.status(200).render('index',{"login":true , user});
-    }
-//   console.log(user)
-//   res.status(200).send(user);
-    });
+homeController(req, res);
 //---------------------------
 });
 
@@ -137,6 +99,27 @@ app.get('/', async (req, res) =>{
 // });
 // });
 ///////////////////////////////////////
+// app.post('/getpost', async (req, res) =>{
+// // console.log("GET POST");
+// const message = req.body.message;
+// res.status(200).json({message});
+// //---------------------------
+// });
+///////////////////////////////////////
+///////////////////////////////////////////////////////////////
+// app.post('/upload', upload.single('image'), (req, res) => {
+//   try {
+//     // move the uploaded file to a permanent location
+//     fs.renameSync(req.file.path, 'public/images/' + req.file.originalname);
+
+//     // return a success response to the client
+//     res.status(200).json({ message: 'Image uploaded successfully' });
+//   } catch (err) {
+//     // handle any errors
+//     console.error(err);
+//     res.status(500).json({ message: 'Error uploading image' });
+//   }
+// });
 app.listen(PORT, ()=>{console.log(`listening on port ${PORT}`)});
 
 

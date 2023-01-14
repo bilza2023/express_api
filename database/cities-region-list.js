@@ -1,36 +1,14 @@
-const  {db,User,Province,City,Region} = require('./db.js');
-const {Sequelize} =  require('sequelize');
-/////////////////--migrations--------------------------------
+// following is an array with names of cities and their "id". i want to create another array of javascript called "region". 
+// the format of the "region" array is as following please complete this array for each city in citiesData:
 
+// const region = [
+//       { "id" : 1, "name" : "Karachi-region1" , "cityId" : 1},
+//       { "id" : 2, "name" : "Karachi-region2" , "cityId" : 1},
+//       { "id" : 3, "name" : "Lahore-region1" , "cityId" : 2},
+//       { "id" : 4, "name" : "Lahore-region2" , "cityId" : 2},
+// ];
 
-module.exports =   async ( ) =>{
-
-// await User.destroy({where:{}});
-// await Province.destroy({where:{}});
-await City.destroy({where:{}});
-await Region.destroy({where:{}});
-
-
-// await createProvinces();
-await createCities();
-await createRegions();
-
-///////////////-migration ends////////////////
-}
-
-//////////////////--createProvinces--////////////////////////////////
-const createProvinces = async ()=>{
-const provincesData = [
-    {id : 1 , name : "Punjab"},
-    {id : 2 , name : "Khyber-Pakhtunkhwa"},
-    {id : 3 , name : "Sind"},
-    {id : 4 , name : "Balochistan"},
-    {id : 5 , name : "Gilgit-Baltistan"},
-];
-await Province.bulkCreate(provincesData);
-}
-
-const createCities = async () => {
+// this is the cities array.
 const citiesData = [
     { "id" : 1, "name" : "Karachi"},
     { "id" : 2, "name" : "Lahore" },
@@ -83,13 +61,10 @@ const citiesData = [
     { "id" : 49, "name" : "Dera Ismail Khan"},
     { "id" : 50, "name" : "Nowshera"}
 
-//--add more cities here with care
 ];
-await City.bulkCreate(citiesData);
-}
 
-const createRegions = async () => {
-  const regionsData = [
+
+const regions = [
   { id: 1, name: 'Karachi-region1', cityId: 1 },
   { id: 2, name: 'Karachi-region2', cityId: 1 },
   { id: 3, name: 'Lahore-region1', cityId: 2 },
@@ -192,6 +167,11 @@ const createRegions = async () => {
   { id: 100, name: 'Nowshera-region2', cityId: 50 }
 ];
 
-await Region.bulkCreate(regionsData);
-}
-    
+// const region = [];
+// let id = 1;
+
+// for (let i = 0; i < citiesData.length; i++) {
+//     region.push({ "id": id++, "name": citiesData[i].name + "-region1", "cityId": citiesData[i].id });
+//     region.push({ "id": id++, "name": citiesData[i].name + "-region2", "cityId": citiesData[i].id });
+// }
+// console.log(region);
