@@ -44,11 +44,11 @@ await BusinessType.bulkCreate(data);
 }
 const createBusiness = async ()=>{
 const data = [
-    {id : 1 , name : "test1 business" , regionId:1, businessTypeId:1},
-    {id : 2 , name : "test2 business" , regionId:1, businessTypeId:1},
-    {id : 3 , name : "test3 business" , regionId:1, businessTypeId:1},
-    {id : 4 , name : "test4 business" , regionId:1, businessTypeId:1},
-    {id : 5 , name : "test5 business" , regionId:1, businessTypeId:1},
+    {id : 1 , name : "karachi region-1 business" , regionId:1, businessTypeId:1},
+    {id : 2 , name : "karachi region-1 business" , regionId:1, businessTypeId:1},
+
+    {id : 3 , name : "karachi region-2 business" , regionId:2, businessTypeId:1},
+    {id : 4 , name : "karachi region-2 business" , regionId:2, businessTypeId:1}
 ];
 await Business.bulkCreate(data);
 }

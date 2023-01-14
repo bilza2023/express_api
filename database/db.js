@@ -35,8 +35,8 @@ User.belongsTo(Region);
 Business.belongsTo(Region);
 Business.belongsTo(BusinessType);
 ////////////////////////////////////////////////////
-const forcedFlag = true;
-// const forcedFlag = false;
+// const forcedFlag = true;
+const forcedFlag = false;
 db.sync({forced: forcedFlag})
 .then((result) => {
 

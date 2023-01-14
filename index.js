@@ -13,7 +13,8 @@ const multer = require('multer');
 const fs = require('fs');
 
 const PORT = process.env.PORT || 80;
-// const  {db,User,State} = require('./database/db.js');
+const  {Business} = require('./database/db.js');
+// const json_pretty = require('json-pretty');
 // const {User} = require('./database/db.js');
 const migration = require('./database/migration.js');
 // const userRouter = require('./routes/homeRoute.js');
@@ -97,6 +98,20 @@ homeController(req, res);
 //---------------------------
 });
 
+app.get('/businesses/:regionId/:businessTypeId', async (req, res) => {
+//http://localhost/businesses/1/1
+  const regionId = req.params.regionId;
+  const businessTypeId = req.params.businessTypeId;
+  // do something with regionId and businessType
+const businesses =   await   Business.findAll({
+  where: {
+    regionId: regionId,
+    businessTypeId,businessTypeId
+  }
+});
+res.status(200).render('businessesPage', {  businesses  });
+//res.send(`Listing businesses of type ${businessType} in region ${regionId}`);
+});
 // --dont delete 
 // app.get('/migration', async (req, res) =>{
 // migration().then(()=>{
