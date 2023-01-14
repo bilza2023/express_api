@@ -9,18 +9,21 @@ process.on('uncaughtException', function (err) {
 const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
+const multer = require('multer');
+const fs = require('fs');
+
 const PORT = process.env.PORT || 80;
 // const  {db,User,State} = require('./database/db.js');
 // const {User} = require('./database/db.js');
 const migration = require('./database/migration.js');
-const userRouter = require('./routes/userRoutes.js');
+// const userRouter = require('./routes/homeRoute.js');
 // const UserController = require('./controllers/userController');
 const signupController = require('./controllers/signupController');
 const signinController = require('./controllers/signinController');
 // const signoutController = require('./controllers/signoutController');
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 ////////////////////////////////////////////////////
 const app = express()
 
@@ -28,10 +31,12 @@ app.use(cors({origin:'https://localhost'}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //.. Route middlewares
-app.use("/users",userRouter);
+// app.use("/users",userRouter);
 app.use(cookieParser());
 //.. static files
 app.use(express.static(path.join(__dirname,"public")));
+
+const upload = multer({ dest: 'uploads/' });
 
 //.. Templating Engine
 app.engine('hbs', engine({ extname: '.hbs' }));
@@ -45,6 +50,21 @@ app.get('/getcookie', (req, res) => {
     console.log(req.cookies)
     res.send(req.cookies);
 });
+///////////////////////////////////////////////////////////////
+// app.post('/upload', upload.single('image'), (req, res) => {
+//   try {
+//     // move the uploaded file to a permanent location
+//     fs.renameSync(req.file.path, 'public/images/' + req.file.originalname);
+
+//     // return a success response to the client
+//     res.status(200).json({ message: 'Image uploaded successfully' });
+//   } catch (err) {
+//     // handle any errors
+//     console.error(err);
+//     res.status(500).json({ message: 'Error uploading image' });
+//   }
+// });
+
 /////////////////////////////////////////////////////////////
 
 app.get('/signupform', (req, res) => {
@@ -81,7 +101,25 @@ app.get('/', async (req, res) =>{
     jwt.verify(token,process.env.JWT_SECRET, (err, user)=>{
     if(err){
     res.user = null;
-        return res.status(200).render('index',{"login":false});
+
+    const citiesArray = [
+    "Lahore",
+    "Rawalpindi",
+    "Multan"    
+    ];
+    const regionsArray = [
+    "sadar",
+    "cant",
+    "bahria town"    
+    ];
+    const businessArray = [
+    "Plumber",
+    "Electrition",    
+    "Painter",    
+    "Teacher",    
+    ];
+        return res.status(200).render('index',{"login":false,
+        regionsArray,citiesArray , businessArray});
     }else {
     res.user = user;
         return res.status(200).render('index',{"login":true , user});
