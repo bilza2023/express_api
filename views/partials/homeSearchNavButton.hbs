@@ -11,9 +11,37 @@ Search
 
 
 <script>
-document.getElementById('mainSearchBtn')
-.addEventListener('click', function(){
-console.log("Search");
-});
+    document.getElementById("mainSearchBtn")
+        .addEventListener("click", e =>{
+        
+           const regionId = document.getElementById("regionsDD").value;             
+           //const businessTypeId = document.getElementById("businessDD").value;             
+           const businessTypeId = 1;             
 
+            axios.post('http://localhost/getBusinesses', {
+                    regionId,businessTypeId
+              })
+              .then(function (response) {
+               //console.log(response);
+               var businesses = response.data.businesses;
+              var businessesList = document.getElementById("businessesList");
+
+              var list = document.createElement("ol");
+
+              businesses.forEach(function(business) {
+                var item = document.createElement("li");
+                var link = document.createElement("a");
+                link.href = "business.html?id=" + business.id;
+                link.innerHTML = business.name;
+                item.appendChild(link);
+                list.appendChild(item);
+              });
+
+                businessesList.appendChild(list);
+
+              })
+              .catch(function (error) {
+                console.log(error);
+              });   
+});
 </script>

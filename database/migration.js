@@ -1,4 +1,4 @@
-const  {db,User,Province,City,Region} = require('./db.js');
+const  {db,User,City,Region,Business,BusinessType} = require('./db.js');
 const {Sequelize} =  require('sequelize');
 /////////////////--migrations--------------------------------
 
@@ -7,18 +7,51 @@ module.exports =   async ( ) =>{
 
 // await User.destroy({where:{}});
 // await Province.destroy({where:{}});
-await City.destroy({where:{}});
-await Region.destroy({where:{}});
-
+// await City.destroy({where:{}});
+// await Region.destroy({where:{}});
+// await Business.destroy({where:{}});
+await BusinessType.destroy({where:{}});
+await Business.destroy({where:{}});
 
 // await createProvinces();
-await createCities();
-await createRegions();
+// await createCities();
+// await createRegions();
+await createBusinessTypes();
+await createBusiness();
 
 ///////////////-migration ends////////////////
 }
 
 //////////////////--createProvinces--////////////////////////////////
+const createBusinessTypes = async ()=>{
+const data = [
+    {id : 1 , type : "plumber"},
+    {id : 2 , type : "electrition"},
+    {id : 3 , type : "tutor"},
+    {id : 4 , type : "mali"},
+    {id : 5 , type : "mason"},
+    {id : 6 , type : "steel-works"},
+    {id : 7 , type : "glass-works"},
+    {id : 8 , type : "water-tank-cleaning"},
+    {id : 9 , type : "dry-cleaning"},
+    {id :10 , type : "water-filter-plant"},
+    {id :11 , type : "medical-store"},
+    {id :12 , type : "bakery"},
+    {id :13 , type : "general-store"},
+    {id :14 , type : "mobile-shop"},
+];
+await BusinessType.bulkCreate(data);
+}
+const createBusiness = async ()=>{
+const data = [
+    {id : 1 , name : "test1 business" , regionId:1, businessTypeId:1},
+    {id : 2 , name : "test2 business" , regionId:1, businessTypeId:1},
+    {id : 3 , name : "test3 business" , regionId:1, businessTypeId:1},
+    {id : 4 , name : "test4 business" , regionId:1, businessTypeId:1},
+    {id : 5 , name : "test5 business" , regionId:1, businessTypeId:1},
+];
+await Business.bulkCreate(data);
+}
 const createProvinces = async ()=>{
 const provincesData = [
     {id : 1 , name : "Punjab"},

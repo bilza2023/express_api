@@ -22,6 +22,7 @@ const signupController = require('./controllers/signupController');
 const signinController = require('./controllers/signinController');
 const homeController = require('./controllers/homeController.js');
 const regionsController = require('./controllers/regionsController.js');
+const businessController = require('./controllers/businessController.js');
 // const signoutController = require('./controllers/signoutController');
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
@@ -76,6 +77,10 @@ signinController(req, res);
 
 app.post('/getRegions', async (req, res) =>{
 regionsController(req, res);
+});
+
+app.post('/getBusinesses', async (req, res) =>{
+businessController(req, res);
 });
 
 
