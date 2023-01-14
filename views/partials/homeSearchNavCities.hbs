@@ -4,7 +4,7 @@
   <select id="citiesDD"  class="block appearance-none text-black w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg leading-tight focus:outline-none focus:shadow-outline-blue">
 
         {{#each citiesArray}}
-          <option>{{this.name}}</option>
+          <option value="{{this.id}}">{{this.name}}</option>
         {{/each}}
 
   </select>
@@ -22,13 +22,24 @@
     document.getElementById("citiesDD")
         .addEventListener("change", e =>{
             
-           const city = e.target.value;
+           const cityId = e.target.value;
 
             axios.post('http://localhost/getRegions', {
-                  "message" : city,
+                  "cityId" : cityId,
               })
               .then(function (response) {
-                console.log(response.data);
+                //console.log(response.data);
+                const select = document.getElementById("regionsDD");
+                select.innerHTML = "";
+                const regionNames = response.data.regionNames;
+                // Add the new options
+                for (let i = 0; i < regionNames.length; i++) {
+                    const option = document.createElement("option");
+                    option.value = regionNames[i].id;
+                    option.text = regionNames[i].name;
+                    select.appendChild(option);
+                }
+
               })
               .catch(function (error) {
                 console.log(error);

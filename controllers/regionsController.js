@@ -3,10 +3,15 @@ const  {Region} = require('../database/db.js');
 
 ////////////////////////////////////////////////
 module.exports =  async (req, res ) => {
-// return res.status(200).json({"message":"success"});
-const message = req.body.message;
-res.status(200).json({message});
 
-// const cityId = req.body.cityId;
+
+const cityId = req.body.cityId;
+const regionNames  = await Region.findAll({
+  where: {
+    cityId: cityId
+  }
+});
+console.log(regionNames);
+res.status(200).json({regionNames});
 
 }///end
