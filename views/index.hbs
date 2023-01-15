@@ -4,7 +4,8 @@
 
 {{> miannav}}
 
-
+<h1>{{businessArray}}???????</h1>
+<h1>{{jsonData}}???????</h1>
 <br/>
 
 <div class="bg-blue-500 flex justify-center  text-white px-4 py-2">
@@ -25,11 +26,44 @@
 
 
 <div id="cardsDiv" class="flex flex-wrap md:flex-no-wrap justify-center">
-{{#each businessArray}}
+{{!-- {{#each businessArray}} --}}
     {{> homePage/homeCard data=this}}
-{{/each}}
+    {{> homePage/teacher  data=this}}
+    {{> homePage/doctor   data=this}}
+{{!-- {{/each}} --}}
 </div>
 
 
 </div>
 
+<hr>
+
+
+<h1>Cities</h1>
+<ul>
+    {{#each businessArray}}
+    <li>{{this.name}}</li>
+    {{/each}}
+</ul>
+
+<h1>Json Data</h1>
+{{#with jsonData}}
+
+<ul>
+    {{#each citiesArray}}
+    <li>{{this.name}}</li>
+    {{/each}}
+</ul>
+
+
+{{/with}}
+
+
+<h1>Json Data</h1>
+{{#with jsonData}}
+  <h1>Message</h1>
+  <p>{{message}}</p>
+{{/with}}
+
+<h1>Message</h1>
+<p>{{jsonData.message}}</p>

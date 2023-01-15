@@ -10,7 +10,6 @@ const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
 const multer = require('multer');
-const fs = require('fs');
 
 const PORT = process.env.PORT || 80;
 const  {Business} = require('./database/db.js');
