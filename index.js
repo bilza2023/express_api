@@ -92,7 +92,6 @@ return res.status(200).render('index',{"login":false});
 });
 
 
-
 app.get('/', async (req, res) =>{
 homeController(req, res);
 //---------------------------

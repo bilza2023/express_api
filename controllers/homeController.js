@@ -16,21 +16,23 @@ try{
     // jwt.verify(token,process.env.JWT_SECRET, (err, user)=>{
     // if(err){
     // res.user = null;
-
-   
+//--------------------------------------   
     const regionsArray = [
     "sadar",
     "cant",
     "bahria town"    
     ];
     const businessArray = [
-    "Plumber",
-    "Electrition",    
-    "Painter",    
-    "Teacher",    
+    { "name" : "Plumber"},
+    {"name" :  "Electrition"},    
+    {"name" :  "Painter"},    
+    {"name" :  "Doctor"},    
+    {"name" :  "Home-Tution"},    
+    {"name" :  "Dentist"},    
+    {"name" :  "Lawer"},    
     ];
         return res.status(200).render('index',{"login":false,
-        regionsArray,citiesArray , businessArray});
+        regionsArray,citiesArray , businessArray });
     // }else {
     // res.user = user;
         // return res.status(200).render('index',{"login":true , user});
