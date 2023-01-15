@@ -112,11 +112,11 @@ res.status(200).render('businessesPage', {  businesses  });
 //res.send(`Listing businesses of type ${businessType} in region ${regionId}`);
 });
 // --dont delete 
-// app.get('/migration', async (req, res) =>{
-// migration().then(()=>{
-// res.status(200).json({"message": "DB Insert Success"});
-// });
-// });
+app.get('/migration', async (req, res) =>{
+migration().then(()=>{
+res.status(200).json({"message": "DB Insert Success"});
+});
+});
 ///////////////////////////////////////
 // app.post('/getpost', async (req, res) =>{
 // // console.log("GET POST");
