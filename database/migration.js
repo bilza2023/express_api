@@ -9,17 +9,28 @@ module.exports =   async ( ) =>{
 // await City.destroy({where:{}});
 // await Region.destroy({where:{}});
 // await BusinessType.destroy({where:{}});
+await User.destroy({where:{}});
 await Business.destroy({where:{}});
 
 // await createCities();
 // await createRegions();
 // await createBusinessTypes();
 await createBusiness();
+await createUsers();
 
 ///////////////-migration ends////////////////
 }
 
 //////////////////--createProvinces--////////////////////////////////
+const createUsers = async ()=>{
+const data = [
+    {id : 1 , email : "admin@admin.com" , password : "$2b$04$14UoBguWzN7VVDxtMWZTDuzDz8e80GZjMz63tQnbAV03gEnYzWg.K",
+    accountType : "superuser"},
+    {id : 2 , email : "abc@gmail.com" , password : "$2b$04$14UoBguWzN7VVDxtMWZTDuzDz8e80GZjMz63tQnbAV03gEnYzWg.K"}
+];
+await User.bulkCreate(data);
+}
+
 const createBusinessTypes = async ()=>{
 const data = [
     {id : 1 , type : "plumber"},

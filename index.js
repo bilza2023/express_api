@@ -30,7 +30,8 @@ const jwt = require('jsonwebtoken');
 ////////////////////////////////////////////////////
 const app = express()
 
-app.use(cors({origin:'https://localhost'}));
+// app.use(cors({origin:'https://localhost'}));
+app.use(cors({origin: process.env.HOME_URL}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //.. Route middlewares
@@ -54,7 +55,14 @@ app.get('/getcookie', (req, res) => {
     res.send(req.cookies);
 });
 
+app.get('/superuser', (req, res) => {
+    superuserController(req, res);
+});
 
+
+app.get('/registerbusiness', (req, res) => {
+return res.status(200).render('registerbusiness');
+});
 ////////////////////////////////////////////////////////
 app.get('/signupform', (req, res) => {
 return res.status(200).render('signupform');
@@ -91,39 +99,32 @@ businessController(req, res);
 //---------------------------
 });
 
+app.get('/checklogin', async (req, res) =>{
+const accessToken = req.cookies.accessToken;
+jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
+  if (err) {
+  res.status(400).send("not logged in")
+  } else {
+  res.status(200).send("Login Success")
+  }
+});
+//---------------------------
+});
+
 app.get('/', async (req, res) =>{
 homeController(req, res);
 //---------------------------
 });
 
 // --dont delete 
-app.get('/migration', async (req, res) =>{
-migration().then(()=>{
-res.status(200).json({"message": "DB Insert Success"});
-});
-});
-///////////////////////////////////////
-// app.post('/getpost', async (req, res) =>{
-// // console.log("GET POST");
-// const message = req.body.message;
-// res.status(200).json({message});
-// //---------------------------
+// app.get('/migration', async (req, res) =>{
+// migration().then(()=>{
+// res.status(200).json({"message": "DB Insert Success"});
 // });
-///////////////////////////////////////
-///////////////////////////////////////////////////////////////
-// app.post('/upload', upload.single('image'), (req, res) => {
-//   try {
-//     // move the uploaded file to a permanent location
-//     fs.renameSync(req.file.path, 'public/images/' + req.file.originalname);
+// });
 
-//     // return a success response to the client
-//     res.status(200).json({ message: 'Image uploaded successfully' });
-//   } catch (err) {
-//     // handle any errors
-//     console.error(err);
-//     res.status(500).json({ message: 'Error uploading image' });
-//   }
-// });
+
+
 app.listen(PORT, ()=>{console.log(`listening on port ${PORT}`)});
 
 

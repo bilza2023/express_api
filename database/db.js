@@ -35,8 +35,8 @@ User.belongsTo(Region);
 Business.belongsTo(Region);
 Business.belongsTo(BusinessType);
 ////////////////////////////////////////////////////
-// const forcedFlag = true;
-const forcedFlag = false;
+const forcedFlag = true;
+// const forcedFlag = false;
 db.sync({forced: forcedFlag})
 .then((result) => {
 
@@ -45,10 +45,7 @@ db.sync({forced: forcedFlag})
     }else {
         console.log("database setup complete.");
     }
-
-
 })
-
 .catch ( err => {
 
 throw new Error( "Database failure",err);

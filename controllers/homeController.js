@@ -9,7 +9,14 @@ const fs = require('fs');
 module.exports =  async (req, res ) => {
 // return res.status(200).json({"ok" : "ok"});
 try{
-    return res.status(200).render('index',{"login":false});
+const accessToken = req.cookies.accessToken;
+jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
+  if (err) { //----error----
+return res.status(200).render('index',{"login":false});
+  } else {
+return res.status(200).render('index',{"login":true});
+  }
+});
 //--------------------------------------      
 ///////////////////////////////////////////////////////////////////
 } catch(err){
