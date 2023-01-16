@@ -22,7 +22,7 @@ const signupController = require('./controllers/signupController');
 const signinController = require('./controllers/signinController');
 const homeController = require('./controllers/homeController.js');
 const regionsController = require('./controllers/regionsController.js');
-const businessController = require('./controllers/businessController.js');
+const businessController = require('./controllers/businessesController');
 // const signoutController = require('./controllers/signoutController');
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
@@ -55,61 +55,47 @@ app.get('/getcookie', (req, res) => {
 });
 
 
-/////////////////////////////////////////////////////////////
-
+////////////////////////////////////////////////////////
 app.get('/signupform', (req, res) => {
 return res.status(200).render('signupform');
 });
-
+//..
 app.post('/signup', async (req, res) =>{
 signupController(req, res);
 });
-
-
+//..
 app.get('/loginform', async (req, res) =>{
 res.status(200).render('loginform');
 });
-
-
+//..
 app.post('/signin', async (req, res) =>{
 signinController(req, res);
 });
-
+//..
 app.post('/getRegions', async (req, res) =>{
 regionsController(req, res);
 });
-
+//..
 app.post('/getBusinesses', async (req, res) =>{
 businessController(req, res);
 });
-
-
+//..
 app.get('/signout', async (req, res) =>{
 res.cookie(`accessToken`, "" );
 return res.status(200).render('index',{"login":false});
-// signoutController(req, res);
 });
 
+
+app.get('/businesses', async (req, res) =>{
+businessController(req, res);
+//---------------------------
+});
 
 app.get('/', async (req, res) =>{
 homeController(req, res);
 //---------------------------
 });
 
-app.get('/businesses/:regionId/:businessTypeId', async (req, res) => {
-//http://localhost/businesses/1/1
-  const regionId = req.params.regionId;
-  const businessTypeId = req.params.businessTypeId;
-  // do something with regionId and businessType
-const businesses =   await   Business.findAll({
-  where: {
-    regionId: regionId,
-    businessTypeId,businessTypeId
-  }
-});
-res.status(200).render('businessesPage', {  businesses  });
-//res.send(`Listing businesses of type ${businessType} in region ${regionId}`);
-});
 // --dont delete 
 app.get('/migration', async (req, res) =>{
 migration().then(()=>{

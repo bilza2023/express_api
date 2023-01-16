@@ -14,6 +14,10 @@ const Business = db.define('business',
     type : DataTypes.STRING,
     allowNull : true,
     },
+  number : {
+    type : DataTypes.STRING,
+    allowNull : true,
+    },
   description : {
    type : DataTypes.TEXT,
    allowNull : true,

@@ -9,7 +9,7 @@ module.exports =   async ( ) =>{
 // await City.destroy({where:{}});
 // await Region.destroy({where:{}});
 // await BusinessType.destroy({where:{}});
-// await Business.destroy({where:{}});
+await Business.destroy({where:{}});
 
 // await createCities();
 // await createRegions();
@@ -40,20 +40,16 @@ const data = [
 await BusinessType.bulkCreate(data);
 }
 const createBusiness = async ()=>{
-// const data = [
-//     {id : 1 , name : "karachi region-1 business" , regionId:1, businessTypeId:1},
-//     {id : 2 , name : "karachi region-1 business" , regionId:1, businessTypeId:1},
+const data = [
+{id : 1 , name : "great business" ,number: "3483" , regionId:1, businessTypeId:1},
+{id : 2 , name : "business" ,number: "54641" , regionId:1, businessTypeId:1},
+{id : 3 , name : "business great" ,number: "321321" , regionId:1, businessTypeId:1},
+{id : 4 , name : "great great business" ,number: "987654" , regionId:1, businessTypeId:1},
 
-//     {id : 3 , name : "karachi region-2 business" , regionId:2, businessTypeId:1},
-//     {id : 4 , name : "karachi region-2 business" , regionId:2, businessTypeId:1}
-// ];
+];
+
 // await Business.bulkCreate(data);
-const business = await Business.create({
-  name: 'Example Business',
-  // other properties
-  regionId: 1,
-  businessTypeId: 1
-}, {
+const business = await Business.bulkCreate(data,{
   include: [Region, BusinessType]
 });
 

@@ -1,0 +1,1 @@
+const businesses = buz.map(business => business.toJSON());
