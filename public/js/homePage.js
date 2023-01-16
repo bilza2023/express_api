@@ -62,7 +62,7 @@ const regionsArray = [
     "electrition":336 , 
     "dentist":66 , 
     "lawer":65 , 
-    "home-tutor":546 , 
+    "tutor":546 , 
     "artist":657 , 
     "painter":446 
     },    
@@ -72,7 +72,7 @@ const regionsArray = [
     "electrition":34 , 
     "dentist":454 , 
     "lawer":134 , 
-    "home-tutor":14 , 
+    "tutor":14 , 
     "artist":456 , 
     "painter":33
     },    
@@ -81,7 +81,7 @@ const regionsArray = [
     "electrition":533 , 
     "dentist":88 , 
     "lawer":443 , 
-    "home-tutor":43 , 
+    "tutor":43 , 
     "artist":34 , 
     "painter":30
     },    
@@ -90,7 +90,7 @@ const regionsArray = [
     "electrition":45 , 
     "dentist":25 , 
     "lawer":44 , 
-    "home-tutor":54 , 
+    "tutor":54 , 
     "artist":56 , 
     "painter":64
     },    
@@ -99,7 +99,7 @@ const regionsArray = [
     "electrition":54 , 
     "dentist":98 , 
     "lawer":43 , 
-    "home-tutor":433 , 
+    "tutor":433 , 
     "artist":56 , 
     "painter":43
     },    
@@ -108,7 +108,7 @@ const regionsArray = [
     "electrition":3002 , 
     "dentist":12 , 
     "lawer":22 , 
-    "home-tutor":55 , 
+    "tutor":55 , 
     "artist":83 , 
     "painter":48
     },    
@@ -189,10 +189,22 @@ const regionId = document.getElementById("regionsDD").value;
         const lawerData = document.getElementById("lawerData");
         lawerData.innerHTML = "";
         lawerData.innerHTML = `Available ${element.lawer}`;
+        //---------------------
+        const hometutorData = document.getElementById("tutorData");
+        hometutorData.innerHTML = "";
+        hometutorData.innerHTML = `Available ${element.tutor}`;
+        //---------------------
+        const artistData = document.getElementById("artistData");
+        artistData.innerHTML = "";
+        artistData.innerHTML = `Available ${element.artist}`;
+        //---------------------
+        const painterData = document.getElementById("painterData");
+        painterData.innerHTML = "";
+        painterData.innerHTML = `Available ${element.painter}`;
         
         
         }
         
     }
-console.log(regionId);
+// console.log(regionId);
 }
