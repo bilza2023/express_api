@@ -4,8 +4,6 @@
 
 {{> miannav}}
 
-<h1>{{businessArray}}???????</h1>
-<h1>{{jsonData}}???????</h1>
 <br/>
 
 <div class="bg-blue-500 flex justify-center  text-white px-4 py-2">
@@ -16,8 +14,6 @@
 <div class="bg-blue-700 flex justify-center  text-white px-4 py-2">
 {{> homeSearchNavCities}} &nbsp;&nbsp;
 {{> homeSearchNavRegions}}&nbsp;&nbsp;
-{{> homeSearchNavBusiness}}&nbsp;&nbsp;
-{{> homeSearchNavButton}}
 </div>
 
 
@@ -38,7 +34,7 @@
 
 <hr>
 
-
+{{!-- 
 <h1>Cities</h1>
 <ul>
     {{#each businessArray}}
@@ -47,8 +43,8 @@
 </ul>
 
 <h1>Json Data</h1>
-{{#with jsonData}}
-
+{{#with jsonData}} --}}
+{{!-- 
 <ul>
     {{#each citiesArray}}
     <li>{{this.name}}</li>
@@ -56,9 +52,9 @@
 </ul>
 
 
-{{/with}}
+{{/with}} --}}
 
-
+{{!-- 
 <h1>Json Data</h1>
 {{#with jsonData}}
   <h1>Message</h1>
@@ -66,4 +62,15 @@
 {{/with}}
 
 <h1>Message</h1>
-<p>{{jsonData.message}}</p>
+<p>{{jsonData.message}}</p> --}}
+
+<script src="js/homePage.js"></script>
+
+<script>
+window.addEventListener("load", function(){
+const citiesDD = document.getElementById("citiesDD");
+populateSelect(citiesDD, citiesArray);
+ updateRegions();
+});
+
+</script>

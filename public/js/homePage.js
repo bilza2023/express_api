@@ -1,7 +1,5 @@
-{
-"message" : "This is from file",
 
-"businessArray" : [
+const businessArray = [
     { "name" : "Plumber"},
     {"name" :  "Electrition"},    
     {"name" :  "Painter"},    
@@ -9,16 +7,11 @@
     {"name" :  "Home-Tution"},    
     {"name" :  "Dentist"},    
     {"name" :  "Lawer"}    
-],
-
-"regionsArray" : [
-    "sadar",
-    "cant",
-    "bahria town"    
-],
+];
 
 
-"citiesArray" : [
+
+const citiesArray = [
     { "id" : 1, "name" : "Karachi"},
     { "id" : 2, "name" : "Lahore" },
     { "id" : 3, "name" : "Faisalabad"},
@@ -69,11 +62,68 @@
     { "id" : 48, "name" : "Jhang Sadar"},
     { "id" : 49, "name" : "Dera Ismail Khan"},
     { "id" : 50, "name" : "Nowshera"}
-]
+];
+
+
+const regionsArray = [
+    { "id" : 1, "name" : "Cant" , cityId : 1},    
+    { "id" : 2, "name" : "Sadar" , cityId : 1},    
+    { "id" : 3, "name" : "Phase-1" , cityId : 1},    
+    { "id" : 4, "name" : "Gulshan-abad" , cityId : 1},    
+    { "id" : 5, "name" : "City" , cityId : 1},    
+    { "id" : 6, "name" : "Main-colony" , cityId : 2},    
+    { "id" : 7, "name" : "Bhains-coloney" , cityId : 2},    
+    { "id" : 8, "name" : "Shadman" , cityId : 2},    
+    { "id" : 9, "name" : "Sadar-link-road" , cityId : 2},    
+    { "id" : 10, "name" : "Maindan" , cityId :2},    
+];
        
 
 
 
 
 
+console.log(citiesArray);
+
+function populateSelect(ddpointer, dataArray) {
+  // remove existing options
+  ddpointer.innerHTML = "";
+  // loop through dataArray
+  for (let i = 0; i < dataArray.length; i++) {
+    // create option element
+    let option = document.createElement("option");
+    // set option text and value
+    option.text = dataArray[i].name;
+    option.value = dataArray[i].id;
+    // add option to select element
+    ddpointer.add(option);
+  }
 }
+
+///////////////
+let citiesDD = document.getElementById("citiesDD");
+citiesDD.addEventListener("change", updateRegions);
+
+function updateRegions() {
+  let citiesDD = document.getElementById("citiesDD");
+  let regionsDD = document.getElementById("regionsDD");
+  // get the selected city id
+  let selectedCityId = citiesDD.value;
+  // remove existing options from regionsDD
+  regionsDD.innerHTML = "";
+  // loop through regionsArray
+  for (let i = 0; i < regionsArray.length; i++) {
+    // check if the region belongs to the selected city
+    if (regionsArray[i].cityId == selectedCityId) {
+      // create option element
+      let option = document.createElement("option");
+      // set option text and value
+      option.text = regionsArray[i].name;
+      option.value = regionsArray[i].id;
+      // add option to regionsDD
+      regionsDD.add(option);
+    }
+  }
+}//update regionsDD
+
+
