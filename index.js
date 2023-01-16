@@ -23,6 +23,7 @@ const signinController = require('./controllers/signinController');
 const homeController = require('./controllers/homeController.js');
 const regionsController = require('./controllers/regionsController.js');
 const businessController = require('./controllers/businessesController');
+const registerbusinessController = require('./controllers/registerbusinessController');
 // const signoutController = require('./controllers/signoutController');
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
@@ -61,7 +62,8 @@ app.get('/superuser', (req, res) => {
 
 
 app.get('/registerbusiness', (req, res) => {
-return res.status(200).render('registerbusiness');
+registerbusinessController(req, res);
+// return res.status(200).send('registerbusiness');
 });
 ////////////////////////////////////////////////////////
 app.get('/signupform', (req, res) => {
