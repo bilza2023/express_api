@@ -7,6 +7,7 @@ const {City,Region}  = require('../database/db');
 ////////////////////////////////////////////////
 const signupController = require('../controllers/signupController');
 const signinController = require('../controllers/signinController');
+const regions_w_business_count_Controller = require('../controllers/regions_w_business_count_Controller');
 const apiRouter = express.Router();
 
 
@@ -53,6 +54,11 @@ signupController(req, res);
 //..
 apiRouter.post('/signin', async (req, res) =>{
 signinController(req, res);
+});
+
+//--
+apiRouter.get('/regions_w_business_count', async (req, res) =>{
+regions_w_business_count_Controller(req, res);
 });
 
 

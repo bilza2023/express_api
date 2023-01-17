@@ -12,6 +12,7 @@ const getBusinessType  = require('./businessTypeModel');
 ////////////////////--database connection--////////////////////////
 const db = new Sequelize(process.env.MYSQL_DATABASENAME,process.env.MYSQL_USER, process.env.MYSQL_PASSWORD,{
 dialect: "mysql",
+logging: false,
 host: "127.0.0.1",
 port: process.env.MYSQL_PORT
 });

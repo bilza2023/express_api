@@ -56,69 +56,65 @@ const citiesArray = [
 ];
 
 
-const regionsArray = [
-    { "id" : 1, "name" : "Cant" , cityId : 1  , 
-    "plumber":396 , 
-    "electrition":336 , 
-    "dentist":66 , 
-    "lawer":65 , 
-    "tutor":546 , 
-    "artist":657 , 
-    "painter":446 
-    },    
+// const regionsArray = [
+//     { "id" : 1, "name" : "Cant" , cityId : 1  , 
+//     "plumber":396 , 
+//     "electrition":336 , 
+//     "dentist":66 , 
+//     "lawer":65 , 
+//     "tutor":546 , 
+//     "artist":657 , 
+//     "painter":446 
+//     },    
 
-    { "id" : 2, "name" : "Sadar" , cityId : 1,
-    "plumber":224 , 
-    "electrition":34 , 
-    "dentist":454 , 
-    "lawer":134 , 
-    "tutor":14 , 
-    "artist":456 , 
-    "painter":33
-    },    
-    { "id" : 3, "name" : "Phase-1" , cityId : 1,
-    "plumber":1233 , 
-    "electrition":533 , 
-    "dentist":88 , 
-    "lawer":443 , 
-    "tutor":43 , 
-    "artist":34 , 
-    "painter":30
-    },    
-    { "id" : 6, "name" : "Main-colony" , cityId : 2,
-    "plumber":88 , 
-    "electrition":45 , 
-    "dentist":25 , 
-    "lawer":44 , 
-    "tutor":54 , 
-    "artist":56 , 
-    "painter":64
-    },    
-    { "id" : 7, "name" : "Bhains-coloney" , cityId : 2,
-    "plumber":34 , 
-    "electrition":54 , 
-    "dentist":98 , 
-    "lawer":43 , 
-    "tutor":433 , 
-    "artist":56 , 
-    "painter":43
-    },    
-    { "id" : 8, "name" : "Shadman" , cityId : 2,
-    "plumber":454 , 
-    "electrition":3002 , 
-    "dentist":12 , 
-    "lawer":22 , 
-    "tutor":55 , 
-    "artist":83 , 
-    "painter":48
-    },    
-];
+//     { "id" : 2, "name" : "Sadar" , cityId : 1,
+//     "plumber":224 , 
+//     "electrition":34 , 
+//     "dentist":454 , 
+//     "lawer":134 , 
+//     "tutor":14 , 
+//     "artist":456 , 
+//     "painter":33
+//     },    
+//     { "id" : 3, "name" : "Phase-1" , cityId : 1,
+//     "plumber":1233 , 
+//     "electrition":533 , 
+//     "dentist":88 , 
+//     "lawer":443 , 
+//     "tutor":43 , 
+//     "artist":34 , 
+//     "painter":30
+//     },    
+//     { "id" : 6, "name" : "Main-colony" , cityId : 2,
+//     "plumber":88 , 
+//     "electrition":45 , 
+//     "dentist":25 , 
+//     "lawer":44 , 
+//     "tutor":54 , 
+//     "artist":56 , 
+//     "painter":64
+//     },    
+//     { "id" : 7, "name" : "Bhains-coloney" , cityId : 2,
+//     "plumber":34 , 
+//     "electrition":54 , 
+//     "dentist":98 , 
+//     "lawer":43 , 
+//     "tutor":433 , 
+//     "artist":56 , 
+//     "painter":43
+//     },    
+//     { "id" : 8, "name" : "Shadman" , cityId : 2,
+//     "plumber":454 , 
+//     "electrition":3002 , 
+//     "dentist":12 , 
+//     "lawer":22 , 
+//     "tutor":55 , 
+//     "artist":83 , 
+//     "painter":48
+//     },    
+// ];
        
-
-
-
-
-console.log(citiesArray);
+// console.log(citiesArray);
 
 function populateSelect(ddpointer, dataArray) {
   // remove existing options
@@ -136,10 +132,8 @@ function populateSelect(ddpointer, dataArray) {
 }
 
 ///////////////
-let citiesDD = document.getElementById("citiesDD");
-citiesDD.addEventListener("change", updateRegions);
 
-function updateRegions() {
+function updateRegions(e , regionsArray) {
   let citiesDD = document.getElementById("citiesDD");
   let regionsDD = document.getElementById("regionsDD");
   // get the selected city id
@@ -159,16 +153,14 @@ function updateRegions() {
       regionsDD.add(option);
     }
   }  
-    updateCards();
+    updateCards( "" ,regionsArray);
 }//update regionsDD
 
 
 
 ////////////////////////////
-document.getElementById("regionsDD").addEventListener("change",
-updateCards);
 
-function updateCards(){
+function updateCards(e, regionsArray){
 const regionId = document.getElementById("regionsDD").value;
     for (let i = 0; i < regionsArray.length; i++) {
         const element = regionsArray[i];
@@ -208,3 +200,26 @@ const regionId = document.getElementById("regionsDD").value;
     }
 // console.log(regionId);
 }
+///////////////////////////////////////////////////
+window.addEventListener("load", async function(){
+try{
+
+const raw = await axios.get('http://localhost/api/regions_w_business_count');
+var regionsArray = raw.data.regions; 
+// console.log(regionsArray);
+//////////////////////////////////////////////
+document.getElementById("citiesDD")
+.addEventListener("change",(event) => updateRegions(event,regionsArray )); 
+//////////////////////////////////////////////
+document.getElementById("regionsDD")
+.addEventListener("change",(event) => updateCards(event,regionsArray ));
+
+//////////////////////////////////////////////
+populateSelect(citiesDD, citiesArray);
+ updateRegions( "" ,regionsArray);
+
+}catch(err){
+console.log("failed to load data");
+}
+
+});
