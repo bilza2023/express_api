@@ -17,6 +17,8 @@ const apiRouter = require('./routes/apiRouter');
 const pagesRouter = require('./routes/pagesRouter');
 const devRouter = require('./routes/pagesRouter');
 
+const {sqliteDb,BusinessType} = require('./sqliteDb/sqliteDb');
+
 // const regionsController = require('./controllers/regionsController');
 
 // const businessController = require('./controllers/businessesController');
@@ -55,10 +57,36 @@ app.set('views', path.join(__dirname, 'views'));
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
+app.get('/sqliteMigrate', async (req, res) =>{
+// await BusinessType.destroy({where:{}});
+await BusinessType.truncate({ cascade: true });
+
+const data = [
+    {id:1, name : "plumber"},
+    {id:2, name : "electrition"},
+    {id:3, name : "tutor"},
+];
+await BusinessType.bulkCreate(data);
+res.status(200).json({"message": "Sqlite migration Success"});
+});
+
+app.get('/sqlite', async (req, res) =>{
+
+const BusinessTypeSeq = await    BusinessType.findAll({where: {}});
+const BusinessTypes = BusinessTypeSeq.map(r => r.toJSON());
+
+res.status(200).json({BusinessTypes});
+});
+
 app.get('/migration', async (req, res) =>{
 migration().then(()=>{
 res.status(200).json({"message": "DB migration Success"});
 });
+});
+
+
+app.get('/tailwind',  (req, res) =>{
+res.status(200).render('tailwind');
 });
 
 
