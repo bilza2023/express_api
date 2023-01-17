@@ -1,7 +1,7 @@
 const express = require('express');
 // const Model = require('../database/baseModal');
 const {City,Region}  = require('../database/db');
-const migration = require('../database/migration.js');
+// const migration = require('../database/migration.js');
 
 ////////////////////////////////////////////////
 // const model = new Model("bilzaDb","users");
@@ -26,7 +26,7 @@ res.status(200).json({"message": "DB migration Success"});
 });
 
 
-app.get('/checklogin', async (req, res) =>{
+devRouter.get('/checklogin', async (req, res) =>{
 const accessToken = req.cookies.accessToken;
 jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
   if (err) {

@@ -12,7 +12,7 @@ const path = require('path');
 // const multer = require('multer');
 
 const PORT = process.env.PORT || 80;
-
+const migration = require('./database/migration.js');
 const apiRouter = require('./routes/apiRouter');
 const pagesRouter = require('./routes/pagesRouter');
 const devRouter = require('./routes/pagesRouter');
@@ -55,9 +55,12 @@ app.set('views', path.join(__dirname, 'views'));
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
-// app.post('/signup', async (req, res) =>{
-// signupController(req, res);
-// });
+app.get('/migration', async (req, res) =>{
+migration().then(()=>{
+res.status(200).json({"message": "DB migration Success"});
+});
+});
+
 
 
 app.get('/superuser', (req, res) => {
