@@ -7,6 +7,25 @@
 <br/>
 <h1 class="p-2 m-2 mx-auto bg-slate-500 text-white">Register Your Business</h1>
 
+<ol>
+{{#each regions}}
+    <li> id:{{this.id}} name:{{this.name}} cityId:{{cityId}}</li>
+  {{/each}}
+</ol>
+
+
+{{verify.email}}
+<h2>Cities</h2>
+
+<select id="citiesDD">
+  {{#each cities}}
+    <option value="{{this.id}}">{{this.name}}</option>
+  {{/each}}
+</select>
+
+<hr/>
+<div id="hidden" class="hidden" data-regions = "{{regions}}"></div>
+
 <h2>Regions</h2>
 <select id="regionsDD">
   {{#each regions}}
