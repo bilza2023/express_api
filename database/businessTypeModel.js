@@ -9,7 +9,7 @@ const BusinessType = db.define('businessTypes',
     primaryKey : true,
 
     },
-  type : {
+  name : {
     type : DataTypes.STRING,
     allowNull : false,
     },

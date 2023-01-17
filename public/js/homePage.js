@@ -1,12 +1,8 @@
 
 function populateSelect(ddpointer, dataArray) {
-  // remove existing options
   ddpointer.innerHTML = "";
-  // loop through dataArray
   for (let i = 0; i < dataArray.length; i++) {
-    // create option element
     let option = document.createElement("option");
-    // set option text and value
     option.text = dataArray[i].name;
     option.value = dataArray[i].id;
     // add option to select element
@@ -67,6 +63,7 @@ const regionId = document.getElementById("regionsDD").value;
     }
 // console.log(regionId);
 }
+
 ///////////////////////////////////////////////////
 window.addEventListener("load", async function(){
 try{

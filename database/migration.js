@@ -34,9 +34,9 @@ await User.bulkCreate(data);
 
 const createBusinessTypes = async ()=>{
 const data = [
-    {id : 1 , type : "plumber"},
-    {id : 2 , type : "electrition"},
-    {id : 3 , type : "tutor"},
+    {id : 1 , name : "plumber"},
+    {id : 2 , name : "electrition"},
+    {id : 3 , name : "tutor"},
     // {id : 4 , type : "mali"},
     // {id : 5 , type : "mason"},
     // {id : 6 , type : "steel-works"},

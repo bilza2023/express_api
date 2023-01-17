@@ -1,9 +1,6 @@
 const express = require('express');
-// const Model = require('../database/baseModal');
-const {City,Region}  = require('../database/db');
 
-const signupController = require('../controllers/signupController');
-const signinController = require('../controllers/signinController');
+
 const homeController = require('../controllers/homeController');
 const cookieParser = require('cookie-parser');
 ////////////////////////////////////////////////

@@ -5,33 +5,52 @@
 <br/>
 <br/>
 <br/>
-<h1 class="p-2 m-2 mx-auto bg-slate-500 text-white">Register Your Business</h1>
 
-<ol>
-{{#each regions}}
-    <li> id:{{this.id}} name:{{this.name}} cityId:{{cityId}}</li>
-  {{/each}}
-</ol>
+<div class="bg-blue-500 text-center py-4 w-80 mx-auto text-white font-bold">
+  Register Your Business
+</div>
+<br>
+<br>
 
 
-{{verify.email}}
-<h2>Cities</h2>
+<div class="bg-blue-700 flex justify-center  text-white px-4 py-2">
+{{> homeSearchNavCities}} &nbsp;&nbsp;
+{{> homeSearchNavRegions}}&nbsp;&nbsp;
+</div>
 
-<select id="citiesDD">
-  {{#each cities}}
-    <option value="{{this.id}}">{{this.name}}</option>
-  {{/each}}
-</select>
+<br>
 
-<hr/>
-<div id="hidden" class="hidden" data-regions = "{{regions}}"></div>
+<div class="bg-blue-700 flex justify-center  text-white px-4 py-2">
+{{> selectBusinessTypes}} &nbsp;&nbsp;
+</div>
 
-<h2>Regions</h2>
-<select id="regionsDD">
-  {{#each regions}}
-    <option value="{{this.id}}">{{this.name}}</option>
-  {{/each}}
-</select>
+<br/>
+<br/>
+
+<div class="w-full h-full flex items-center justify-center">
+  <table class="w-4/5 rounded-lg bg-blue-900">
+    <tr class="p-4 m-4">
+      <td class="font-bold  text-white">Business Name :</td>
+      <td><input id="nameInput" class="border-2 rounded-lg p-2" type="text" name="business-name" value="Great Business"></td>
+
+
+    </tr>
+    
+    <tr class="p-8 m-8">
+      <td class="font-bold  text-white">Mobile Number :</td>
+      <td><input id="numberInput"  class="border-2 rounded-lg p-2" type="text" name="mobile-number"value="123456789" ></td>
+    </tr>
+    
+    <tr class="p-8 m-8">
+      <td class="font-bold  text-white">Description of the Business :</td>
+      <td><input id="descriptionInput"  class="border-2 rounded-lg p-2" type="text" name="description" value="Great Business...."></td>
+    </tr>
+    
+    <tr class="p-4 m-8">
+      <td colspan="2" class="mx-auto"><input id="registerBusiness" class="bg-blue-500 rounded-lg text-white p-2" type="button" value="Register Business"></td>
+    </tr>
+  </table>
+</div>
 
 <script src="js/registerbusiness.js"></script>
 
