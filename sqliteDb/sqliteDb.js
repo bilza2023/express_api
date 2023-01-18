@@ -42,7 +42,6 @@ console.log("=======> Sqlite Db is running");
 });
 
 
-
 //................
 module.exports = {
 sqliteDb,
