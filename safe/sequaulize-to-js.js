@@ -1,1 +1,1 @@
-const businesses = buz.map(business => business.toJSON());
+const businesses = seqItem.map(r => r.toJSON());

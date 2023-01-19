@@ -1,5 +1,5 @@
 require('dotenv').config();
-const  {Region,BusinessType,Business} = require('../database/db.js');
+const  {Region,BusinessType,Business} = require('../database/sqliteDb');
 
 ////////////////////////////////////////////////
 module.exports =  async (req, res ) => {

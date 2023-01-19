@@ -18,19 +18,27 @@ const Region = getRegion( db , DataTypes);
 const City = getCity( db , DataTypes);
 const Business = getBusiness( db , DataTypes);
 const BusinessType = getBusinessType( db , DataTypes);
+
+async function init(){
+await User.sync();
+await Region.sync();
+await City.sync();
+await Business.sync();
+await BusinessType.sync();
 ////////////////////////////////////////////////////
-Business.belongsTo(Region);
-Business.belongsTo(User);
-Business.belongsTo(BusinessType);
+//--not using relationship for now
+// Business.belongsTo(Region);
+// Business.belongsTo(User);
+// Business.belongsTo(BusinessType);
 ///////////////////////////////////////////////////////////////
-
-// const forcedFlag = false;
-// const forcedFlag = true;
-
 db.sync({forced: true})
 .then((result) => {
 console.log("=======> Sqlite Db is running");
 });
+
+}//init ends
+
+init();
 
 
 //................

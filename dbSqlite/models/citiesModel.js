@@ -1,11 +1,12 @@
 
 
-const getProvince =  (db,DataTypes) =>{
+const getCity =  (db,DataTypes) =>{
 
-const Province = db.define('provinces', 
+const City = db.define('cities', 
 {
   id : {
-    type : DataTypes.STRING,
+    type : DataTypes.INTEGER,
+    autoIncrement : true,
     allowNull : false,
     primaryKey : true,
 
@@ -13,7 +14,6 @@ const Province = db.define('provinces',
   name : {
     type : DataTypes.STRING,
     allowNull : false,
-    primaryKey : true,
     },
   description : {
    type : DataTypes.TEXT,
@@ -21,7 +21,7 @@ const Province = db.define('provinces',
   }
 });
  
-return Province;
+return City;
 }
 //------------------------------
-module.exports = getProvince;
+module.exports = getCity;

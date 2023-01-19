@@ -1,5 +1,6 @@
 require('dotenv').config();
-const  {db,User} = require('../database/db.js');
+// const  {db,User} = require('../database/db.js');
+const  {db,User} = require('../database/sqliteDb');
 const jwt = require('jsonwebtoken');
 const isValidEmail = require("./util/isValidEmail");
 const bcrypt = require('bcrypt');

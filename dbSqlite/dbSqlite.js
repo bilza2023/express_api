@@ -2,25 +2,25 @@ const {Sequelize,DataTypes} =  require('sequelize');
 const sqlite = require('sqlite3').verbose();
 //-----------------------------------------------
 
-const getUser = require('../models/userModel.js');
-const getRegion = require('../models/regionModel.js');
-const getCity = require('../models/citiesModel.js');
-const getBusiness = require('../models/businessModel');
-const getBusinessType  = require('../models/businessTypeModel');
+const getUser = require('./models/userModel');
+const getRegion = require('./models/regionModel.js');
+const getCity = require('./models/citiesModel.js');
+const getBusiness = require('./models/businessModel');
+const getBusinessType  = require('./models/businessTypeModel');
 
 ////////////////////--database connection--////////////////////////
 const db = new Sequelize({
     dialect: "sqlite",
     storage: 'fill4Sqlite.sqlite',
-    logging: true,
+    logging: false,
 });
 
 ////////////////////--user model--////////////////////////
-const User = getUser( db , DataTypes);
-const Region = getRegion( db , DataTypes);
-const City = getCity( db , DataTypes);
-const Business = getBusiness( db , DataTypes);
-const BusinessType = getBusinessType( db , DataTypes);
+const UserSeq = getUser( db , DataTypes);
+const RegionSeq = getRegion( db , DataTypes);
+const CitySeq = getCity( db , DataTypes);
+const BusinessSeq = getBusiness( db , DataTypes);
+const BusinessTypeSeq = getBusinessType( db , DataTypes);
 
 
 ////////////////////////////////////////////////////
@@ -46,10 +46,10 @@ throw new Error( "sqlite failure",err);
 //................
 module.exports = {
 db,
-User,
-City,
-Region,
-Business,
-BusinessType
+UserSeq,
+CitySeq,
+RegionSeq,
+BusinessSeq,
+BusinessTypeSeq
 }
 

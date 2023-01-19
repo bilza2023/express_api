@@ -27,7 +27,8 @@ pagesRouter.get('/signout', async (req, res) =>{
 res.cookie(`accessToken`, "" );
 return res.status(200).render('index',{"login":false});
 });
-//-------------------------------------------------------
+
+
 ////////////////////////////////////////////////////////
 module.exports = pagesRouter;
 

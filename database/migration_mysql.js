@@ -1,5 +1,5 @@
-// const  {db,User,City,Region,Business,BusinessType} = require('../database/db.js');
-const  {db,User,City,Region,Business,BusinessType} = require('../database/sqliteDb');
+const  {db,User,City,Region,Business,BusinessType} = require('./db.js');
+// const  {db,User,City,Region,Business,BusinessType} = require('../database/sqliteDb');
 const {Sequelize} =  require('sequelize');
 /////////////////--migrations--------------------------------
 

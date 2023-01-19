@@ -1,5 +1,5 @@
-
-const migration = async ()=>{
+const {User,Region,City,Business,BusinessType} = require('./sqliteDb');
+module.exports = async ()=>{
 
 //////////////////--createProvinces--////////////////////////////////
 const createUsers = async ()=>{
@@ -34,10 +34,10 @@ await BusinessType.bulkCreate(data);
 }
 const createBusiness = async ()=>{
 const data = [
-{id : 1 , name : "great business" ,number: "3483" , regionId:1, businessTypeId:1},
-{id : 2 , name : "business" ,number: "54641" , regionId:1, businessTypeId:2},
-{id : 3 , name : "business great" ,number: "321321" , regionId:1, businessTypeId:3},
-{id : 4 , name : "great great business" ,number: "987654" , regionId:1, businessTypeId:1},
+{id : 1 , userId:1, name : "great business" ,number: "3483" , regionId:1, businessTypeId:1 },
+{id : 2 ,  userId:1, name : "business" ,number: "54641" , regionId:1, businessTypeId:2},
+{id : 3 , userId:1, name : "business great" ,number: "321321" , regionId:1, businessTypeId:3},
+{id : 4 , userId:1, name : "great great business" ,number: "987654" , regionId:1, businessTypeId:1},
 
 ];
 
@@ -106,10 +106,10 @@ await City.bulkCreate(citiesData);
 }
 const createRegions = async () => {
   const regionsData = [
-  { id: 1, name: 'Rawalpindi-region1', cityId: 1 },
-  { id: 2, name: 'Rawalpindi-region2', cityId: 1 },
-  { id: 3, name: 'Islamabad-region1', cityId: 2 },
-  { id: 4, name: 'Islamabad-region2', cityId: 2 },
+  { id: 1, name: 'Islamabad-region1', cityId: 1 },
+  { id: 2, name: 'Islamabad-region2', cityId: 1 },
+  { id: 3, name: 'Rawalpindi-region1', cityId: 2 },
+  { id: 4, name: 'Rawalpindi-region2', cityId: 2 },
   { id: 5, name: 'Faisalabad-region1', cityId: 3 },
   { id: 6, name: 'Faisalabad-region2', cityId: 3 },
   { id: 7, name: 'Rawalpindi-region1', cityId: 4 },
@@ -217,7 +217,7 @@ await Region.destroy({where:{}});
 
 await BusinessType.destroy({where:{}});
 await Business.destroy({where:{}});
-//------------------------------------------
+// ------------------------------------------
 await createUsers();
 await createCities();
 await createRegions();

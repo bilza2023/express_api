@@ -1,14 +1,13 @@
 
-
-const getRegion =  (db,DataTypes) =>{
-
-const Region = db.define('regions', 
-{
+const getBusinessType =  (db,DataTypes) =>{
+const BusinessType = db.define('businessTypes', 
+  {
   id : {
     type : DataTypes.INTEGER,
     autoIncrement : true,
     allowNull : false,
     primaryKey : true,
+
     },
   name : {
     type : DataTypes.STRING,
@@ -17,15 +16,12 @@ const Region = db.define('regions',
   description : {
    type : DataTypes.TEXT,
    allowNull : true,
-  },
-  cityId : {
-    type : DataTypes.INTEGER,
-    allowNull : false,
   }
 
 });
  
-return Region;
+return BusinessType;
 }
 //------------------------------
-module.exports = getRegion;
+
+module.exports = getBusinessType;

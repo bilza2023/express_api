@@ -1,12 +1,13 @@
 const express = require('express');
 // const Model = require('../database/baseModal');
-const {City,Region,BusinessType,Business}  = require('../database/db');
+const {City,Region,BusinessType,Business}  = require('../database/sqliteDb');
 
 ////////////////////////////////////////////////
 // const model = new Model("bilzaDb","users");
 ////////////////////////////////////////////////
 const signupController = require('../controllers/signupController');
 const signinController = require('../controllers/signinController');
+
 const regions_w_business_count_Controller = require('../controllers/regions_w_business_count_Controller');
 const apiRouter = express.Router();
 
@@ -85,7 +86,7 @@ const regionId = body.regionId;
 const businessTypeId = body.businessTypeId;
 const data =  { name ,number , description,regionId, businessTypeId};
 
-console.log(data);
+// console.log(data);
 
 const business = await Business.create(data,{
   include: [Region, BusinessType]
