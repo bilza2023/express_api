@@ -1,8 +1,5 @@
 
-const {UserSeq} = require('../dbSqlite');
-
-/////////////////////////////////////////
-class User {
+class Table {
 
 constructor(sequalizeModel){
 this.seqTable = sequalizeModel; 
@@ -23,7 +20,7 @@ async  read(id) {
   try {
     const seqItem = await this.seqTable.findByPk(id );
     if (seqItem) {
-      const item = seqItem.map(r => r.toJSON());  
+      const item = seqItem.toJSON();  
       return item;
     } else {
       return false;
@@ -70,38 +67,21 @@ async  readAll() {
     console.error(`Failed to fetch items. Error: ${error}`);
   }
 }
+//------------------READ ALL-----------------------------
+async where(data) {
+  try {
+    const seqItems = await this.seqTable.findAll({ where: data });
+    if (seqItems) {
+      const items = seqItems.map(r => r.toJSON());
+      return items;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(`Failed to fetch items with provided args. Error: ${error}`);
+  }
+}//--where
 }//--user class ends
 
-//-------font end
-////////////////////////////////////
-const user = new User(UserSeq);
 
-async function useCreate(data){
-await user.create(data);
-}
-// useCreate({name:"ddd" , password:"876543234567" , email:"user@example.com"});
-
-async function useUpdate(id,data){
-await user.update(id,data);
-}
-// useUpdate(1,{name:"ddd" , password:"876543234567" , email:"user@example.com"});
-
-async function useRead(id){
-const u  = await user.read(id);
-// console.log(u);
-}
-// useRead(1);
-
-async function useDel(id){
-const u  = await user.del(id);
-// console.log(u);
-}
-// useDel(1);
-
-
-//--
-async function useReadAll(){
-const u  =  await user.readAll();
-console.table(u);
-}
-useReadAll();
+module.exports = Table;
