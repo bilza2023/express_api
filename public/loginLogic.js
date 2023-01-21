@@ -13,7 +13,7 @@ if (rez.status == false){throw new Error(rez.message)};
 
 //////////////////////////////////////////////////////////
 // ////////////////---axios////////////////
-axios.post('http://localhost/api/signin', {email,password})
+axios.post('http://localhost/signin', {email,password})
 .then(function (response) {
 // console.log(response);
   // alert(response.data.message);

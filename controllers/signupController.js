@@ -8,6 +8,7 @@ const isValidEmail = require("./util/isValidEmail");
 module.exports =  async (req, res ) => {
 // return res.status(200).json({"message":"success"});
 try{
+console.log("reached");
 const email = req.body.email;
 const password = req.body.password;
 //--
@@ -37,7 +38,6 @@ const hasedPassword = await bcrypt.hash(password, 2);
   await User.create(userObj);
 
  return res.status(201).redirect("/loginform");
-        // return res.status(201).json({  accessToken , email, password,hasedPassword, "message" : "account created successfully" });
 
 }//try end
 
@@ -70,9 +70,6 @@ const isValidPassword =(password)=> {
     }
     return { status: true, message: "Password is valid" }
 }
-
-
-
 
 //--to remove every thing from a table
 // db.User.destroy({

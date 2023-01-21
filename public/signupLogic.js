@@ -13,7 +13,7 @@ if (rez.status == false){throw new Error(rez.message)};
 if (!(password2 === password)) {throw new Error('both the password strings need to be identical');}
 //////////////////////////////////////////////////////////
 // ////////////////---axios////////////////
-axios.post('http://localhost/api/signup', {email,password})
+axios.post('http://localhost/signup', {email,password})
 .then(function (response) {
   // alert(response.data.message);
    window.location.href = 'http://localhost/loginform'; //Here's my redirect - the router is listening for this route and will render accordingly

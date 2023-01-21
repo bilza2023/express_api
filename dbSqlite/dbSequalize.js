@@ -11,7 +11,7 @@ const getBusinessType  = require('./models/businessTypeModel');
 ////////////////////--database connection--////////////////////////
 const db = new Sequelize({
     dialect: "sqlite",
-    storage: './dbSqlite/fill4Sqlite.sqlite', // this path is from root
+    storage: 'fill4Sqlite.sqlite', // this path is from root
     logging: false,
 });
 

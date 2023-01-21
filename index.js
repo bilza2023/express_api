@@ -49,7 +49,6 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 /////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
 ///////////////////////////Routes////////////////////////
 
 /**
@@ -67,12 +66,6 @@ app.set('views', path.join(__dirname, 'views'));
 ---------------------
 10.create region
  */
-
-
-
-// app.get('/superuser', (req, res) => {
-//     superuserController(req, res);
-// });
 
 
 // app.get('/registerbusiness', (req, res) => {

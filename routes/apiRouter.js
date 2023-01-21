@@ -41,12 +41,11 @@ res.status(200).json({cities,regions,BusinessType : BTp});
 
 apiRouter.get("/get_cities" , async function(req,res) {
 const cities = await    City.findAll();
-console.log(cities);
+// console.log(cities);
 res.status(200).json(cities);
 });
 
 apiRouter.get("/get_regions" , async function(req,res) {
-
 const regions = await    Region.findAll();
 console.log(regions);
 res.status(200).json({regions });

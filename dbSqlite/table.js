@@ -129,6 +129,18 @@ async bulkCreate(data) {
     console.error(`Failed to bulkCreate. Error: ${error}`);
   }
 }//--count
+async findOne(data) {
+  try {
+    const seqItems = await this.seqTable.findOne({where: data});
+    if (seqItems) {
+      return seqItems;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(`Failed to findOne. Error: ${error}`);
+  }
+}//--count
 }//--user class ends
 
 
