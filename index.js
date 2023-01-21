@@ -68,11 +68,6 @@ app.set('views', path.join(__dirname, 'views'));
 10.create region
  */
 
-// app.get("/get_regions" , async function(req,res) {
-// const regions = await    Region.findAll();
-// // console.log(regions);
-// return res.status(200).json({regions });
-// });
 
 
 // app.get('/superuser', (req, res) => {

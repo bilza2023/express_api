@@ -68,7 +68,7 @@ const regionId = document.getElementById("regionsDD").value;
 window.addEventListener("load", async function(){
 try{
 const rawCities = await axios.get('http://localhost/api/get_cities');
- var citiesArray = rawCities.data.cities;
+ var citiesArray = rawCities.data;
  
 const raw = await axios.get('http://localhost/api/regions_w_business_count');
 var regionsArray = raw.data.regions; 

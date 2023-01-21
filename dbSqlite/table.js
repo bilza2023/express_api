@@ -105,6 +105,18 @@ async destroyWhere(data) {
     console.error(`Failed to destroy. Error: ${error}`);
   }
 }//--where
+async count(data) {
+  try {
+    const seqItems = await  this.seqTable.count(`{ where: ${data} }`);
+    if (seqItems) {
+      return seqItems;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(`Failed to count. Error: ${error}`);
+  }
+}//--where
 async bulkCreate(data) {
   try {
     const seqItems = await this.seqTable.bulkCreate(data);
@@ -116,7 +128,7 @@ async bulkCreate(data) {
   } catch (error) {
     console.error(`Failed to bulkCreate. Error: ${error}`);
   }
-}//--where
+}//--count
 }//--user class ends
 
 
