@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const  {Region,City} = require('../database/db.js');
+const  {Region,City} = require('../dbSqlite/dbSqlite');
 ////////////////////////////////////////////////
 module.exports =  async (req, res ) => {
 

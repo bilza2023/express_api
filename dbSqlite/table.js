@@ -81,6 +81,42 @@ async where(data) {
     console.error(`Failed to fetch items with provided args. Error: ${error}`);
   }
 }//--where
+async destroy() {
+  try {
+    const seqItems = await this.seqTable.destroy({where:{}});
+    if (seqItems) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(`Failed to destroy. Error: ${error}`);
+  }
+}//--where
+async destroyWhere(data) {
+  try {
+    const seqItems = await this.seqTable.destroy({where:data});
+    if (seqItems) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(`Failed to destroy. Error: ${error}`);
+  }
+}//--where
+async bulkCreate(data) {
+  try {
+    const seqItems = await this.seqTable.bulkCreate(data);
+    if (seqItems) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(`Failed to bulkCreate. Error: ${error}`);
+  }
+}//--where
 }//--user class ends
 
 

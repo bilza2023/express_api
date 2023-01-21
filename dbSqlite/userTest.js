@@ -26,7 +26,7 @@ console.log("Del Operation ===>>>" , u);
 
 //--
 async function useReadAll(){
-const u  =  await User.readAll();
+const u  =  await User.findAll();
 console.table(u);
 }
 useReadAll();

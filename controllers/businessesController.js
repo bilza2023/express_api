@@ -1,5 +1,5 @@
 require('dotenv').config();
-const  {Business } = require('../database/db.js');
+const  {Business } = require('../dbSqlite/dbSqlite');
 //-----------------------------------
 ////////////////////////////////////////////////
 module.exports =  async (req, res ) => {

@@ -20,6 +20,8 @@ const loginRouter = require('./routes/loginRouter');
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const {Region} = require('./dbSqlite/dbSqlite');
+
 ////////////////////////////////////////////////////
 const app = express()
 
@@ -66,10 +68,11 @@ app.set('views', path.join(__dirname, 'views'));
 10.create region
  */
 
-app.get('/tailwind',  (req, res) =>{
-res.status(200).render('tailwind');
-});
-
+// app.get("/get_regions" , async function(req,res) {
+// const regions = await    Region.findAll();
+// // console.log(regions);
+// return res.status(200).json({regions });
+// });
 
 
 // app.get('/superuser', (req, res) => {
