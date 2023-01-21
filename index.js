@@ -13,9 +13,9 @@ const path = require('path');
 const PORT = process.env.PORT || 80;
 const apiRouter = require('./routes/apiRouter');
 const pagesRouter = require('./routes/pagesRouter');
+const loginRouter = require('./routes/loginRouter');
 // const devRouter = require('./routes/devRouter');
 
-// const registerbusinessController = require('./controllers/registerbusinessController');
 
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
@@ -30,6 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //.. Route middlewares--/////////////////////////////////////
 app.use("/",pagesRouter);
+app.use("/",loginRouter);
 app.use("/api",apiRouter);
 // app.use("/dev",devRouter);
 
@@ -47,7 +48,23 @@ app.set('views', path.join(__dirname, 'views'));
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
+///////////////////////////Routes////////////////////////
+
+/**
+    //--login-routes
+1.register (form and process)
+2.login (form and process)
+3.logout (process)
+
+4.register_business (form and process)
+6.Search Businesses - home page (form ,process , hydration)
+7.Businesses - list page (form/page)
+8.Businesses -individual page (form/page)
+5.Edit business
+9.edit user profile.
+---------------------
+10.create region
+ */
 
 app.get('/tailwind',  (req, res) =>{
 res.status(200).render('tailwind');

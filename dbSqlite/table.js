@@ -53,7 +53,7 @@ async  del(id) {
   }
 }
 //------------------READ ALL-----------------------------
-async  readAll() {
+async  findAll() {
   try {
     const seqItem = await this.seqTable.findAll();
     if (seqItem) {

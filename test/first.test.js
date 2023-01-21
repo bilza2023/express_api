@@ -10,7 +10,7 @@ function sum(a, b) {
 //-------------------------------------
 describe("Filter function", () => {
 
-test("it should filter by a search term (link)", () => {
+test("--", () => {
     expect(sum(2,2)).toEqual(4);
 });
 
