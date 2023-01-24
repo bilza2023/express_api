@@ -67,11 +67,6 @@ app.set('views', path.join(__dirname, 'views'));
 10.create region
  */
 
-
-// app.get('/registerbusiness', (req, res) => {
-// registerbusinessController(req, res);
-// // return res.status(200).send('registerbusiness');
-// });
 ////////////////////////////////////////////////////////
 
 app.listen(PORT, ()=>{console.log(`listening on port ${PORT}`)});

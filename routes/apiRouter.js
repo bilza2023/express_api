@@ -27,14 +27,14 @@ res.status(200).json({cities,regions });
 });
 
 apiRouter.get("/get_cities_regions_BusinessTypes" , async function(req,res) {
-const citiesSeq = await    City.findAll({where: {}});
-const cities = citiesSeq.map(r => r.toJSON());
+const cities = await    City.findAll( );
+// const cities = citiesSeq.map(r => r.toJSON());
 
-const regionSeq = await    Region.findAll({where: {}});
-const regions = regionSeq.map(r => r.toJSON());
+const regions = await    Region.findAll( );
+// const regions = regionSeq.map(r => r.toJSON());
 
-const BusinessTypeSeq = await  BusinessType.findAll({where: {}});
-const BTp = BusinessTypeSeq.map(r => r.toJSON());
+const BTp = await  BusinessType.findAll( );
+// const BTp = BusinessTypeSeq.map(r => r.toJSON());
 
 res.status(200).json({cities,regions,BusinessType : BTp});
 });
@@ -65,13 +65,11 @@ const number = body.number;
 const description = body.description;
 const regionId = body.regionId;
 const businessTypeId = body.businessTypeId;
-const data =  { name ,number , description,regionId, businessTypeId};
+const data =  { name ,number , description,regionId, businessTypeId, userId:1};
 
 // console.log(data);
 
-const business = await Business.create(data,{
-  include: [Region, BusinessType]
-});
+const business = await Business.create(data);
 });
 
 

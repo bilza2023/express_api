@@ -1,5 +1,5 @@
 const express = require('express');
-
+const registerbusinessController = require('../controllers/registerbusinessController');
 
 const homeController = require('../controllers/homeController');
 const cookieParser = require('cookie-parser');
@@ -14,6 +14,10 @@ homeController(req, res);
 //---------------------------
 });
 
+pagesRouter.get('/registerbusiness', (req, res) => {
+registerbusinessController(req, res);
+// return res.status(200).send('registerbusiness');
+});
 
 ////////////////////////////////////////////////////////
 module.exports = pagesRouter;
