@@ -1,6 +1,6 @@
 const express = require('express');
 const registerbusinessController = require('../controllers/registerbusinessController');
-
+const businessPageController = require('../controllers/businessPageController');
 const homeController = require('../controllers/homeController');
 const cookieParser = require('cookie-parser');
 ////////////////////////////////////////////////
@@ -9,6 +9,10 @@ const pagesRouter = express.Router();
 pagesRouter.use(cookieParser());
 
 
+pagesRouter.get('/businessPage', async (req, res) =>{
+businessPageController( req, res);
+//---------------------------
+});
 pagesRouter.get('/', async (req, res) =>{
 homeController(req, res);
 //---------------------------
