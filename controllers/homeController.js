@@ -9,7 +9,7 @@ try{
 const accessToken = req.cookies.accessToken;
 
 // res.status(200).send("ok");
-jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
+jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
 
   if (err) { //----error----
 return res.status(200).render('index',{"login":false});

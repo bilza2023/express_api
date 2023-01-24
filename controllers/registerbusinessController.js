@@ -13,14 +13,9 @@ return res.status(200).render('loginform');
 }
 
 try{
-// const citiesSeq = await    City.findAll( );
-// const cities = citiesSeq.map(r => r.toJSON());
-
-// const regionSeq = await    Region.findAll( );
-// const regions = regionSeq.map(r => r.toJSON());
-
-// return res.status(200).render("registerbusiness", {regions,cities});
-return res.status(200).render("registerbusiness");
+const cities = await    City.findAll( );
+const regions = await    Region.findAll( );
+return res.status(200).render("registerbusiness", {"login":true,regions,cities});
 
 }catch(e){
 return res.status(400).send('failed to load');

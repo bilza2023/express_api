@@ -1,3 +1,6 @@
+require('dotenv').config();
+
+const jwt = require('jsonwebtoken');
 const express = require('express');
 
 const {City,Region,BusinessType,Business}  = require('../dbSqlite/dbSqlite');
@@ -59,17 +62,26 @@ regions_w_business_count_Controller(req, res);
 
 
 apiRouter.post('/register_new_business', async (req, res) =>{
-const body = req.body;
+
+const accessToken = req.cookies.accessToken;
+jwt.verify(accessToken, process.env.JWT_SECRET, async (err, user) => {
+  if (err) { //----error----
+  // return res.status(200).render('index',{"login":false});
+  } else {
+  const body = req.body;
 const name = body.name;
 const number = body.number;
 const description = body.description;
 const regionId = body.regionId;
 const businessTypeId = body.businessTypeId;
-const data =  { name ,number , description,regionId, businessTypeId, userId:1};
-
+const data =  { name ,number , description,regionId, businessTypeId, userId:user.id};
 // console.log(data);
+await Business.create(data);
+return res.status(200).send("success");
+  // return res.status(200).render('index',{"login":true});
+}
+});
 
-const business = await Business.create(data);
 });
 
 
