@@ -35,8 +35,6 @@ function updateRegions(e , regionsArray) {
     updateCards( "" ,regionsArray);
 }//update regionsDD
 
-
-
 ////////////////////////////
 
 function updateCards(e, regionsArray){

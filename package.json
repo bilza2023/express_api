@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node ./index.js",
     "dev": "nodemon ./index.js",
+    "debug": "nodemon --inspect index.js",
     "sqlite": "nodemon ./sqlite_lab.js",
     "orm": "nodemon ./orm.js",
     "test": "jest",

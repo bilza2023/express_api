@@ -57,11 +57,11 @@ app.set('views', path.join(__dirname, 'views'));
 2.login (form and process)
 3.logout (process)
 
-4.register_business (form and process)
-6.Search Businesses - home page (form ,process , hydration)
-7.Businesses - list page (form/page)
-8.Businesses -individual page (form/page)
-5.Edit business
+4.Search Businesses - home page (form ,process , hydration)
+5.register_business (form and process)
+6.Businesses - list page (form/page)
+7.Businesses -individual page (form/page)
+8.Edit business
 9.edit user profile.
 ---------------------
 10.create region

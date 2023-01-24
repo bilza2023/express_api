@@ -107,7 +107,7 @@ async destroyWhere(data) {
 }//--where
 async count(data) {
   try {
-    const seqItems = await  this.seqTable.count(`{ where: ${data} }`);
+    const seqItems = await  this.seqTable.count(data);
     if (seqItems) {
       return seqItems;
     } else {

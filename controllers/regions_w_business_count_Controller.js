@@ -4,12 +4,8 @@ const  {Region,BusinessType,Business} = require('../dbSqlite/dbSqlite');
 ////////////////////////////////////////////////
 module.exports =  async (req, res ) => {
 const businessTypes = await   BusinessType.findAll({ where: {}});
-// const businessTypes = businessTypesSeq.map(r => r.toJSON());
 
 const regions = await   Region.findAll({ where: {}});
-// const regions = regionsSeq.map(r => r.toJSON());
-
-// const data = [];
 
 for (let i = 0; i < regions.length; i++) {
     const region  = regions [i];
@@ -18,8 +14,10 @@ for (let i = 0; i < regions.length; i++) {
         const businessType = businessTypes[j];
 
         
-        const count = await Business.count({ businessTypeId: businessType.id, regionId: region.id });
-        region[businessType.type] = count;
+        // const count = await Business.count({ businessTypeId: businessType.id, regionId: region.id });
+        const count = await Business.count({ where: { businessTypeId: businessType.id, regionId: region.id } });
+        // console.log(count);
+        region[businessType.name] = count;
         
     }
 // data.push(region);
