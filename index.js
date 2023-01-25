@@ -9,7 +9,7 @@ process.on('uncaughtException', function (err) {
 const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
-   
+const dbComController = require('./controllers/dbComController');   
 const PORT = process.env.PORT || 80;
 const apiRouter = require('./routes/apiRouter');
 const pagesRouter = require('./routes/pagesRouter');
@@ -67,6 +67,10 @@ app.set('views', path.join(__dirname, 'views'));
 10.create region
  */
 
+app.get('/dbtest', async (req, res) =>{
+dbComController( req, res);
+//---------------------------
+});
 ////////////////////////////////////////////////////////
 
 app.listen(PORT, ()=>{console.log(`listening on port ${PORT}`)});

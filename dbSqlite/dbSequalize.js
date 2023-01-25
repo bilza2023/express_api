@@ -1,5 +1,6 @@
 const {Sequelize,DataTypes} =  require('sequelize');
 const sqlite = require('sqlite3').verbose();
+const path = require('path');
 //-----------------------------------------------
 
 const getUser = require('./models/userModel');
@@ -11,10 +12,10 @@ const getBusinessType  = require('./models/businessTypeModel');
 ////////////////////--database connection--////////////////////////
 const db = new Sequelize({
     dialect: "sqlite",
-    storage: 'fill4Sqlite.sqlite', // this path is from root
+    storage: path.join(__dirname, '..', 'fill4Sqlite.sqlite'),
     logging: false,
 });
-
+// console.log("__dirname",path.join(__dirname, '..', 'fill4Sqlite.sqlite'));
 ////////////////////--user model--////////////////////////
 const UserSeq = getUser( db , DataTypes);
 const RegionSeq = getRegion( db , DataTypes);
