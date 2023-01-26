@@ -39,25 +39,25 @@ function updateRegions(e , regionsArray) {
 
 function updateCards(e, regionsArray){
 const regionId = document.getElementById("regionsDD").value;
+const cardsDiv = document.getElementById("cardsDiv");
+cardsDiv.innerHTML = "";
     for (let i = 0; i < regionsArray.length; i++) {
-        const element = regionsArray[i];
-        if (element.id == regionId) {
-        //---------------------
-        const plumberData = document.getElementById("plumberData");
-        plumberData.innerHTML = "";
-        plumberData.innerHTML = `Available ${element.plumber}`;
-        //---------------------
-        const electritionData = document.getElementById("electritionData");
-        electritionData.innerHTML = "";
-        electritionData.innerHTML = `Available ${element.electrition}`;
-        //--------------------- 
-        const hometutorData = document.getElementById("tutorData");
-        hometutorData.innerHTML = "";
-        hometutorData.innerHTML = `Available ${element.tutor}`;
-      
-        
+
+        if (regionsArray[i].id == regionId) {
+        const businessesCountArray = regionsArray[i].businessesCountArray;
+         //---------------------
+        for (let j = 0; j < businessesCountArray.length; j++) {
+          const businessItem = businessesCountArray[j];
+          let newDiv = document.createElement("div");
+          newDiv.setAttribute("class", "w-1/5 md:w-1/3 lg:w-1/5 bg-white rounded-lg shadow-md hover:shadow-lg hover:cursor-pointer border border-gray-300 m-2 p-5");
+
+          newDiv.innerHTML += `<h1>${businessItem.businessTypeName}</h1>`;
+          newDiv.innerHTML += `<h1>Available : ${businessItem.count}</h1>`;
+          newDiv.innerHTML += "</div>";
+          
+          cardsDiv.appendChild(newDiv);
         }
-        
+        }
     }
 // console.log(regionId);
 }
@@ -70,7 +70,7 @@ const rawCities = await axios.get('http://localhost/api/get_cities');
  
 const raw = await axios.get('http://localhost/api/regions_w_business_count');
 var regionsArray = raw.data.regions; 
-// console.log(regionsArray);
+console.log(regionsArray);
 //////////////////////////////////////////////
 document.getElementById("citiesDD")
 .addEventListener("change",(event) => updateRegions(event,regionsArray )); 

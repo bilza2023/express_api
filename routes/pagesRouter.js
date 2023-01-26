@@ -9,12 +9,13 @@ const pagesRouter = express.Router();
 pagesRouter.use(cookieParser());
 
 
-pagesRouter.get('/businessPage', async (req, res) =>{
-businessPageController( req, res);
-//---------------------------
-});
 pagesRouter.get('/', async (req, res) =>{
 homeController(req, res);
+//---------------------------
+});
+
+pagesRouter.get('/businessPage', async (req, res) =>{
+businessPageController( req, res);
 //---------------------------
 });
 

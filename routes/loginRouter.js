@@ -12,10 +12,6 @@ const loginRouter = express.Router();
 loginRouter.use(cookieParser());
 
 
-loginRouter.get('/', async (req, res) =>{
-homeController(req, res);
-//---------------------------
-});
 //---------------------------
 
 loginRouter.post('/signup', async (req, res) =>{

@@ -6,6 +6,7 @@ const express = require('express');
 const {City,Region,BusinessType,Business}  = require('../dbSqlite/dbSqlite');
 
 const regions_w_business_count_Controller = require('../controllers/regions_w_business_count_Controller');
+const areas_businesses_count = require('../dbCom/areas_businesses_count/areas_businesses_count');
 const apiRouter = express.Router();
 
 /////////////////////////////////////////////////
@@ -57,7 +58,11 @@ res.status(200).json({regions });
 
 //--
 apiRouter.get('/regions_w_business_count', async (req, res) =>{
-regions_w_business_count_Controller(req, res);
+// regions_w_business_count_Controller(req, res);
+
+const regions =await areas_businesses_count();
+res.status(200).json({regions});
+
 });
 
 
