@@ -9,6 +9,10 @@ const bcrypt = require('bcrypt');
 ////////////////////////////////////////////////
 module.exports =  async (req, res ) => {
 try{
+// const cookies = req.cookies;
+    // console.log(cookies);
+// res.status(200).json(cookies);    
+
 const selectedRegionId = req.cookies.selectedRegionId;
 const selectedBusinessTypeId = req.cookies.selectedBusinessTypeId;
 // const businesses = Business.where({});

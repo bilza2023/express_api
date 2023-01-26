@@ -71,6 +71,12 @@ app.get('/dbtest', async (req, res) =>{
 dbComController( req, res);
 //---------------------------
 });
+// app.get('/test', async (req, res) =>{
+//  const cookies = req.cookies;
+//     console.log(cookies);
+// res.status(200).json(cookies);    
+// //---------------------------
+// });
 ////////////////////////////////////////////////////////
 
 app.listen(PORT, ()=>{console.log(`listening on port ${PORT}`)});
