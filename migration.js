@@ -1,4 +1,4 @@
-const {User,Region,City,Business,BusinessType} = require('./dbSqlite/dbSqlite');
+const {UserSeq,RegionSeq,CitySeq,BusinessSeq,BusinessTypeSeq} = require('./dbSqlite/dbSequalize');
 
 
 const createUsers = async ()=>{
@@ -7,26 +7,16 @@ const data = [
   {id : 1 , email : "super@user.com" , password  ,accountType : "superuser"},
   {id : 2 , email : "user@gmail.com" , password },
 ];
-await User.bulkCreate(data);
+await UserSeq.bulkCreate(data);
 }
 const createBusinessTypes = async ()=>{
 const data = [
     {id : 1 , name : "plumber"},
     {id : 2 , name : "electrition"},
     {id : 3 , name : "tutor"},
-    // {id : 4 , type : "mali"},
-    // {id : 5 , type : "mason"},
-    // {id : 6 , type : "steel-works"},
-    // {id : 7 , type : "glass-works"},
-    // {id : 8 , type : "water-tank-cleaning"},
-    // {id : 9 , type : "dry-cleaning"},
-    // {id :10 , type : "water-filter-plant"},
-    // {id :11 , type : "medical-store"},
-    // {id :12 , type : "bakery"},
-    // {id :13 , type : "general-store"},
-    // {id :14 , type : "mobile-shop"},
+    {id : 4 , name : "mali"},
 ];
-await BusinessType.bulkCreate(data);
+await BusinessTypeSeq.bulkCreate(data);
 }
 const createBusiness = async ()=>{
 const data = [
@@ -38,7 +28,7 @@ const data = [
 ];
 
 // await Business.bulkCreate(data);
-const business = await Business.bulkCreate(data,{
+const business = await BusinessSeq.bulkCreate(data,{
   include: [Region, BusinessType]
 });
 
@@ -98,7 +88,7 @@ const citiesData = [
 
 //--add more cities here with care
 ];
-await City.bulkCreate(citiesData);
+await CitySeq.bulkCreate(citiesData);
 }
 const createRegions = async () => {
   const regionsData = [
@@ -204,23 +194,23 @@ const createRegions = async () => {
   // { id: 100, name: 'Nowshera-region2', cityId: 50 }
 ];
 
-await Region.bulkCreate(regionsData);
+await RegionSeq.bulkCreate(regionsData);
 }
 
 
 async function migration(){
-await User.destroy({where:{}});
-await City.destroy({where:{}});
-await Region.destroy({where:{}});
+// await UserSeq.destroy({where:{}});
+// await CitySeq.destroy({where:{}});
+// await RegionSeq.destroy({where:{}});
 
-await BusinessType.destroy({where:{}});
-await Business.destroy({where:{}});
+await BusinessTypeSeq.destroy({where:{}});
+// await BusinessSeq.destroy({where:{}});
 // ------------------------------------------
-await createUsers();
-await createCities();
-await createRegions();
+// await createUsers();
+// await createCities();
+// await createRegions();
 await createBusinessTypes();
-await createBusiness();
+// await createBusiness();
 }
 
 migration();

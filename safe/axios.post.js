@@ -1,3 +1,4 @@
+
 axios.post('http://localhost/api/signup', {email,password})
 .then(function (response) {
   // alert(response.data.message);

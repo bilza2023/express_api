@@ -51,12 +51,9 @@ cardsDiv.innerHTML = "";
           let newDiv = document.createElement("div");
           newDiv.setAttribute("class", "actionBtn w-1/5 md:w-1/3 lg:w-1/5 bg-white rounded-lg shadow-md hover:shadow-lg hover:cursor-pointer border border-gray-300 m-2 p-5");
         
-        // data-selectedBusinessId=''
-        // newDiv.setAttribute("data-selectedBusinessTypeId", `${businessItem.businessTypeId}`);
-        
         newDiv.addEventListener("click", function() {
-        const selectedBusinessId = this.getAttribute("data-selectedBusinessId");
-
+        // const selectedBusinessId = this.getAttribute("data-selectedBusinessId");
+ 
         document.cookie = `selectedBusinessTypeId=${businessItem.businessTypeId}`;
         document.cookie = `selectedRegionId=${regionId}`;
         // console.log("selectedBusinessId", selectedBusinessId);
@@ -92,7 +89,7 @@ const rawCities = await axios.get('http://localhost/api/get_cities');
  
 const raw = await axios.get('http://localhost/api/regions_w_business_count');
 var regionsArray = raw.data.regions; 
-console.log(regionsArray);
+// console.log(regionsArray);
 //////////////////////////////////////////////
 document.getElementById("citiesDD")
 .addEventListener("change",(event) => updateRegions(event,regionsArray )); 

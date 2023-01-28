@@ -14,13 +14,13 @@ const PORT = process.env.PORT || 80;
 const apiRouter = require('./routes/apiRouter');
 const pagesRouter = require('./routes/pagesRouter');
 const loginRouter = require('./routes/loginRouter');
-// const devRouter = require('./routes/devRouter');
+const devRouter = require('./routes/devRouter');
+const cityRouter = require('./routes/cityRouter');
 
 
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
-const {Region} = require('./dbSqlite/dbSqlite');
+// const jwt = require('jsonwebtoken');
 
 ////////////////////////////////////////////////////
 const app = express()
@@ -33,8 +33,9 @@ app.use(express.urlencoded({ extended: true }));
 //.. Route middlewares--/////////////////////////////////////
 app.use("/",pagesRouter);
 app.use("/",loginRouter);
+app.use("/",devRouter);
 app.use("/api",apiRouter);
-// app.use("/dev",devRouter);
+app.use("/city",cityRouter);
 
 /////////////////////////////////////
 app.use(cookieParser());
