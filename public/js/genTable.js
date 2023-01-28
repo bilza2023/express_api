@@ -41,7 +41,11 @@ document.getElementById("container").innerHTML = "";
     // editLink.href = "#";
     editLink.textContent = "Edit";
     editLink.classList.add("text-green-300", "hover:cursor-pointer");
-    editLink.addEventListener("click", () => console.log(city.id));
+      editLink.addEventListener("click", () => {
+      document.cookie = `cityIdToEdit=${city.id}`; 
+      window.location.href = "http://localhost/city/editForm"; 
+      });
+
     td3.appendChild(editLink);
     const td4 = document.createElement("td");
     td4.classList.add("border-2", "border-gray-600", "px-4", "py-2");

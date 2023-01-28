@@ -10,15 +10,6 @@ devRouter.get('/getcookies', (req, res) => {
 });
 
 
-//----
-devRouter.get('/admin', (req, res) => {
-return res.status(200).render('admin');
-});
-//----
-devRouter.get('/manage_cities', async (req, res) => {
-const Cities = await City.findAll();
-return res.status(200).render('manage_cities',{Cities});
-});
 
 //----
 devRouter.get('/migration', async (req, res) =>{

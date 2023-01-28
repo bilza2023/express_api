@@ -16,6 +16,7 @@ const pagesRouter = require('./routes/pagesRouter');
 const loginRouter = require('./routes/loginRouter');
 const devRouter = require('./routes/devRouter');
 const cityRouter = require('./routes/cityRouter');
+const adminRouter = require('./routes/adminRouter');
 
 
 const  { engine } =  require('express-handlebars');
@@ -24,7 +25,10 @@ const cookieParser = require('cookie-parser');
 
 ////////////////////////////////////////////////////
 const app = express()
-
+app.use(cookieParser());
+//.. static files
+app.use(express.static(path.join(__dirname,"public")));
+//..
 // app.use(cors({origin:'https://localhost'}));
 app.use(cors({origin: process.env.HOME_URL}));
 app.use(express.json());
@@ -36,11 +40,9 @@ app.use("/",loginRouter);
 app.use("/",devRouter);
 app.use("/api",apiRouter);
 app.use("/city",cityRouter);
+app.use("/admin",adminRouter);
 
 /////////////////////////////////////
-app.use(cookieParser());
-//.. static files
-app.use(express.static(path.join(__dirname,"public")));
 
 // const upload = multer({ dest: 'uploads/' });
 

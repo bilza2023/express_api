@@ -81,8 +81,7 @@ document.getElementById("registerBusiness")
 
 axios.post('http://localhost/api/register_new_business', {name,number, description,regionId,businessTypeId})
 .then(function (response) {
-  // alert(response.data.message);
-   window.location.href = 'http://localhost'; //Here's my redirect - the router is listening for this route and will render accordingly
+   window.location.href = 'http://localhost';
                 
 })
 
