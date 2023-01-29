@@ -1,0 +1,10 @@
+
+-home /
+create new form main -table
+
+/edit form
+/edit 
+path  edit
+
+path new 
+path  delete

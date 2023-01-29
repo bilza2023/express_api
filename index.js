@@ -5,7 +5,6 @@ process.on('uncaughtException', function (err) {
     process.exit(1);
 });
 //.......................................................
-
 const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
@@ -17,6 +16,7 @@ const loginRouter = require('./routes/loginRouter');
 const devRouter = require('./routes/devRouter');
 const cityRouter = require('./routes/cityRouter');
 const adminRouter = require('./routes/adminRouter');
+const businessTypeRouter = require('./routes/businessTypeRouter');
 
 
 const  { engine } =  require('express-handlebars');
@@ -29,7 +29,6 @@ app.use(cookieParser());
 //.. static files
 app.use(express.static(path.join(__dirname,"public")));
 //..
-// app.use(cors({origin:'https://localhost'}));
 app.use(cors({origin: process.env.HOME_URL}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -39,8 +38,9 @@ app.use("/",pagesRouter);
 app.use("/",loginRouter);
 app.use("/",devRouter);
 app.use("/api",apiRouter);
-app.use("/city",cityRouter);
 app.use("/admin",adminRouter);
+app.use("/city",cityRouter);
+app.use("/businessType",businessTypeRouter);
 
 /////////////////////////////////////
 
