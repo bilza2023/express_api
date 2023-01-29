@@ -33,7 +33,7 @@ document.getElementById('newBizTypeInput').value = "";
 
 
 ////////////////////////////////////
-export default function createTable(cities) {
+export default function createTable(collection) {
 
 document.getElementById("container").innerHTML = "";
   // Create the table element
@@ -63,7 +63,7 @@ document.getElementById("container").innerHTML = "";
 
   // Create the table body
   const tbody = document.createElement("tbody");
-  for (const item of cities) {
+  for (const item of collection) {
     const tr = document.createElement("tr");
     const td1 = document.createElement("td");
     td1.classList.add("border-2", "border-gray-600", "px-4", "py-2");
@@ -78,7 +78,7 @@ document.getElementById("container").innerHTML = "";
     editLink.textContent = "Edit";
     editLink.classList.add("text-green-300", "hover:cursor-pointer");
       editLink.addEventListener("click", () => {
-      document.cookie = `cityIdToEdit=${item.id}`; 
+      document.cookie = `businessTypeIdToEdit=${item.id}`; 
       window.location.href = "http://localhost/businessType/editForm"; 
       });
 

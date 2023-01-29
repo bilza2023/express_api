@@ -33,8 +33,8 @@ async  read(id) {
 async  update(id, data) {
   try {
     const seqItem = await this.seqTable.update(data, { where: { id: id } });
-    const item = seqItem.map(r => r.toJSON());
-    return item;
+    // const item = seqItem.map(r => r.toJSON());
+    return true;
   } catch (error) {
     console.error(`Failed to update item with ID ${id}. Error: ${error}`);
   }

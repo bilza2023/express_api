@@ -33,27 +33,31 @@ businessTypeRouter.get('/get_list', async (req, res) => {
 const BusinessTypeArray = await BusinessType.findAll();
 return res.status(200).json({BusinessTypeArray});
 });
+
 //-------------------------------------------------------
 businessTypeRouter.get('/edit', async (req, res) => {
-const cityIdToEdit = req.cookies.cityIdToEdit;
-const cityEditName = req.cookies.cityEditName;
+const BusinessTypeEditName = req.cookies.BusinessTypeEditName;
+const businessTypeIdToEdit = req.cookies.businessTypeIdToEdit;
 
-const r = await City.update(cityIdToEdit,{name : cityEditName});
+await BusinessType.update(businessTypeIdToEdit,{name : BusinessTypeEditName});
+    
 return res.status(200).json({success:true});
 });
+//-------------------------------------------------------
+
 
 //-------------------------------------------------------
 businessTypeRouter.get("/editForm" ,async function(req,res) {
-const cityIdToEdit = req.cookies.cityIdToEdit;
-const city = await City.read( cityIdToEdit );
-res.status(200).render('editForm',{cityName: city.name,cityId:1});
+const businessTypeIdToEdit = req.cookies.businessTypeIdToEdit;
+const bzType = await BusinessType.read( businessTypeIdToEdit );
+res.status(200).render('businessTypePages/edit',{name: bzType.name,id:bzType.id});
 });
 
 //-------------------------------------------------------
 businessTypeRouter.get("/new" ,async function(req,res) {
 // res.status(200).json({success:true});
 const newBizTypeName = req.cookies.newBizTypeName;
-const c = await BusinessType.create({ name: newBizTypeName});
+    await BusinessType.create({ name: newBizTypeName});
 res.status(200).json({message:"new Business Type created",success:true});
 });
 
