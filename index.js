@@ -17,12 +17,11 @@ const devRouter = require('./routes/devRouter');
 const cityRouter = require('./routes/cityRouter');
 const adminRouter = require('./routes/adminRouter');
 const businessTypeRouter = require('./routes/businessTypeRouter');
+const areaRouter = require('./routes/areaRouter');
 
 
 const  { engine } =  require('express-handlebars');
 const cookieParser = require('cookie-parser');
-// const jwt = require('jsonwebtoken');
-
 ////////////////////////////////////////////////////
 const app = express()
 app.use(cookieParser());
@@ -41,17 +40,12 @@ app.use("/api",apiRouter);
 app.use("/admin",adminRouter);
 app.use("/city",cityRouter);
 app.use("/businessType",businessTypeRouter);
-
-/////////////////////////////////////
-
-// const upload = multer({ dest: 'uploads/' });
+app.use("/area",areaRouter);
 
 //.. Templating Engine
 app.engine('hbs', engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
-
-/////////////////////////////////////////////////////////////
 ///////////////////////////Routes////////////////////////
 
 /**
@@ -74,12 +68,8 @@ app.get('/dbtest', async (req, res) =>{
 dbComController( req, res);
 //---------------------------
 });
-// app.get('/test', async (req, res) =>{
-//  const cookies = req.cookies;
-//     console.log(cookies);
-// res.status(200).json(cookies);    
-// //---------------------------
-// });
+
+
 ////////////////////////////////////////////////////////
 
 app.listen(PORT, ()=>{console.log(`listening on port ${PORT}`)});
