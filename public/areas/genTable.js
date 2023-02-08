@@ -99,6 +99,6 @@ deleteFunction : (id) => {
                 return function(){console.log( `delete function ${id}`);} 
                 }
 
-}//return statement
+        }//return statement
 }//fn ends
 
