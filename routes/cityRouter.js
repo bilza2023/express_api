@@ -7,15 +7,15 @@ const cityRouter = express.Router();
 const {City,Region,BusinessType,Business}  = require('../dbSqlite/dbSqlite');
 
 ////////////////////////////////////////////////
-cityRouter.get("/delete" ,async function(req,res) {
-const cityIdToDelete = req.cookies.cityIdToDelete;
-// const cityIdToDelete = 1;
+cityRouter.post("/delete" ,async function(req,res) {
 
-const c = await Region.count({ where: { cityId: cityIdToDelete } });
+const idToDelete = req.body.idToDelete;
+
+const c = await Region.count({ where: { cityId: idToDelete } });
 if ( c > 0 ){
     res.status(200).json({message :"This city has areas attached to it",success:false});
 }else {
-    const del = await City.del(cityIdToDelete);
+    const del = await City.del(idToDelete);
     if (del==true){
     res.status(200).json({message :"deleted",success:true});
     }else {
@@ -46,12 +46,12 @@ res.status(200).render('editForm',{cityName: city.name,cityId:1});
 });
 
 //-------------------------------------------------------
-cityRouter.get("/new" ,async function(req,res) {
-
-const newCityName = req.cookies.newCityName;
+cityRouter.post("/new" ,async function(req,res) {
+const body = req.body
+const name = body.name;
 // const cityIdToDelete = 1;
 
-const c = await City.create({ name: newCityName});
+const c = await City.create({ name});
 res.status(200).json({message:"new city created",success:true});
 });
 

@@ -57,3 +57,26 @@ const editFn = (id) => {
                 } 
 }
 
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+document.getElementById("newItemBtn").addEventListener("click",function(e){
+
+const newAreaName = document.getElementById("newItemName").value;
+
+if (newAreaName == ""){alert("Please enter a name"); return;}
+
+document.getElementById("newItemName").value = "";
+
+      document.cookie = `newAreaName=${newAreaName}`;  
+      axios.get("http://localhost/area/new")
+      .then((response) => {
+        if (response.data.success == true){
+          refresh();
+        }else {
+          alert(response.data.message);
+        }
+        //console.log(response);
+      });
+});

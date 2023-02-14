@@ -9,7 +9,8 @@ const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
 const dbComController = require('./controllers/dbComController');   
-const PORT = process.env.PORT || 80;
+// const PORT = process.env.PORT || 80;
+const PORT = 3000;
 const apiRouter = require('./routes/apiRouter');
 const pagesRouter = require('./routes/pagesRouter');
 const loginRouter = require('./routes/loginRouter');
@@ -28,7 +29,9 @@ app.use(cookieParser());
 //.. static files
 app.use(express.static(path.join(__dirname,"public")));
 //..
-app.use(cors({origin: process.env.HOME_URL}));
+// app.use(cors({origin: process.env.HOME_URL}));
+// app.use(cors({origin: "http://localhost/"}));
+app.use(cors({origin: "http://localhost:8080"}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

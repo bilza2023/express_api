@@ -3,13 +3,13 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const path = require('path');
-const {Region,Business}  = require('../dbSqlite/dbSqlite');
+const {Region,}  = require('../dbSqlite/dbSqlite');
 const areaRouter = express.Router();
 ////////////////////////////////////////////////
 areaRouter.get("/delete" ,async function(req,res) {
 const areaIdToDelete = req.cookies.areaIdToDelete;
 
-const c = await Business.count({ where: { regionId:areaIdToDelete  } });
+const c = await Region.count({ where: { regionId:areaIdToDelete  } });
 
 if ( c > 0 ){
     res.status(200).json({message :"This Area has businesses attached to it",success:false});
@@ -63,9 +63,9 @@ res.status(200).render('businessTypePages/edit',{name: bzType.name,id:bzType.id}
 //-------------------------------------------------------
 areaRouter.get("/new" ,async function(req,res) {
 // res.status(200).json({success:true});
-const newBizTypeName = req.cookies.newBizTypeName;
-    await BusinessType.create({ name: newBizTypeName});
-res.status(200).json({message:"new Business Type created",success:true});
+const newAreaName = req.cookies.newAreaName;
+    await Region.create({ name: newAreaName});
+return res.status(200).json({message:"new Item created",success:true});
 });
 
 //-------------------------------------------------------
