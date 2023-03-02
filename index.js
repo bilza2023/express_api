@@ -8,6 +8,7 @@ process.on('uncaughtException', function (err) {
 const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
+const  { City } = require('./dbSqlite/dbSqlite');
 const dbComController = require('./controllers/dbComController');   
 // const PORT = process.env.PORT || 80;
 const PORT = 3000;
@@ -75,6 +76,14 @@ res.sendFile(path.resolve('build/index.html'));
 });
 app.get('/dbtest', async (req, res) =>{
 dbComController( req, res);
+//---------------------------
+});
+
+app.post('/add_city', async (req, res) =>{
+const name = req.body.name;
+// console.log(req.body);
+await City.create({name});
+res.status(200).json({success:true, message:"success"});
 //---------------------------
 });
 
