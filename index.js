@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname,"build")));
 // app.use(cors({origin: "http://localhost/"}));
 app.use(express.json());
 // app.use(cors({origin: process.env.HOME_URL})); //use this
-app.use(cors({origin: "http://localhost"})); //working
+app.use(cors( )); //working
 // app.use(cors({ origin: '*' })); //working
 app.use(express.urlencoded({ extended: true }));
 
