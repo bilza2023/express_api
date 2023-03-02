@@ -30,9 +30,9 @@ const Cities = await City.findAll();
 return res.status(200).render('manage_cities',{Cities});
 });
 //-------------------------------------------------------
-cityRouter.get('/edit', async (req, res) => {
-const cityIdToEdit = req.cookies.cityIdToEdit;
-const cityEditName = req.cookies.cityEditName;
+cityRouter.post('/edit', async (req, res) => {
+const cityIdToEdit = req.body.cityIdToEdit;
+const cityEditName = req.body.cityEditName;
 
 const r = await City.update(cityIdToEdit,{name : cityEditName});
 return res.status(200).json({success:true});
