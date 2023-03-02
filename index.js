@@ -80,10 +80,15 @@ dbComController( req, res);
 });
 
 app.post('/add_city', async (req, res) =>{
+try {
 const name = req.body.name;
 // console.log(req.body);
-await City.create({name});
+const rez = await City.create({name});
 res.status(200).json({success:true, message:"success"});
+}catch(e){
+res.status(200).json({success:false, message:"failed"});
+}
+
 //---------------------------
 });
 
