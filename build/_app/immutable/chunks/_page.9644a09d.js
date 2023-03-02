@@ -1,0 +1,1 @@
+async function e({params:t}){return{item:await(await fetch("https://jsonplaceholder.typicode.com/todos/1")).json()}}const s=Object.freeze(Object.defineProperty({__proto__:null,load:e},Symbol.toStringTag,{value:"Module"}));export{s as _,e as l};

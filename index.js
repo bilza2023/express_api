@@ -27,7 +27,7 @@ const cookieParser = require('cookie-parser');
 const app = express()
 app.use(cookieParser());
 //.. static files
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname,"build")));
 //..
 // app.use(cors({origin: "http://localhost/"}));
 app.use(express.json());
@@ -69,7 +69,8 @@ app.set('views', path.join(__dirname, 'views'));
  */
 
 app.get('/', async (req, res) =>{
-res.status(200).json({success :true ,  message : "Welcome to the api, try api/get_cities or /dbtest"});
+// res.status(200).json({success :true ,  message : "Welcome to the api, try api/get_cities or /dbtest"});
+res.sendFile(path.resolve('build/index.html'));
 //---------------------------
 });
 app.get('/dbtest', async (req, res) =>{
