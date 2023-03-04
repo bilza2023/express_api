@@ -8,10 +8,21 @@ process.on('uncaughtException', function (err) {
 const  express  =require('express');
 const cors = require('cors');
 const path = require('path');
+////////////////////////////////////////////////
+const mongoose = require('mongoose');
+
+mongoose.connect( process.env.MONGO_DB_URL , { useNewUrlParser: true});
+const db = mongoose.connection;
+
+db.on('error',(error)=> console.error(error))
+db.once('open',()=> console.log("MongoDb ===> connection established"))
+
+const Subscriber = require("./models/subscriber");
+////////////////////////////////////////////////
 const  { City } = require('./dbSqlite/dbSqlite');
 const dbComController = require('./controllers/dbComController');   
-// const PORT = process.env.PORT || 80;
-const PORT = 3000;
+const PORT = process.env.PORT || 80;
+
 const apiRouter = require('./routes/apiRouter');
 // const pagesRouter = require('./routes/pagesRouter');
 // const loginRouter = require('./routes/loginRouter');
@@ -70,12 +81,53 @@ app.set('views', path.join(__dirname, 'views'));
  */
 
 app.get('/', async (req, res) =>{
-// res.status(200).json({success :true ,  message : "Welcome to the api, try api/get_cities or /dbtest"});
-res.sendFile(path.resolve('build/index.html'));
+res.status(200).json({success :true ,  message : "Welcome to the api, try api/get_cities or /dbtest"});
+// res.sendFile(path.resolve('build/index.html'));
 //---------------------------
 });
+
+app.get('/getUser/:id', async (req, res) =>{
+try{
+const id = req.params.id;
+// const id = '6402fcb8b2ebd95935bff82a';
+console.log(id);
+    const subscriber = await Subscriber.findById(id);
+        if (subscriber == null){
+            return res.status(404).json({message : "Subscriber not found" });
+        }else {
+            return res.status(200).json({subscriber });
+        }
+}catch(err){
+            return res.status(500).json({message : "server error!!!" });
+    // console.error(err);
+}
+});
+//---------------------------
 app.get('/dbtest', async (req, res) =>{
-dbComController( req, res);
+try{
+// res.status(200).json({success :true ,  message : "Welcome to the api"});
+const subscribers = await Subscriber.find();
+res.status(200).json({subscribers});
+console.log(subscribers);
+}catch(e){
+console.log(e);
+}
+//---------------------------
+});
+app.post('/add', async (req, res) =>{
+try{
+// res.status(200).json({success :true ,  message : "Welcome to the api"});
+const subscriber = new  Subscriber({
+name : "abc",
+email : "abc@example.com",
+password : 232323 
+});
+const newSub = await subscriber.save();
+res.status(200).json({msg : "success" , newSub});
+// console.log(subscribers);
+}catch(e){
+console.log(e);
+}
 //---------------------------
 });
 
