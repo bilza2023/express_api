@@ -13,6 +13,7 @@ userRouter.get("/secure" , async function(req,res) {
  try {
     // get token from request header
     const token = req.headers.authorization.split(" ")[1];
+    console.log("token",token);
     if(token == null || token == ""){
     res.status(404).json({message : "Auth token not found:you may not be logged in."});
     }

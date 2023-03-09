@@ -36,48 +36,65 @@ app.get('/', async (req, res) =>{
 res.status(200).json({success :true ,  message : "Welcome to the api"});
 });
 
-// app.get('/getUser/:id', async (req, res) =>{
-// try{
-// const id = req.params.id;
-// // const id = '6402fcb8b2ebd95935bff82a';
-// console.log(id);
-//     const subscriber = await Subscriber.findById(id);
-//         if (subscriber == null){
-//             return res.status(404).json({message : "Subscriber not found" });
-//         }else {
-//             return res.status(200).json({subscriber });
-//         }
-// }catch(err){
-//             return res.status(500).json({message : "server error!!!" });
-//     // console.error(err);
-// }
-// });
-//---------------------------
-// app.get('/dbtest', async (req, res) =>{
-// try{
-// // res.status(200).json({success :true ,  message : "Welcome to the api"});
-// const subscribers = await Subscriber.find();
-// res.status(200).json({subscribers});
-// console.log(subscribers);
-// }catch(e){
-// console.log(e);
-// }
-// //---------------------------
-// });
-
-// app.patch('/patch', async (req, res) =>{
-// console.log(req);
-// return res.status(200).json({ msg :"patch"})
-// });
-
-// app.delete('/delete', async (req, res) =>{
-// console.log(req);
-// return res.status(200).json({ msg :"delete"})
-// });
-
-
 
 ///////////////////////////////////////////////////////////////////////
+const Quiz = require("./models/quiz.js");
+app.get("/save_quiz" , async function(req,res) {
+
+const QuizData = {
+  questions: [
+    {
+      content: 'What is the capital of France?',
+      correctAnswer: 2,
+      explanation: 'Paris is the capital of France.',
+      answers: [
+        { content: 'London' },
+        { content: 'Madrid' },
+        { content: 'Paris' },
+        { content: 'Berlin' }
+      ]
+    },
+    {
+      content: 'What is the largest continent in the world?',
+      correctAnswer: 0,
+      explanation: 'Asia is the largest continent in the world.',
+      answers: [
+        { content: 'Asia' },
+        { content: 'North America' },
+        { content: 'Europe' },
+        { content: 'Africa' }
+      ]
+    },
+    {
+      content: 'What is the highest mountain in the United States?',
+      correctAnswer: 1,
+      explanation: 'Mount Denali is the highest mountain in the United States.',
+      answers: [
+        { content: 'Mount Whitney' },
+        { content: 'Mount Denali' },
+        { content: 'Mount Rainier' },
+        { content: 'Mount St. Helens' }
+      ]
+    }
+  ]
+};
+
+ const quiz = new Quiz(QuizData); // create a new Quiz instance with the data
+const newQuiz = await quiz.save(); // save the Quiz to MongoDB
+return res.json({newQuiz , status: "ok"});
+
+
+
+// console.log(quiz);
+
+// return res.status(200).json({msg : "Quiz saved successfully!" ,newQuiz});
+//             // console.log(subscribers);
+// }catch(error){
+//         // console.log(error);
+//         return res.status(400).json({msg : "failured to save quiz" , error  });
+// }
+});
+
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
