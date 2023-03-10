@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
-const answerSchema = new mongoose.Schema({
+const optionSchema = new mongoose.Schema({
+  id: { //This is not mongodb _id rather the app assigned id
+    type: String,
+    required: true
+  },
   content: {
     type: String,
     required: true
@@ -12,20 +16,20 @@ const questionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  correctAnswer: {
-    type: Number,
-    required: true
-  },
-  selectedAnswer: {
-    type: Number,
-    default: null
-  },
-  explanation: {
+  id: { //This is not mongodb _id rather the app assigned id
     type: String,
     required: true
   },
-  answers: {
-    type: [answerSchema],
+  correctAnswer: {
+    type: String,
+    required: true
+  },
+  explanation: {
+    type: String,
+    required: false
+  },
+  options: {
+    type: [optionSchema],
     required: true
   }
 });
@@ -33,6 +37,10 @@ const questionSchema = new mongoose.Schema({
 const QuizSchema = new mongoose.Schema({
   questions: {
     type: [questionSchema],
+    required: true
+  },
+  title: {
+    type: String,
     required: true
   }
 });

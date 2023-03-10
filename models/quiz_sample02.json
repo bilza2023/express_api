@@ -1,0 +1,38 @@
+{
+  "questions": [
+    {
+      "id" : "sssss",
+      "content": "What is the currency used in Japan?",
+      "correctAnswer": 1,
+      "explanation": "Yen is the currency used in Japan.",
+      "answers": [
+        { "content": "Dollar" },
+        { "content": "Yen" },
+        { "content": "Euro" },
+        { "content": "Pound" }
+      ]
+    },
+    {
+      "content": "Which country has the largest economy in the world?",
+      "correctAnswer": 2,
+      "explanation": "The United States has the largest economy in the world.",
+      "answers": [
+        { "content": "Japan" },
+        { "content": "China" },
+        { "content": "United States" },
+        { "content": "India" }
+      ]
+    },
+    {
+      "content": "What is the nickname for the Australian dollar?",
+      "correctAnswer": 0,
+      "explanation": "The Australian dollar is also known as the Aussie.",
+      "answers": [
+        { "content": "Aussie" },
+        { "content": "Ozzie" },
+        { "content": "Auss" },
+        { "content": "Oz" }
+      ]
+    }
+  ]
+}

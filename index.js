@@ -12,8 +12,11 @@ const db = require("./mongoDb/mongo.js");
 ////////////////////////////////////////////////
 
 const userRouter = require('./routes/userRouter');
+const quizRouter = require('./routes/quizRouter');
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 80;
+const Quiz = require("./models/quiz.js");
+const QuizResult = require("./models/quiz_result.js");
 ////////////////////////////////////////////////////
 
 const app = express()
@@ -30,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //.. Route middlewares--/////////////////////////////////////
 app.use("/user",userRouter);
+app.use("/quiz",quizRouter);
 
 ///////////////////////////Routes////////////////////////
 app.get('/', async (req, res) =>{
@@ -37,51 +41,44 @@ res.status(200).json({success :true ,  message : "Welcome to the api"});
 });
 
 
+app.get("/quizlist" , async function(req,res) {
+  try {
+    const quizes = await Quiz.find({});
+    return res.status(200).json({msg : "success" , quizes });
+  } catch(error) {
+    return res.status(400).json({msg : "failure" , error  });
+  }
+});
+app.get("/responses" , async function(req,res) {
+  try {
+    const results = await QuizResult.find({});
+    return res.status(200).json({results });
+  } catch(error) {
+    return res.status(400).json({msg : "failure" , error  });
+  }
+});
 ///////////////////////////////////////////////////////////////////////
-const Quiz = require("./models/quiz.js");
-app.get("/save_quiz" , async function(req,res) {
+app.post("/save_response" , async function(req,res) {
 
-const QuizData = {
-  questions: [
-    {
-      content: 'What is the capital of France?',
-      correctAnswer: 2,
-      explanation: 'Paris is the capital of France.',
-      answers: [
-        { content: 'London' },
-        { content: 'Madrid' },
-        { content: 'Paris' },
-        { content: 'Berlin' }
-      ]
-    },
-    {
-      content: 'What is the largest continent in the world?',
-      correctAnswer: 0,
-      explanation: 'Asia is the largest continent in the world.',
-      answers: [
-        { content: 'Asia' },
-        { content: 'North America' },
-        { content: 'Europe' },
-        { content: 'Africa' }
-      ]
-    },
-    {
-      content: 'What is the highest mountain in the United States?',
-      correctAnswer: 1,
-      explanation: 'Mount Denali is the highest mountain in the United States.',
-      answers: [
-        { content: 'Mount Whitney' },
-        { content: 'Mount Denali' },
-        { content: 'Mount Rainier' },
-        { content: 'Mount St. Helens' }
-      ]
-    }
-  ]
-};
+const quizResponse = req.body; 
+// console.log(QuizData);
+
+ const quizResult = new QuizResult(quizResponse); // create a new Quiz instance with the data
+const newQuizResult = await quizResult.save(); // save the Quiz to MongoDB
+return res.json({newQuizResult , status: "ok"});
+});
+
+///////////////////////////////////////////////////////////////////////
+
+app.post("/save_quiz" , async function(req,res) {
+
+const QuizData = req.body; 
+// console.log(QuizData);
 
  const quiz = new Quiz(QuizData); // create a new Quiz instance with the data
 const newQuiz = await quiz.save(); // save the Quiz to MongoDB
 return res.json({newQuiz , status: "ok"});
+// return res.json({QuizData , status: "ok"});
 
 
 
