@@ -49,9 +49,10 @@ app.get("/quizlist" , async function(req,res) {
     return res.status(400).json({msg : "failure" , error  });
   }
 });
-app.get("/responses" , async function(req,res) {
+app.get("/responses/:id" , async function(req,res) {
   try {
-    const results = await QuizResult.find({});
+    const id = req.params.id;
+    const results = await QuizResult.find({quizId:id});
     return res.status(200).json({results });
   } catch(error) {
     return res.status(400).json({msg : "failure" , error  });

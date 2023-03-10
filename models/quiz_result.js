@@ -8,11 +8,11 @@ const quizResultSchema = new mongoose.Schema({
     required: true
   },
   correctAnswers: {
-    type: Number,
+    type: [String],
     required: true,
   },
   wrongAnswers: {
-    type: Number,
+    type: [String],
     required: true,
   },
   totalQuestions: {
