@@ -73,10 +73,10 @@ return res.json({newQuizResult , status: "ok"});
 
 app.post("/save_quiz" , async function(req,res) {
 
+try{
 const QuizData = req.body; 
 // console.log(QuizData);
-
- const quiz = new Quiz(QuizData); // create a new Quiz instance with the data
+const quiz = new Quiz(QuizData); // create a new Quiz instance with the data
 const newQuiz = await quiz.save(); // save the Quiz to MongoDB
 return res.json({newQuiz , status: "ok"});
 // return res.json({QuizData , status: "ok"});
@@ -87,10 +87,10 @@ return res.json({newQuiz , status: "ok"});
 
 // return res.status(200).json({msg : "Quiz saved successfully!" ,newQuiz});
 //             // console.log(subscribers);
-// }catch(error){
-//         // console.log(error);
-//         return res.status(400).json({msg : "failured to save quiz" , error  });
-// }
+}catch(error){
+        // console.log(error);
+        return res.status(400).json({msg : "failured to save quiz" , error  });
+}
 });
 
 ///////////////////////////////////////////////////////////////////////

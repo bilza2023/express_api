@@ -38,6 +38,7 @@ userRouter.get("/secure" , async function(req,res) {
 
 });
 userRouter.post("/register" , async function(req,res) {
+
 try{
 const name = req.body.name;
 const email = req.body.email;
@@ -45,18 +46,17 @@ const passwordPlain = req.body.password;
 
 const password = await bcrypt.hash(passwordPlain,3);
 // console.log(password);
-
-const subscriber = new  Subscriber({
-name,
-email,
-password
-});
+    const subscriber = new  Subscriber({
+    name,
+    email,
+    password
+    });
 // console.log(subscriber);
 
-        const newSub = await subscriber.save();
-            return res.status(200).json({msg : "success" , newSub});
+    const newSub = await subscriber.save();
+    return res.status(200).json({msg : "success" , newSub});
             // console.log(subscribers);
-    }catch(error){
+}catch(error){
         // console.log(error);
         return res.status(400).json({msg : "failure" , error  });
 }
