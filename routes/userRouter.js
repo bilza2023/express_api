@@ -163,6 +163,41 @@ userRouter.patch("/:id", async function(req, res) {
 });
 //-------------------------------------------------------
 ////////////////////////////////////////////////////////
+// //-----middle ware
+// const isLogin = async (req, res, next) => {
+//   try {
+//     // get token from request header
+//     const authHeader = req.headers.authorization;
+//     if (!authHeader) {
+//       return res.status(401).json({ msg: "Unauthorized: Missing authorization header" });
+//     }
+
+//     const token = authHeader.split(" ")[1];
+//     if (!token) {
+//       return res.status(401).json({ msg: "Unauthorized: Missing token" });
+//     }
+
+//     // verify token with JWT_SECRET
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+//     // get user id from decoded token
+//     const userId = decoded.id;
+
+//     // find user by id
+//     const user = await Subscriber.findById(userId);
+
+//     if (user) {
+//       req.user = user;
+//       next();
+//     } else {
+//       return res.status(401).json({ msg: "Unauthorized: User not found" });
+//     }
+//   } catch (error) {
+//     return res.status(401).json({ msg: "Unauthorized: Invalid token" });
+//   }
+// };
+
+////////////////////////////////////////////////////////
 module.exports = userRouter;
 
 
