@@ -15,6 +15,10 @@ const quizResultSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+  skippedAnswers: {
+    type: [String],
+    required: true,
+  },
   totalQuestions: {
     type: Number,
     required: true,

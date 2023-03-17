@@ -20,7 +20,7 @@ const questionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  correctAnswer: {
+  correctOption: {
     type: String,
     required: true
   },
@@ -34,6 +34,7 @@ const questionSchema = new mongoose.Schema({
   }
 });
 
+
 const QuizSchema = new mongoose.Schema({
   questions: {
     type: [questionSchema],
@@ -44,6 +45,27 @@ const QuizSchema = new mongoose.Schema({
     required: true
   },
   userId: {
+    type: String,
+    required: true
+  },
+  saveResponse: {
+    type: Boolean,
+    required: true,
+    default : false
+  },
+  showIntro: {
+    type: Boolean,
+    default : true
+  },
+  introText: {
+    type: String,
+    required: true
+  },
+  showResult: {
+    type: String,
+    required: true
+  },
+  farewellText: {
     type: String,
     required: true
   }
