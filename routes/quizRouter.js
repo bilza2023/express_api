@@ -23,6 +23,17 @@ quizRouter.get("/" , async function(req,res) {
   }
 });
 ////////////////////////////////////////////////////////
+//////////////////---update----////////////////////////////
+quizRouter.post("/update", async function(req, res) {
+  try {
+    const quiz = req.body.quiz; // the updated fields
+    // const options = { new: true }; // to return the updated quiz object
+    const updatedQuiz = await Quiz.findByIdAndUpdate(quiz._id, quiz,{ new: true });
+    return res.status(200).json({ msg: "success", status:"ok" , updatedQuiz });
+  } catch (error) {
+    return res.status(400).json({ msg: "failure", status:"error",error });
+  }
+});
 ////////////////////////////////////////////////////////
 // quizRouter.get("/page/:limit?/:count?" , async function(req,res) {
 //   try {

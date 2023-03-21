@@ -50,24 +50,28 @@ const QuizSchema = new mongoose.Schema({
   },
   saveResponse: {
     type: Boolean,
-    required: true,
+    required: false,
     default : false
   },
   showIntro: {
     type: Boolean,
-    default : true
+    default : true,
+    required: false
   },
   introText: {
     type: String,
-    required: true
+    default : "",
+    required: false
   },
   showResult: {
     type: String,
-    required: true
+    required: false,
+    default : true
   },
   farewellText: {
     type: String,
-    required: true
+    default : "",
+    required: false
   }
 });
 
