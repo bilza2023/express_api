@@ -127,32 +127,6 @@ return res.json({newQuizResult , status: "ok"});
 
 ///////////////////////////////////////////////////////////////////////
 
-app.post("/save_quiz" , async function(req,res) {
-
-try{
-// const {user , isLogin} = await checkLogin(req);
-
-// let userId;
-// if (isLogin==false){
-// return res.status(401).json({msg: "please login to save"});
-// }else {
-// userId = user._id;
-// }
-
-const QuizData = req.body.quiz; 
-// const QuizData = require('./quizzes/frontend_dev.js');
-QuizData.userId = "6414ec4fa19c446f0e6d2b53";
-// console.log(QuizData);
-const quiz = new Quiz(QuizData); // create a new Quiz instance with the data
-// console.log("quiz" , quizn);
-  const newQuiz = await quiz.save(); // save the Quiz to MongoDB
-  const newQuizId = newQuiz._id; // Access the _id field of the newQuiz object
-return res.json({newQuiz ,newQuizId, status: "ok"});
-
-}catch(error){
- return res.status(400).json({msg : "failured to save quiz." , error  });
-}
-});
 
 app.get("/del" , async function(req,res) {
 

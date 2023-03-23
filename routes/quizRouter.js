@@ -5,58 +5,61 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const quizRouter = express.Router();
 const Quiz = require("../models/quiz");
-
+const newQuiz = require('../models/new_quiz.js');
 /////////////////////////////////////////////////
 ////////-----------------CREATE---------/////////
 ////////////////////////////////////////////////
-
-
-
 ////////////////////////////////////////////////////////
-quizRouter.get("/" , async function(req,res) {
-  try {
-
-    const quizzzes = await Quiz.find({});
-    return res.status(200).json({msg : "success" , quizzzes });
-  } catch(error) {
-    return res.status(400).json({msg : "failure" , error  });
+//////////////////---new----////////////////////////////
+quizRouter.post("/new", async function(req, res) {
+   try {
+  //  const userId = req.body.userId;
+   newQuiz.userId = "641a0285c1e7d9a8adddfd4a"
+    let quiz = new Quiz(newQuiz);
+    await quiz.save();
+    return res.json({ quiz, status: "ok" });
+  
+  } catch (error) {
+    return res.status(400).json({ msg: "failure to save quiz.", error });
   }
 });
-////////////////////////////////////////////////////////
-//////////////////---update----////////////////////////////
+
 quizRouter.post("/update", async function(req, res) {
   try {
     const quiz = req.body.quiz; // the updated fields
-    // const options = { new: true }; // to return the updated quiz object
-    const updatedQuiz = await Quiz.findByIdAndUpdate(quiz._id, quiz,{ new: true });
+    const id = quiz._id; // the updated fields
+     const options = { new: true, upsert: true }; 
+    const updatedQuiz = await Quiz.findByIdAndUpdate( id , quiz,options);
+    // console.log(updatedQuiz);
     return res.status(200).json({ msg: "success", status:"ok" , updatedQuiz });
   } catch (error) {
     return res.status(400).json({ msg: "failure", status:"error",error });
   }
 });
 ////////////////////////////////////////////////////////
-// quizRouter.get("/page/:limit?/:count?" , async function(req,res) {
-//   try {
-//     const { limit = 2, count = 0 } = req.params;
 
-//     const subscribers = await Subscriber.find({}).limit(limit).skip(count);
-//     return res.status(200).json({msg : "success" , subscribers });
-//   } catch(error) {
-//     return res.status(400).json({msg : "failure" , error  });
-//   }
-// });
-// ////////////////////////////////////////////////////////
-// ////////////////////////////////////////////////////////
-quizRouter.get("/:id" , async function(req,res) {
+////////////////////////////////////////////////////////
+quizRouter.get("/:limit?/:count?" , async function(req,res) {
   try {
-    const id= req.params.id;
-    const quiz = await Quiz.findById(id);
-    return res.status(200).json({ quiz });
+    const { limit = 10, count = 0 } = req.params;
+
+    const quizzes = await Quiz.find({}).limit(limit).skip(count);
+    return res.status(200).json({msg : "success" , quizzes });
   } catch(error) {
     return res.status(400).json({msg : "failure" , error  });
   }
 });
-////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////
+quizRouter.post("/find" , async function(req,res) {
+  try {
+    const id= req.body.quizId;
+    const quiz = await Quiz.findById(id);
+    return res.status(200).json({ quiz,status:"ok" });
+  } catch(error) {
+    return res.status(400).json({msg : "failure" , error  });
+  }
+});
 ////////////////////////////////////////////////////////
 // quizRouter.delete("/:id" , async function(req,res) {
 //   try {

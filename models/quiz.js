@@ -7,14 +7,14 @@ const optionSchema = new mongoose.Schema({
   },
   content: {
     type: String,
-    required: true
+    required: false
   }
 });
 
 const questionSchema = new mongoose.Schema({
   content: {
     type: String,
-    required: true
+    required: false
   },
   id: { //This is not mongodb _id rather the app assigned id
     type: String,
@@ -22,7 +22,7 @@ const questionSchema = new mongoose.Schema({
   },
   correctOption: {
     type: String,
-    required: true
+    required: false
   },
   explanation: {
     type: String,
@@ -34,7 +34,7 @@ const questionSchema = new mongoose.Schema({
   }
 });
 
-
+//--user id & 1 question
 const QuizSchema = new mongoose.Schema({
   questions: {
     type: [questionSchema],
@@ -42,7 +42,8 @@ const QuizSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    required: true
+    required: false,
+    default : ""
   },
   userId: {
     type: String,
@@ -63,10 +64,15 @@ const QuizSchema = new mongoose.Schema({
     default : "",
     required: false
   },
+  published: {
+    type: Boolean,
+    required: false,
+    default : false
+  },
   showResult: {
     type: String,
-    required: false,
-    default : true
+    default : true,
+    required: false
   },
   farewellText: {
     type: String,
