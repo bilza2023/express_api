@@ -78,6 +78,10 @@ const QuizSchema = new mongoose.Schema({
     type: String,
     default : "",
     required: false
+  },
+   createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 

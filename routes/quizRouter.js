@@ -13,9 +13,12 @@ const newQuiz = require('../models/new_quiz.js');
 //////////////////---new----////////////////////////////
 quizRouter.post("/new", async function(req, res) {
    try {
-  //  const userId = req.body.userId;
+   const token = req.body.token;
+   const title = req.body.title;
    newQuiz.userId = "641a0285c1e7d9a8adddfd4a"
-    let quiz = new Quiz(newQuiz);
+   const aa = newQuiz;
+   aa.title =  title;
+    let quiz = new Quiz( aa );
     await quiz.save();
     return res.json({ quiz, status: "ok" });
   
@@ -39,11 +42,15 @@ quizRouter.post("/update", async function(req, res) {
 ////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////
-quizRouter.get("/:limit?/:count?" , async function(req,res) {
+quizRouter.get("/page/:limit?/:count?" , async function(req,res) {
   try {
     const { limit = 10, count = 0 } = req.params;
 
-    const quizzes = await Quiz.find({}).limit(limit).skip(count);
+      const quizzes = await Quiz.find({})
+      .sort({ createdAt: -1 }) // Sort by createdAt field in descending order
+      .limit(Number(limit))
+      .skip(Number(count));
+
     return res.status(200).json({msg : "success" , quizzes });
   } catch(error) {
     return res.status(400).json({msg : "failure" , error  });
@@ -55,6 +62,17 @@ quizRouter.post("/find" , async function(req,res) {
   try {
     const id= req.body.quizId;
     const quiz = await Quiz.findById(id);
+    return res.status(200).json({ quiz,status:"ok" });
+  } catch(error) {
+    return res.status(400).json({msg : "failure" , error  });
+  }
+});
+// ////////////////////////////////////////////////////////
+quizRouter.get("/show/:quizId" , async function(req,res) {
+  try {
+  const quizId  = req.params.quizId;
+  // console.log(quizId)
+    const quiz = await Quiz.findById( quizId );
     return res.status(200).json({ quiz,status:"ok" });
   } catch(error) {
     return res.status(400).json({msg : "failure" , error  });
