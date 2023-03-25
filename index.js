@@ -43,14 +43,7 @@ res.status(200).json({success :true ,  message : "Welcome to the api"});
 });
 
 
-app.get("/quizlist" , async function(req,res) {
-  try {
-    const quizes = await Quiz.find({});
-    return res.status(200).json({msg : "success" , quizes });
-  } catch(error) {
-    return res.status(400).json({msg : "failure" , error  });
-  }
-});
+
 //-----middle ware
 async  function  authToken(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -89,146 +82,6 @@ const decoded = jwt.verify(token, process.env.JWT_SECRET);
     return  {user , isLogin :true};
 }
 
-app.post("/user_quiz" , async function(req,res) {
-
-let userId;
-const {user , isLogin} = await checkLogin(req);
-    if (isLogin==false){
-      return res.status(401).json({msg: "please login to save"});
-    }else {
-    userId = user._id;
-    }
-const quizes = await Quiz.find({userId : userId });//======>
-      return res.status(200).json({ msg: "success",user,quizes });
-
-});
-app.get("/responses/:id" , async function(req,res) {
-  try {
-    const id = req.params.id;
-    const results = await QuizResult.find({quizId:id});
-    return res.status(200).json({results });
-  } catch(error) {
-    return res.status(400).json({msg : "failure" , error  });
-  }
-});
-
-///////////////////////////////////////////////////////////////////////
-app.post("/save_response" , async function(req,res) {
-
-const quizResponse = req.body; 
-console.log(quizResponse);
-
- const quizResult = new QuizResult(quizResponse); // create a new Quiz instance with the data
-console.log("quizResult",quizResult);
-
-const newQuizResult = await quizResult.save(); // save the Quiz to MongoDB
-return res.json({newQuizResult , status: "ok"});
-});
-
-///////////////////////////////////////////////////////////////////////
-
-
-app.get("/del" , async function(req,res) {
-
-try{
-const QuizJson = {
-"title": "The Most Comprehensive Quiz Test",
-"saveResponse" : true,
-"introText" : "introText introText introText introText introText introText inText introText introText introText ",
-"farewellText" : "farewellText farewellText farewellText farewellText farewellText farewellText farewellText farewellText ",
-"showIntro" : true,
-"showResult" : true,
-"userId": "640c60780a87835ced6122af",
-
-  "questions": [
-    {
-      "content": "How will it look if the question has more text than a simple single line?",
-      "id": "6a1ca9f9-f592-4a20-bdc9-0b2e1c90e58a",
-      "correctOption"  : "bc32734b-2d87-47cd-98f1-8d0a4786fb08",
-      "selectedOption" : null,
-      "explanation" : "explanation explanation explanation explanation explanation explanation ",
-      "options": [
-        {
-          "id": "bc32734b-2d87-47cd-98f1-8d0a4786fb08",
-          "content": "correct",
-        },
-        {
-          "id": "38781586-0799-4428-8894-4abb074ea48d",
-          "content": "option--2",
-        },
-        {
-          "id": "33b0e2f5-e4ba-43f2-9e98-99eed20e0a72",
-          "content": "option--3",
-        },
-        {
-          "id": "02df4333-0af5-447c-8ea1-ac39dad4300f",
-          "content": "option--4",
-        }
-      ],
-
-    },
-    {
-      "content": "This is a more descriptive question with more text to overflow and create moe paragraphs. Also do mention that this is for real stuff and not jokes",
-      "id": "d9f7c597-4950-4d4f-9499-de70a8bcbaba",
-      "correctOption": "5954af8a-6d7d-4010-b2e6-52f0f895b81c",
-      "selectedOption" : null,
-      "explanation" : "explanation explanation explanation explanation explanation explanation ",
-      "options": [
-        {
-          "id": "690766a5-c418-4dd4-95ab-ef43e549c6ee",
-          "content": "option--1",
-        },
-        {
-          "id": "5954af8a-6d7d-4010-b2e6-52f0f895b81c",
-          "content": "correct",
-        },
-        {
-          "id": "b3eb5235-25e1-4cf2-8233-41fc86506c45",
-          "content": "option--3",
-        },
-        {
-          "id": "db351619-3168-4f63-969c-53adf4a105ab",
-          "content": "option--4",
-        }
-      ],
-    },
-     {
-      "content": "This is a more descriptive question with more text to overflow and create moe paragraphs. Also do mention that this is for real stuff and not jokes. Also do mention that this is for real stuff and not jokes",
-      "id": "6a1ca9f9-f592-4a20-bdc9-0b2e1c90e58a",
-      "correctOption"  : "bc32734b-2d87-47cd-98f1-8d0a4786fb08",
-      "selectedOption" : null,
-      "explanation" : "explanation explanation explanation explanation explanation explanation ",
-      "options": [
-        {
-          "id": "bc32734b-2d87-47cd-98f1-8d0a4786fb08",
-          "content": "correct",
-        },
-        {
-          "id": "38781586-0799-4428-8894-4abb074ea48d",
-          "content": "jj nhbg  fddd",
-        },
-        {
-          "id": "33b0e2f5-e4ba-43f2-9e98-99eed20e0a72",
-          "content": "some great message",
-        },
-        {
-          "id": "02df4333-0af5-447c-8ea1-ac39dad4300f",
-          "content": "welcome to hell",
-        }
-      ],
-
-    }
-  ],
-};
-// console.log(QuizData);
-const quiz = new Quiz(QuizJson); // create a new Quiz instance with the data
-const newQuiz = await quiz.save(); // save the Quiz to MongoDB
-return res.json({newQuiz , status: "ok"});
-
-}catch(error){
-        return res.status(400).json({msg : "failured to save quiz" , error  });
-}
-});
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 db.once('open',()=> {
@@ -236,8 +89,6 @@ db.once('open',()=> {
     app.listen(PORT, ()=>{console.log(`listening on port ${PORT}`)});
 });
 ///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-
 
 
 

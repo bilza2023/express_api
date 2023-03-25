@@ -71,7 +71,7 @@ const email = req.body.email;
 const passwordPlain = req.body.password;
 const user = await Subscriber.findOne({email});
   if (user == null) {
-      return res.status(200).json({msg: "can not find email address"});
+      return res.status(200).json({status: "error", msg: "can not find email address"});
   }
 
   if (await bcrypt.compare(passwordPlain,user.password)) {
@@ -80,16 +80,16 @@ const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1
 
 //--Set Authorization with Bearer token syntax also send as token
 res.set("Authorization", `Bearer ${token}`);
-return res.status(200).json({ msg: "compare success", token: token });
+return res.status(200).json({status: "ok", msg: "compare success", token: token });
 
 
   }else {
-      return res.status(200).json({msg: "login failed, the email and the password does not match"});
+      return res.status(200).json({status: "error", msg: "login failed, the email and the password does not match"});
   }
 
 }catch(error){
         // console.log(error);
-        return res.status(400).json({msg : "failure" , error });
+        return res.status(400).json({status: "error",msg : "login failed" , error });
 }
 });
 userRouter.post("/logout" , async function(req,res) {
