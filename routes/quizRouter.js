@@ -6,6 +6,9 @@ const express = require('express');
 const quizRouter = express.Router();
 const Quiz = require("../models/quiz");
 const newQuiz = require('../models/new_quiz.js');
+const Subscriber = require("../models/subscriber.js");
+
+// const checkLogin = require("../middleware/checkLogin.js");
 /////////////////////////////////////////////////
 ////////-----------------CREATE---------/////////
 ////////////////////////////////////////////////
@@ -13,11 +16,25 @@ const newQuiz = require('../models/new_quiz.js');
 //////////////////---new----////////////////////////////
 quizRouter.post("/new", async function(req, res) {
    try {
-   const token = req.body.token;
    const title = req.body.title;
-   newQuiz.userId = "641a0285c1e7d9a8adddfd4a"
+  //  debugger;
+   const token = req.body.token;
+   const userId  = await checkLogin(token);
+
+  if (userId == null) {
+    return res.status(400).json({ status:"error",  msg: "please register or login", error });
+  }
+///////////////////---limit new quiz--////
+if (userId !== '64202224fd8518cb214bd138'){
+const prev = await Quiz.count({userId :userId});
+    if (prev > 10){
+    return res.status(400).json({ status:"error", msg: "At the momnent no more than 10 Quizzes are allowed"});
+    }
+}
+//////--limit ends
    const aa = newQuiz;
    aa.title =  title;
+   aa.userId = userId; // importantay
     let quiz = new Quiz( aa );
     await quiz.save();
     return res.json({ quiz, status: "ok" });
@@ -44,9 +61,15 @@ quizRouter.post("/update", async function(req, res) {
 ////////////////////////////////////////////////////////
 quizRouter.get("/page/:limit?/:count?" , async function(req,res) {
   try {
-    const { limit = 10, count = 0 } = req.params;
+    const { limit = 20, count = 0 } = req.params;
+// debugger;
+   const token = req.headers['authorization'];
+   const userId  = await checkLogin(token);
 
-      const quizzes = await Quiz.find({})
+  if (userId == null) {
+    return res.status(400).json({ status:"error",  msg: "please register or login", error });
+  }
+      const quizzes = await Quiz.find({"userId" : userId})
       .sort({ createdAt: -1 }) // Sort by createdAt field in descending order
       .limit(Number(limit))
       .skip(Number(count));
@@ -93,4 +116,23 @@ quizRouter.get("/show/:quizId" , async function(req,res) {
 ////////////////////////////////////////////////////////
 module.exports = quizRouter;
 
+////////////////////////////////////////////////////////
+async function  checkLogin(token) {
+try{
+// const token = req.body.token;
+    
+    if(token == null || token == ""){
+      return  {user:null , isLogin :false};
+    }
+// verify token with JWT_SECRET
+const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // get user id from decoded token
+    const userId = decoded.id;
+    // find user by id--user still exists???
+    const user = await Subscriber.findById(userId);
+    return  userId;
+}catch(e){
+  return  null;
+}
+}
 

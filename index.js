@@ -68,21 +68,6 @@ async  function  authToken(req, res, next) {
 next();
 }
 
-async  function  checkLogin(req) {
-const token = req.body.token;
-    
-    if(token == null || token == ""){
-      return  {user:null , isLogin :false};
-    }
-// verify token with JWT_SECRET
-const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // get user id from decoded token
-    const userId = decoded.id;
-    // find user by id
-    const user = await Subscriber.findById(userId);
-    return  {user , isLogin :true};
-}
-
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 db.once('open',()=> {
