@@ -68,9 +68,9 @@ quizRouter.get("/featured" , async function(req,res) {
       .limit(Number(limit))
       .skip(Number(count));
 
-    return res.status(200).json({msg : "success" , quizzes });
+    return res.status(200).json({status : "ok" , quizzes });
   } catch(error) {
-    return res.status(400).json({msg : "failure" , error  });
+    return res.status(400).json({status : "error" , error  });
   }
 });
 // ////////////////////////////////////////////////////////
