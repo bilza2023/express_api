@@ -59,6 +59,22 @@ quizRouter.post("/update", async function(req, res) {
 ////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////
+quizRouter.get("/featured" , async function(req,res) {
+  try {
+    const { limit = 20, count = 0 } = req.params;
+
+      const quizzes = await Quiz.find({"userId" : '64202224fd8518cb214bd138'})
+      .sort({ createdAt: -1 }) // Sort by createdAt field in descending order
+      .limit(Number(limit))
+      .skip(Number(count));
+
+    return res.status(200).json({msg : "success" , quizzes });
+  } catch(error) {
+    return res.status(400).json({msg : "failure" , error  });
+  }
+});
+// ////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 quizRouter.get("/page/:limit?/:count?" , async function(req,res) {
   try {
     const { limit = 20, count = 0 } = req.params;
