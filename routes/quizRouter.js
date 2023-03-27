@@ -102,16 +102,23 @@ quizRouter.get("/show/:quizId" , async function(req,res) {
   }
 });
 ////////////////////////////////////////////////////////
-// quizRouter.delete("/:id" , async function(req,res) {
-//   try {
-//     const id= req.params.id;
+quizRouter.post( "/del" , async function(req,res) {
+  try {
+  // debugger;
+    const id= req.body.id;
+    const token= req.body.token;
 
-//     await Subscriber.deleteOne({ _id: id });
-//     return res.status(200).json({msg : "success" });
-//   } catch(error) {
-//     return res.status(400).json({msg : "failure" , error  });
-//   }
-// });
+  const userId  = await checkLogin(token);
+  if (userId == null) {
+    return res.status(400).json({ status:"error",  msg: "please register or login", error });
+  }
+
+    const r = await Quiz.deleteOne({ _id: id , userId });
+    return res.status(200).json({status:"ok", msg : "deleted" });
+  } catch(error) {
+    return res.status(400).json({status : "error" ,msg : "failed to delete", error  });
+  }
+});
 //-------------------------------------------------------
 ////////////////////////////////////////////////////////
 module.exports = quizRouter;
