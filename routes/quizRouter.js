@@ -51,9 +51,9 @@ quizRouter.post("/update", async function(req, res) {
      const options = { new: true, upsert: true }; 
     const updatedQuiz = await Quiz.findByIdAndUpdate( id , quiz,options);
     // console.log(updatedQuiz);
-    return res.status(200).json({ success: "ok" , updatedQuiz });
+    return res.status(200).json({ code:0 , updatedQuiz });
   } catch (error) {
-    return res.status(400).json({ success: "error",error });
+    return res.status(400).json({ code:1 ,error });
   }
 });
 ////////////////////////////////////////////////////////
