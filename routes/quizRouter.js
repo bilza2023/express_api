@@ -51,19 +51,18 @@ quizRouter.post("/update", async function(req, res) {
      const options = { new: true, upsert: true }; 
     const updatedQuiz = await Quiz.findByIdAndUpdate( id , quiz,options);
     // console.log(updatedQuiz);
-    return res.status(200).json({ msg: "success", status:"ok" , updatedQuiz });
+    return res.status(200).json({ success: "ok" , updatedQuiz });
   } catch (error) {
-    return res.status(400).json({ msg: "failure", status:"error",error });
+    return res.status(400).json({ success: "error",error });
   }
 });
 ////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////
-quizRouter.get("/featured" , async function(req,res) {
+quizRouter.get( "/featured" , async function(req,res) {
   try {
     const { limit = 20, count = 0 } = req.params;
 
-      const quizzes = await Quiz.find({"userId" : '64202224fd8518cb214bd138'})
+      const quizzes = await Quiz.find({"userId" : '64202224fd8518cb214bd138' , published : true })
       .sort({ createdAt: -1 }) // Sort by createdAt field in descending order
       .limit(Number(limit))
       .skip(Number(count));
@@ -112,9 +111,13 @@ quizRouter.get("/show/:quizId" , async function(req,res) {
   const quizId  = req.params.quizId;
   // console.log(quizId)
     const quiz = await Quiz.findById( quizId );
-    return res.status(200).json({ quiz,status:"ok" });
+      if (quiz.published == true){
+        return res.status(200).json({ quiz, code:0 });
+      }else {
+        return res.status(200).json({ code: 2 });
+      }
   } catch(error) {
-    return res.status(400).json({msg : "failure" , error  });
+    return res.status(400).json({code:3 , error  });
   }
 });
 ////////////////////////////////////////////////////////
