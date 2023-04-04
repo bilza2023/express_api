@@ -34,6 +34,7 @@ const prev = await Quiz.count({userId :userId});
 //////--limit ends
    const aa = newQuiz;
    aa.title =  title;
+   aa.members =  [{email: "ff@jj.com" , password: "123456"}];
    aa.userId = userId; // importantay
     let quiz = new Quiz( aa );
     await quiz.save();
@@ -50,8 +51,9 @@ quizRouter.post("/update", async function(req, res) {
     const id = quiz._id; // the updated fields
      const options = { new: true, upsert: true }; 
     const updatedQuiz = await Quiz.findByIdAndUpdate( id , quiz,options);
-    // console.log(updatedQuiz);
+
     return res.status(200).json({ code:0 , updatedQuiz });
+       
   } catch (error) {
     return res.status(400).json({ code:1 ,error });
   }

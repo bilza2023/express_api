@@ -1,0 +1,164 @@
+{
+ "quiz" :{
+
+  "title": "Global Economy 101",
+  "_id" : "6424018be683525d966ea649",
+  "userId": "64202224fd8518cb214bd138",
+  "saveResponse": false,
+  "published": true,
+  "showIntro": true,
+  "introText": "Welcome to the Global Economy 101 Quiz! This quiz is designed for school kids to test their knowledge on the basics of the global economy. The questions in this quiz cover topics such as international trade, economic systems, and economic indicators. Good luck!",
+  "showResult": true,
+
+  "questions": [
+{
+  "content": "What is the definition of GDP?",
+  "id": "a94f7b4a-9b6f-4dc4-9a12-af5c5cf3e60a",
+  "correctOption": "1c9bbd2b-364c-4f91-a74c-40c52c8b29b4",
+  "explanation": "Gross Domestic Product (GDP) is the total value of all goods and services produced within a country's borders in a given period of time, typically a year.",
+  "options": [
+    {
+      "id": "4ec601d3-1205-4c51-b1a5-2c26df1ed70d",
+      "content": "The total value of goods and services imported by a country in a given period of time"
+    },
+    {
+      "id": "1c9bbd2b-364c-4f91-a74c-40c52c8b29b4",
+      "content": "The total value of goods and services produced within a country's borders in a given period of time"
+    },
+    {
+      "id": "6a13a1f4-bd87-479c-8a6f-d9fb0b39d4ae",
+      "content": "The total value of goods and services exported by a country in a given period of time"
+    },
+    {
+      "id": "4e163575-6f92-4370-98f7-8f21602e87c9",
+      "content": "The total value of all goods and services produced by a country in a given period of time, including those produced by foreign-owned firms"
+    }
+  ]
+},
+{
+  "content": "Which of the following is an example of a command economy?",
+  "id": "6c5d6a5b-72de-47f5-a882-27b7f8c6e3db",
+  "correctOption": "b7d8fb2d-9cd9-4856-bbea-1948a6a5f7f5",
+  "explanation": "A command economy is a system where the government makes all economic decisions and controls all production and distribution of goods and services. North Korea is an example of a country that has a command economy.",
+  "options": [
+    {
+      "id": "3e3b0ef3-90a2-4d94-a3f1-9da22d4f4844",
+      "content": "The United States"
+    },
+    {
+      "id": "b7d8fb2d-9cd9-4856-bbea-1948a6a5f7f5",
+      "content": "North Korea"
+    },
+    {
+      "id": "3d32ecec-35ce-4d2a-8c2a-49e858a99c32",
+      "content": "Japan"
+    },
+    {
+      "id": "816f1e8b-065f-45a7-93d2-38a2fb2a0b93",
+      "content": "Germany"
+    }
+  ]
+},
+{
+  "content": "What is a trade deficit?",
+  "id": "f428ae11-1b19-4e9f-b6d9-bb57f21177cb",
+  "correctOption": "b4081aa6-ba68-4c9d-b9d6-ba28f7a54b8c",
+  "explanation": "A trade deficit occurs when a country imports more goods and services than it exports. This means that the country is spending more money on imports than it is earning through exports. A trade deficit can have negative consequences for a country's economy, such as inflation and a weaker currency.",
+  "options": [
+    {
+      "id": "7a361f2c-9e9d-48d7-ae27-6943f0665b5d",
+      "content": "When a country exports more goods and services than it imports"
+    },
+    {
+      "id": "b4081aa6-ba68-4c9d-b9d6-ba28f7a54b8c",
+      "content": "When a country imports more goods and services than it exports"
+    },
+    {
+      "id": "21f7a347-8c17-4d26-965a-d65d36b4c0e6",
+      "content": "When a country's economy is growing rapidly"
+    },
+    {
+      "id": "2314d4a3-4a75-4f2b-9827-09a2a47a7df1",
+      "content": "When a country's currency is strong"
+    }
+  ]
+},
+{
+  "content": "What is inflation?",
+  "id": "7890a0cd-fa48-4e05-8eb2-2b9f7c173c95",
+  "correctOption": "d89e2195-5c5a-4b51-b4fc-9a7a5f0ce3a3",
+  "explanation": "Inflation is the rate at which the general level of prices for goods and services is rising, and, subsequently, purchasing power is falling. Central banks attempt to limit inflation and avoid deflation, in order to keep the economy running smoothly. Inflation can be caused by a variety of factors, such as an increase in the money supply, a decrease in the supply of goods and services, or increased demand for goods and services.",
+  "options": [
+    {
+      "id": "1b52372d-8a62-446c-9e9c-aa9b6a97774c",
+      "content": "The rate at which a currency appreciates or depreciates relative to other currencies"
+    },
+    {
+      "id": "81a9185c-df20-4c3d-a901-4c4f0989a662",
+      "content": "The total value of all goods and services produced in a country over a period of time"
+    },
+    {
+      "id": "fe482fa7-31c5-4cf7-af6e-48a8d70e2cd2",
+      "content": "The rate at which a country's economy is growing"
+    },
+    {
+      "id": "d89e2195-5c5a-4b51-b4fc-9a7a5f0ce3a3",
+      "content": "The rate at which the general level of prices for goods and services is rising"
+    }
+  ]
+},
+{
+  "content": "What is Gross Domestic Product (GDP)?",
+  "id": "16f6a7e6-3ef6-46d2-9a9a-1b39f41d33e7",
+  "correctOption": "04ecf68e-ba0b-4497-a4aa-5e5a64ce7894",
+  "explanation": "Gross Domestic Product (GDP) is the total value of all goods and services produced within a country's borders in a given time period, usually a year. It is one of the most important economic indicators, as it is used to measure the economic health and growth of a country. GDP can be calculated using three different methods: the expenditure approach, the production approach, and the income approach.",
+  "options": [
+    {
+      "id": "7ec86f36-963b-46b5-8a1c-39c9f274a080",
+      "content": "The total value of all goods and services produced in the world over a period of time"
+    },
+    {
+      "id": "26b0d860-0e37-49a3-91a3-cf3b3e7f6c20",
+      "content": "The total amount of money earned by a country's citizens and businesses over a period of time"
+    },
+    {
+      "id": "c7e0d915-0172-4e10-8f4d-4f4f4c6e0e9c",
+      "content": "The total amount of money earned by a country's government over a period of time"
+    },
+    {
+      "id": "04ecf68e-ba0b-4497-a4aa-5e5a64ce7894",
+      "content": "The total value of all goods and services produced within a country's borders in a given time period"
+    }
+  ]
+},
+{
+  "content": "What is inflation?",
+  "id": "8721d61f-9398-4bb5-90c7-1a5a1d9c2a17",
+  "correctOption": "b91cefd8-5e37-4d3a-9445-5df5fa5dc858",
+  "explanation": "Inflation is the rate at which the general level of prices for goods and services is rising and, subsequently, purchasing power is falling. Inflation is usually measured as a percentage increase in the Consumer Price Index (CPI) or the Producer Price Index (PPI). Moderate inflation is generally considered to be a sign of a healthy economy, but high inflation can be detrimental to the economy and the purchasing power of individuals.",
+  "options": [
+    {
+      "id": "2a8a740e-88c2-4d87-877f-b8b71724f231",
+      "content": "The rate at which the general level of prices for goods and services is falling"
+    },
+    {
+      "id": "0a15ce7a-f86d-4b7d-a4fb-51db7aa62cd6",
+      "content": "The rate at which the general level of prices for goods and services is stable"
+    },
+    {
+      "id": "b91cefd8-5e37-4d3a-9445-5df5fa5dc858",
+      "content": "The rate at which the general level of prices for goods and services is rising"
+    },
+    {
+      "id": "e5a255cf-0bc8-417e-968a-93b3342c96b1",
+      "content": "The rate at which the general level of prices for goods and services is fluctuating"
+    }
+  ]
+}
+
+    ] 
+     
+}
+
+
+}

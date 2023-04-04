@@ -1,0 +1,262 @@
+{
+ "quiz" :{
+
+  "title": "Everyday Science",
+  "_id" : "64234b9db5d31dab8acf14bc",
+  "userId": "64202224fd8518cb214bd138",
+  "saveResponse": false,
+  "published": true,
+  "showIntro": true,
+  "introText": "Welcome to the Everyday Science Quiz for Kids! This quiz is designed to test your knowledge of everyday scientific concepts that you might encounter in your daily life. From the properties of matter to the workings of the human body, this quiz covers a broad range of topics that will challenge and inspire you. So put on your thinking caps and let's get started!",
+  "showResult": true,
+
+  "questions": [
+
+{
+  "content": "What is the process by which plants make their own food?",
+  "id": "80f246b5-d492-466f-bb5b-d8cc47b08cc2",
+  "correctOption": "85a46a68-936d-4228-a8ba-2b1f6b0de6b9",
+  "explanation": "Plants make their own food through the process of photosynthesis, which involves using sunlight to convert carbon dioxide and water into glucose and oxygen.",
+  "options": [
+    {
+      "id": "85a46a68-936d-4228-a8ba-2b1f6b0de6b9",
+      "content": "Photosynthesis"
+    },
+    {
+      "id": "8ddcb7aa-b9a9-456e-b1e6-e526372a26a4",
+      "content": "Respiration"
+    },
+    {
+      "id": "29d4dbf4-8e4e-4d29-973e-68dd8c8f4330",
+      "content": "Digestion"
+    },
+    {
+      "id": "b5f5e5c5-5d2c-46a7-b66d-242964c08bb2",
+      "content": "Fermentation"
+    }
+  ]
+},
+
+{
+  "content": "What type of energy is stored in a battery?",
+  "id": "9e1f08ba-8a61-49b6-80f6-58bbd8c0f440",
+  "correctOption": "ce5b6e91-c6f5-4f75-892a-b55d7af157ce",
+  "explanation": "A battery stores chemical energy that can be converted into electrical energy.",
+  "options": [
+    {
+      "id": "ce5b6e91-c6f5-4f75-892a-b55d7af157ce",
+      "content": "Chemical energy"
+    },
+    {
+      "id": "07fb18b8-63eb-4da1-a1dc-47a7b72953c9",
+      "content": "Kinetic energy"
+    },
+    {
+      "id": "b157f962-3f95-4d89-a2ca-6e5cf6b8a6d5",
+      "content": "Potential energy"
+    },
+    {
+      "id": "51f87b9c-2d8e-4655-b6b5-6cdbe20c87f2",
+      "content": "Nuclear energy"
+    }
+  ]
+},
+{
+  "content": "What is the freezing point of water?",
+  "id": "c936fbd6-29e2-438a-a0f7-0d35d1557077",
+  "correctOption": "d87f09b6-1d29-4a6f-9b5e-13d73a2a1b6e",
+  "explanation": "Water freezes at 0 degrees Celsius or 32 degrees Fahrenheit.",
+  "options": [
+    {
+      "id": "1d7c3b3e-6a8a-4aee-bad4-c6d4f6f831c4",
+      "content": "100 degrees Celsius"
+    },
+    {
+      "id": "b0c5d5bf-2e1a-4169-88d7-96b71d2da1c6",
+      "content": "0 degrees Fahrenheit"
+    },
+    {
+      "id": "d87f09b6-1d29-4a6f-9b5e-13d73a2a1b6e",
+      "content": "0 degrees Celsius"
+    },
+    {
+      "id": "f43aae35-dc06-4019-9b34-cd446d0990ea",
+      "content": "32 degrees Fahrenheit"
+    }
+  ]
+},
+{
+  "content": "Which gas is most abundant in the Earth's atmosphere?",
+  "id": "e29a6ed4-22f4-4d75-99b2-64c0a9d2a485",
+  "correctOption": "4b4a4b3c-745d-4741-a8db-fc9f3b3303ce",
+  "explanation": "Nitrogen is the most abundant gas in the Earth's atmosphere, making up about 78% of it.",
+  "options": [
+    {
+      "id": "f37114b7-44e5-464e-8a22-9d6950d64b16",
+      "content": "Carbon dioxide"
+    },
+    {
+      "id": "dc15c50a-b9b3-4643-9863-4172368e273c",
+      "content": "Oxygen"
+    },
+    {
+      "id": "4b4a4b3c-745d-4741-a8db-fc9f3b3303ce",
+      "content": "Nitrogen"
+    },
+    {
+      "id": "30803820-5766-439f-b131-2db8f88c1394",
+      "content": "Methane"
+    }
+  ]
+},
+{
+  "content": "What is the largest organ in the human body?",
+  "id": "d5a5bae8-3c36-48f3-86d6-41f8ce562678",
+  "correctOption": "128ccf37-2f16-42e1-a312-c6761a22d74f",
+  "explanation": "The skin is the largest organ in the human body, both by weight and surface area.",
+  "options": [
+    {
+      "id": "a88aa821-12f8-45d7-bc67-e5842f7d67b8",
+      "content": "Heart"
+    },
+    {
+      "id": "04c2b169-11e8-48b6-a0b9-3d22863b5e5c",
+      "content": "Brain"
+    },
+    {
+      "id": "128ccf37-2f16-42e1-a312-c6761a22d74f",
+      "content": "Skin"
+    },
+    {
+      "id": "4eaf6254-8943-4e0e-9973-c3be1a8d1cb6",
+      "content": "Liver"
+    }
+  ]
+},
+{
+  "content": "What is the smallest unit of matter?",
+  "id": "8a3d3ed3-fccf-4d34-86f8-7de719b63e63",
+  "correctOption": "4b7dc91b-773e-4e4d-8a4c-ffcb789f56c7",
+  "explanation": "The atom is the smallest unit of matter, consisting of a nucleus composed of protons and neutrons, with electrons orbiting the nucleus.",
+  "options": [
+    {
+      "id": "7d2a3d83-d7f3-4911-a48d-10a8e56b02fc",
+      "content": "Molecule"
+    },
+    {
+      "id": "4b7dc91b-773e-4e4d-8a4c-ffcb789f56c7",
+      "content": "Atom"
+    },
+    {
+      "id": "0e20446c-fb4e-4a4a-8b2e-efba50f2a39e",
+      "content": "Cell"
+    },
+    {
+      "id": "c0f6a327-88a4-4b08-bb58-8b46f22b82fc",
+      "content": "Organism"
+    }
+  ]
+},
+{
+  "content": "What is the process called when a solid changes directly into a gas without first becoming a liquid?",
+  "id": "d9b9f6ea-7cc7-4426-83e6-b1b481d5c1eb",
+  "correctOption": "ab329dcc-77b7-4703-8643-3c53a2b3d9c9",
+  "explanation": "The process of a solid changing directly into a gas without first becoming a liquid is called sublimation.",
+  "options": [
+    {
+      "id": "ab329dcc-77b7-4703-8643-3c53a2b3d9c9",
+      "content": "Sublimation"
+    },
+    {
+      "id": "13196554-7ec5-45d8-befe-62ca547e308c",
+      "content": "Evaporation"
+    },
+    {
+      "id": "1200a4a4-bf4c-43b4-bcb4-51f43c9d5181",
+      "content": "Condensation"
+    },
+    {
+      "id": "08ad4d62-77b9-4fb1-b427-4d0d43038402",
+      "content": "Deposition"
+    }
+  ]
+},
+{
+"content": "What is the process by which water changes from a liquid to a gas?",
+"id": "3e550e16-6c24-4f35-b6b5-fc22d01a1b46",
+"correctOption": "d3b3f947-729a-4e03-971b-631d12a8b0c4",
+"explanation": "The process by which water changes from a liquid to a gas is called evaporation. This occurs when water is heated or exposed to dry air, causing the molecules to become excited and break free from the liquid, turning into water vapor.",
+"options": [
+{
+"id": "5ef5d77c-1e33-47c2-9ccf-3cc811d14cc8",
+"content": "Condensation"
+},
+{
+"id": "d3b3f947-729a-4e03-971b-631d12a8b0c4",
+"content": "Evaporation"
+},
+{
+"id": "2e981ed3-ef3d-4646-aaaf-2e1ee1d812a9",
+"content": "Precipitation"
+},
+{
+"id": "4a7aa256-0d9a-4e9b-9b7a-818f13e449c7",
+"content": "Sublimation"
+}
+]
+},
+{
+"content": "What is the process by which water changes from a liquid to a gas?",
+"id": "7adef082-1ed9-4c06-bec4-7e965d80066e",
+"correctOption": "0d7aeb5e-f9df-4f5d-bf5c-efc96f4f8a7a",
+"explanation": "The process by which water changes from a liquid to a gas is called evaporation. This occurs when water is heated or exposed to air, causing it to transform into water vapor.",
+"options": [
+{
+"id": "d2a2f797-ae54-491d-aa14-74f84ec657b6",
+"content": "Condensation"
+},
+{
+"id": "fd6ecfd3-7e9b-4138-942e-76fcd696d1ce",
+"content": "Freezing"
+},
+{
+"id": "0d7aeb5e-f9df-4f5d-bf5c-efc96f4f8a7a",
+"content": "Evaporation"
+},
+{
+"id": "5ec70c5f-08db-40c5-a9aa-b2f159a1b69a",
+"content": "Sublimation"
+}
+]
+},
+{
+  "content": "What is the process of converting a liquid into a gas called?",
+  "id": "8d02e2a9-720f-4871-946f-30b6a2e2e256",
+  "correctOption": "22d345da-3c80-4e43-a4c1-fbbcf32cb548",
+  "explanation": "The process of converting a liquid into a gas is called evaporation. This occurs when the heat energy of a substance causes its molecules to move faster, eventually causing them to break free from the liquid and become a gas.",
+  "options": [
+    {
+      "id": "c90b6f69-6eb2-48a5-9a1e-3175a2ed2f04",
+      "content": "Sublimation"
+    },
+    {
+      "id": "b2847f15-944e-4dbd-b8d3-e3c0fb3a466d",
+      "content": "Condensation"
+    },
+    {
+      "id": "22d345da-3c80-4e43-a4c1-fbbcf32cb548",
+      "content": "Evaporation"
+    },
+    {
+      "id": "31aaf42f-d7ee-41fa-9f7a-b30f92c352ec",
+      "content": "Freezing"
+    }
+  ]
+}
+
+    ] 
+     
+}
+
+
+}

@@ -1,0 +1,19 @@
+{
+ "quiz" :{
+
+  "_id"  : "6424018be683525d966ea647" ,
+  "title": "",
+  "userId": "64202224fd8518cb214bd138",
+  "saveResponse": false,
+  "published": true,
+  "showIntro": true,
+  "introText": "",
+  "showResult": true,
+  "questions": [
+    
+      ]
+ 
+}
+
+
+}

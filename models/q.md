@@ -1,3 +1,8 @@
+This is my node.js api with mongoose . 
+I want to write route "/members" in which I want to obtain a subcriber.members and return that
+using subscriber._id
+
+The model of subscribers is as fol:
 // Require the necessary packages
 const mongoose = require('mongoose');
 

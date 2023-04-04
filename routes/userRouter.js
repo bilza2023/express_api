@@ -37,6 +37,37 @@ const Subscriber = require("../models/subscriber");
 //   }
 
 // });
+userRouter.get('/members', async (req, res) => {
+  try {
+  const id = '64202224fd8518cb214bd138';
+    const members = await Subscriber.findById(id).select('members');
+    res.json({members});
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+userRouter.post('/members/save', async (req, res) => {
+  const newMembers = req.body.members;
+  // const token = req.body.token;
+  const id = '64202224fd8518cb214bd138';
+
+  try {
+    const user = await Subscriber.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    user.members = newMembers;
+    await user.save();
+
+    res.json({ success: true,message: 'Members updated successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({success: false, message: 'Server error' });
+  }
+});
 userRouter.post("/register" , async function(req,res) {
 
 try{

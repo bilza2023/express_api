@@ -10,7 +10,7 @@ const optionSchema = new mongoose.Schema({
     required: false
   }
 });
-
+ 
 const questionSchema = new mongoose.Schema({
   content: {
     type: String,
@@ -36,7 +36,7 @@ const questionSchema = new mongoose.Schema({
 
 //--user id & 1 question
 const QuizSchema = new mongoose.Schema({
-  questions: {
+   questions: {
     type: [questionSchema],
     required: true
   },
