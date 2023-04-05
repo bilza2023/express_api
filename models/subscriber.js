@@ -27,7 +27,7 @@ const subscriberSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  },
+  }, 
    members: {
     type: [membersSchema],
     required: false,

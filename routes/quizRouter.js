@@ -101,8 +101,13 @@ quizRouter.get("/page/:limit?/:count?" , async function(req,res) {
 quizRouter.post("/find" , async function(req,res) {
   try {
     const id= req.body.quizId;
-    const quiz = await Quiz.findById(id);
-    return res.status(200).json({ quiz,status:"ok" });
+    const incommingQuiz = await Quiz.findById(id);
+    if (incommingQuiz){
+      const userId = incommingQuiz.userId;
+      const user = await Subscriber.findById(userId);
+      const incommingMembers = user.members;
+    return res.status(200).json({ incommingQuiz, incommingMembers, status:"ok" });
+    }
   } catch(error) {
     return res.status(400).json({msg : "failure" , error  });
   }

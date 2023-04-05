@@ -33,6 +33,17 @@ const questionSchema = new mongoose.Schema({
     required: true
   }
 });
+const membersSchema = new mongoose.Schema({
+  email: { //This is not mongodb _id rather the app assigned id
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: false,
+    default : ""
+  }
+});
 
 //--user id & 1 question
 const QuizSchema = new mongoose.Schema({
@@ -40,7 +51,7 @@ const QuizSchema = new mongoose.Schema({
     type: [questionSchema],
     required: true
   },
-  title: {
+  title: { 
     type: String,
     required: false,
     default : ""
@@ -87,6 +98,17 @@ const QuizSchema = new mongoose.Schema({
    createdAt: {
     type: Date,
     default: Date.now
+  }, 
+   members: {
+    type: [membersSchema],
+    required: false,
+    default : []
+  },
+  dispatchTo: {
+    type: String,
+    enum: ["anyone", "selected", "team"],
+    required: true,
+    default: "anyone"
   }
 });
 
