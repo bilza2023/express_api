@@ -34,7 +34,14 @@ const prev = await Quiz.count({userId :userId});
 //////--limit ends
    const aa = newQuiz;
    aa.title =  title;
-   aa.members =  [{email: "ff@jj.com" , password: "123456"}];
+  //  aa.members =  [{email: "ff@jj.com" , password: "123456"}];
+   aa.members =  [];
+   aa.showIntro =  true;
+   aa.showfarewellText =  true;
+   aa.showResult =  true;
+   aa.saveResponse =  true;
+   aa.published =  false;
+
    aa.userId = userId; // importantay
     let quiz = new Quiz( aa );
     await quiz.save();

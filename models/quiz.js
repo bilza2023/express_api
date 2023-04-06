@@ -86,7 +86,12 @@ const QuizSchema = new mongoose.Schema({
     default : false
   },
   showResult: {
-    type: String,
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  showfarewellText: {
+    type: Boolean,
     default : true,
     required: false
   },
