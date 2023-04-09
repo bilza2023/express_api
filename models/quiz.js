@@ -113,7 +113,7 @@ const QuizSchema = new mongoose.Schema({
     type: String,
     enum: ["anyone", "selected", "team"],
     required: true,
-    default: "anyone"
+    default: "selected"
   }
 });
 

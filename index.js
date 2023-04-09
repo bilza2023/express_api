@@ -15,11 +15,11 @@ const jwt = require('jsonwebtoken');
 
 const userRouter = require('./routes/userRouter');
 const quizRouter = require('./routes/quizRouter');
+const resultRouter = require('./routes/resultRouter');
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 80;
 const Quiz = require("./models/quiz.js");
 const Subscriber = require("./models/subscriber.js");
-const QuizResult = require("./models/quiz_result.js");
 ////////////////////////////////////////////////////
 
 const app = express()
@@ -37,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 //.. Route middlewares--/////////////////////////////////////
 app.use("/user",userRouter);
 app.use("/quiz",quizRouter);
+app.use("/result",resultRouter);
 
 ///////////////////////////Routes////////////////////////
 app.get('/', async (req, res) =>{
