@@ -49,11 +49,12 @@ const membersSchema = new mongoose.Schema({
 const QuizSchema = new mongoose.Schema({
    questions: {
     type: [questionSchema],
-    required: true
+    required: false,
+    default : []
   },
   title: { 
     type: String,
-    required: false,
+    required: true,
     default : ""
   },
   userId: {
@@ -77,7 +78,7 @@ const QuizSchema = new mongoose.Schema({
   },
   introText: {
     type: String,
-    default : "",
+    default : "Welcome",
     required: false
   },
   published: {
@@ -97,7 +98,7 @@ const QuizSchema = new mongoose.Schema({
   },
   farewellText: {
     type: String,
-    default : "",
+    default : "Goodbye",
     required: false
   },
    createdAt: {
@@ -109,11 +110,11 @@ const QuizSchema = new mongoose.Schema({
     required: false,
     default : []
   },
-  dispatchTo: {
+  quizType: {
     type: String,
-    enum: ["anyone", "selected", "team"],
+    enum: ["quiz", "survey", "poll"],
     required: true,
-    default: "selected"
+    default: "quiz"
   }
 });
 

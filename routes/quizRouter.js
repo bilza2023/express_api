@@ -17,38 +17,34 @@ const Subscriber = require("../models/subscriber.js");
 quizRouter.post("/new", async function(req, res) {
    try {
    const title = req.body.title;
-  //  debugger;
    const token = req.body.token;
+   const quizType  = req.body.quizType;
    const userId  = await checkLogin(token);
 
   if (userId == null) {
-    return res.status(400).json({ status:"error",  msg: "please register or login", error });
+    return res.status(400).json({ msg: "please register or login" });
   }
 ///////////////////---limit new quiz--////
-if (userId !== '64202224fd8518cb214bd138'){
+if (userId !== process.env.OWNER_ID ){
 const prev = await Quiz.count({userId :userId});
     if (prev > 10){
-    return res.status(400).json({ status:"error", msg: "At the momnent no more than 10 Quizzes are allowed"});
+    return res.status(400).json({ msg: "At the momnent no more than 10 Quizzes are allowed"});
     }
 }
 //////--limit ends
    const aa = newQuiz;
    aa.title =  title;
-  //  aa.members =  [{email: "ff@jj.com" , password: "123456"}];
-   aa.members =  [];
-   aa.showIntro =  true;
-   aa.showfarewellText =  true;
-   aa.showResult =  true;
-   aa.saveResponse =  true;
-   aa.published =  false;
-
+   aa.quizType =  quizType;
    aa.userId = userId; // importantay
+  
     let quiz = new Quiz( aa );
     await quiz.save();
-    return res.json({ quiz, status: "ok" });
+    return res.json({ quiz });
   
   } catch (error) {
-    return res.status(400).json({ msg: "failure to save quiz.", error });
+    //--do not send error to the user
+    // return res.status(400).json({ msg: "failured to create.", error });
+    return res.status(400).json({ msg: "failured to create." });
   }
 });
 
@@ -88,10 +84,11 @@ quizRouter.get("/page/:limit?/:count?" , async function(req,res) {
     const { limit = 20, count = 0 } = req.params;
 // debugger;
    const token = req.headers['authorization'];
+   //---here is the place to remove Bearer if added
    const userId  = await checkLogin(token);
 
   if (userId == null) {
-    return res.status(400).json({ status:"error",  msg: "please register or login", error });
+    return res.status(400).json({  msg: "please register or login", error });
   }
       const quizzes = await Quiz.find({"userId" : userId})
       .sort({ createdAt: -1 }) // Sort by createdAt field in descending order
@@ -157,22 +154,25 @@ quizRouter.post( "/del" , async function(req,res) {
 module.exports = quizRouter;
 
 ////////////////////////////////////////////////////////
-async function  checkLogin(token) {
-try{
-// const token = req.body.token;
-    
-    if(token == null || token == ""){
-      return  {user:null , isLogin :false};
+async function checkLogin(token) {
+  try {
+    // const token = req.body.token;
+    if (token == null || token == "") {
+      return null;
     }
-// verify token with JWT_SECRET
-const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // verify token with JWT_SECRET
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // get user id from decoded token
     const userId = decoded.id;
     // find user by id--user still exists???
     const user = await Subscriber.findById(userId);
-    return  userId;
-}catch(e){
-  return  null;
+    
+    if (!user) {
+      return null;
+    }
+    
+    return userId;
+  } catch (e) {
+    return null;
+  }
 }
-}
-
