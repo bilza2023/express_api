@@ -5,15 +5,12 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const quizRouter = express.Router();
 const Quiz = require("../models/quiz");
-const newQuiz = require('../models/new_quiz.js');
+const newQuiz = require('../models/new_quizxx.js');
 const Subscriber = require("../models/subscriber.js");
-
-// const checkLogin = require("../middleware/checkLogin.js");
 /////////////////////////////////////////////////
 ////////-----------------CREATE---------/////////
 ////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-//////////////////---new----////////////////////////////
+
 quizRouter.post("/new", async function(req, res) {
    try {
    const title = req.body.title;
@@ -106,6 +103,7 @@ quizRouter.post("/find" , async function(req,res) {
   try {
     const id= req.body.quizId;
     const incommingQuiz = await Quiz.findById(id);
+    debugger;
     if (incommingQuiz){
       const userId = incommingQuiz.userId;
       const user = await Subscriber.findById(userId);
@@ -149,7 +147,71 @@ quizRouter.post( "/del" , async function(req,res) {
     return res.status(400).json({status : "error" ,msg : "failed to delete", error  });
   }
 });
+quizRouter.post( "/question/delete" , async function(req,res) {
+  try {
+  // debugger;
+    const questionId= req.body.questionId;
+    const quizId= req.body.quizId;
+    // const token= req.body.token;
+
+  // const userId  = await checkLogin(token);
+  // if (userId == null) {
+  //   return res.status(400).json({ status:"error",  msg: "please register or login", error });
+  // }
+
+    const q = await Quiz.findById(quizId);
+    const qs = q.questions;
+    
+    for (let i = 0; i < qs.length; i++) {
+      const quest = qs[i];
+      if (quest._id == questionId){
+        qs.splice(i, 1);
+      }
+    }
+     q.questions = qs;
+     q.save();
+
+    return res.status(200).json({ msg : "deleted" , questions :q.questions });
+  } catch(error) {
+    return res.status(400).json({msg : "failed to delete", error  });
+  }
+});
 //-------------------------------------------------------
+quizRouter.get('/all_questions', async (req, res) => {
+  try {
+  const id = '64202224fd8518cb214bd138';
+    const members = await Subscriber.findById(id).select('questions');
+    res.json({questions});
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+quizRouter.post('/question/new', async (req, res) => {
+  const newQuestion = req.body.question;
+  // const quizId = req.body.quizId;
+  const quizId = '6439b3eb5c3ba7e9432be31e';
+  // const token = req.body.token;
+  const userId = '64202224fd8518cb214bd138';
+
+  try {
+    // const user = await Subscriber.findById(id);
+
+    // if (!user) {
+    //   return res.status(404).json({ success: false, message: 'User not found' });
+    // }
+     const quiz = await Quiz.findById(quizId);
+
+   quiz.questions.push(newQuestion); //--check this
+    await quiz.save();
+
+    res.status(200).json({ msg: 'Question updated successfully' ,questions :quiz.questions });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
 ////////////////////////////////////////////////////////
 module.exports = quizRouter;
 
