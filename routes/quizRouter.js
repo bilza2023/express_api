@@ -5,8 +5,11 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const quizRouter = express.Router();
 const Quiz = require("../models/quiz");
+const Result = require("../models/result");
+
 const newQuiz = require('../models/new_quizxx.js');
 const Subscriber = require("../models/subscriber.js");
+const qExistInR = require("./qExistInR.js");
 /////////////////////////////////////////////////
 ////////-----------------CREATE---------/////////
 ////////////////////////////////////////////////
@@ -49,13 +52,21 @@ quizRouter.post("/update", async function(req, res) {
   try {
     const quiz = req.body.quiz; // the updated fields
     const id = quiz._id; // the updated fields
+    const token = req.body.token;
+    
+  const userId  = await checkLogin(token);
+  if (userId == null) {
+    return res.status(400).json({ status:"error",  msg: "please register or login", error });
+  }
+
      const options = { new: true, upsert: true }; 
+    //  debugger;
     const updatedQuiz = await Quiz.findByIdAndUpdate( id , quiz,options);
 
-    return res.status(200).json({ code:0 , updatedQuiz });
+    return res.status(200).json({ msg : "Quiz Saved" });
        
   } catch (error) {
-    return res.status(400).json({ code:1 ,error });
+    return res.status(400).json({ error , msg : "failed to save"});
   }
 });
 ////////////////////////////////////////////////////////
@@ -103,7 +114,7 @@ quizRouter.post("/find" , async function(req,res) {
   try {
     const id= req.body.quizId;
     const incommingQuiz = await Quiz.findById(id);
-    debugger;
+    // debugger;
     if (incommingQuiz){
       const userId = incommingQuiz.userId;
       const user = await Subscriber.findById(userId);
@@ -130,10 +141,37 @@ quizRouter.get("/show/:quizId" , async function(req,res) {
   }
 });
 ////////////////////////////////////////////////////////
+
 quizRouter.post( "/del" , async function(req,res) {
   try {
   // debugger;
-    const id= req.body.id;
+    const quizId= req.body.quizId;
+    const token= req.body.token;
+
+  const userId  = await checkLogin(token);
+  if (userId == null) {
+    return res.status(400).json({ status:"error",  msg: "please register or login", error });
+  }
+//---check if quiz has responses
+ const allQuizResults = await Result.find({"quizId" : quizId});
+debugger;
+    if (allQuizResults.length > 0) {
+       return res.status(404).json({msg : "The Quiz has responses. Failed to delete"  });
+    }else{
+      const r = await Quiz.deleteOne({ _id: quizId , userId });
+    return res.status(200).json({ msg : "deleted" });
+    }
+//----------------------------------
+  } catch(error) {
+    return res.status(400).json({msg : "failed to delete", error  });
+  }
+});
+
+quizRouter.post( "/question/delete" , async function(req,res) {
+  try {
+  debugger;
+    const questionId= req.body.questionId;
+    const quizId= req.body.quizId;
     const token= req.body.token;
 
   const userId  = await checkLogin(token);
@@ -141,24 +179,12 @@ quizRouter.post( "/del" , async function(req,res) {
     return res.status(400).json({ status:"error",  msg: "please register or login", error });
   }
 
-    const r = await Quiz.deleteOne({ _id: id , userId });
-    return res.status(200).json({status:"ok", msg : "deleted" });
-  } catch(error) {
-    return res.status(400).json({status : "error" ,msg : "failed to delete", error  });
-  }
-});
-quizRouter.post( "/question/delete" , async function(req,res) {
-  try {
-  // debugger;
-    const questionId= req.body.questionId;
-    const quizId= req.body.quizId;
-    // const token= req.body.token;
 
-  // const userId  = await checkLogin(token);
-  // if (userId == null) {
-  //   return res.status(400).json({ status:"error",  msg: "please register or login", error });
-  // }
-
+    const allQuizResults = await Result.find({"quizId" : quizId});
+// debugger;
+    if (allQuizResults.length > 0) {
+       return res.status(400).json({msg : "This Question has responses. Failed to delete"  });
+    }else{
     const q = await Quiz.findById(quizId);
     const qs = q.questions;
     
@@ -172,10 +198,13 @@ quizRouter.post( "/question/delete" , async function(req,res) {
      q.save();
 
     return res.status(200).json({ msg : "deleted" , questions :q.questions });
+    }
+    
   } catch(error) {
     return res.status(400).json({msg : "failed to delete", error  });
   }
 });
+
 //-------------------------------------------------------
 quizRouter.get('/all_questions', async (req, res) => {
   try {
@@ -190,8 +219,8 @@ quizRouter.get('/all_questions', async (req, res) => {
 
 quizRouter.post('/question/new', async (req, res) => {
   const newQuestion = req.body.question;
-  // const quizId = req.body.quizId;
-  const quizId = '6439b3eb5c3ba7e9432be31e';
+  const quizId = req.body.quizId;
+  // const  = '6439b3eb5c3ba7e9432be31e';
   // const token = req.body.token;
   const userId = '64202224fd8518cb214bd138';
 
@@ -238,3 +267,5 @@ async function checkLogin(token) {
     return null;
   }
 }
+
+
