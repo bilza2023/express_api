@@ -156,13 +156,17 @@ quizRouter.get("/show/:quizId" , async function(req,res) {
   const quizId  = req.params.quizId;
   // console.log(quizId)
     const quiz = await Quiz.findById( quizId );
+      if (quiz == null){
+        return res.status(404).json({ msg: "Item not found" });
+      }
+    
       if (quiz.published == true){
-        return res.status(200).json({ quiz, code:0 });
+        return res.status(200).json({ quiz, msg: "success" });
       }else {
-        return res.status(200).json({ code: 2 });
+        return res.status(404).json({ msg: "Item Not Published" });
       }
   } catch(error) {
-    return res.status(400).json({code:3 , error  });
+    return res.status(400).json({msg : 'unknown error!'  });
   }
 });
 ////////////////////////////////////////////////////////
