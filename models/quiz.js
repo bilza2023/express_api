@@ -26,8 +26,8 @@ const QuizSchema = new mongoose.Schema({
   },
   saveResponse: {
     type: Boolean,
-    required: false,
-    default : false
+    default : true,
+    required: false
   },
   published: {
     type: Boolean,

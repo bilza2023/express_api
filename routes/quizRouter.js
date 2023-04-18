@@ -7,7 +7,7 @@ const quizRouter = express.Router();
 const Quiz = require("../models/quiz");
 const Result = require("../models/result");
 
-const newQuiz = require('../models/new_quizxx.js');
+const newQuiz = require('../models/new_quiz.js');
 const Subscriber = require("../models/subscriber.js");
 const qExistInR = require("./qExistInR.js");
 /////////////////////////////////////////////////
@@ -35,16 +35,41 @@ const prev = await Quiz.count({userId :userId});
    const aa = newQuiz;
    aa.title =  title;
    aa.quizType =  quizType;
+   //--dont know from where else to set default values since setting it in model does not wrok.
+   aa.saveResponse =  true;
    aa.userId = userId; // importantay
   
     let quiz = new Quiz( aa );
     await quiz.save();
-    return res.json({ quiz });
+    return res.status(200).json({ quiz });
   
   } catch (error) {
     //--do not send error to the user
     // return res.status(400).json({ msg: "failured to create.", error });
     return res.status(400).json({ msg: "failured to create." });
+  }
+});
+
+quizRouter.post("/clone", async function(req, res) {
+  try {
+  debugger;
+    const id = req.body.id;
+    const title = req.body.title;
+    const originalQuiz = await Quiz.findById(id);
+    if (!originalQuiz) {
+      return res.status(404).json({ msg: "Quiz not found" });
+    }
+    const newQuiz = new Quiz(originalQuiz.toObject());
+    // newQuiz._id = mongoose.Types.ObjectId();
+    newQuiz._id = undefined;
+    newQuiz.isNew = true;
+    newQuiz.title = title;
+    newQuiz.createdAt = Date.now();
+    await newQuiz.save();
+    return res.status(200).json({ quiz: newQuiz ,msg: "Cloned.." });
+  } catch (error) {
+    // console.log(error);
+    return res.status(400).json({ msg: "Failed to clone quiz." });
   }
 });
 

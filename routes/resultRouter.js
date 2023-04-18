@@ -59,6 +59,22 @@ resultRouter.post( "/del" , async function(req,res) {
   }
 });
 
+resultRouter.post("/deleteAll", async function(req, res) {
+  try {
+    const quizId = req.body.quizId;
+    const token = req.body.token;
+
+    const userId = await checkLogin(token);
+    if (userId == null) {
+      return res.status(400).json({ msg: "please register or login" });
+    }
+
+    await Result.deleteMany({ quizId: quizId });
+    return res.status(200).json({ msg: "deleted all results" });
+  } catch (error) {
+    return res.status(400).json({ msg: "failed to delete  results" });
+  }
+});
 ////////////////////////////////////////////////////////
 module.exports = resultRouter;
 
