@@ -56,15 +56,15 @@ userRouter.post('/members/save', async (req, res) => {
 
   try {
     const user = await Subscriber.findById(id);
-
+debugger;
     if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found' });
+      return res.status(404).json({ msg: 'User not found' });
     }
 
     user.members = newMembers;
     await user.save();
-
-    res.json({ success: true,message: 'Members updated successfully' });
+const members = await Subscriber.findById(id).select('members');
+res.status(200).json({ msg: 'Members updated successfully' , members });
   } catch (err) {
     console.error(err);
     res.status(500).json({success: false, message: 'Server error' });
