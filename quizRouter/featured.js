@@ -3,7 +3,7 @@
 require('dotenv').config();
 const auth = require('../middleware/auth');
 const express = require('express');
-const appConfig = require("../common/appConfig");
+const appConfig = require("./appConfig");
 const Quiz = require("../models/quiz");
 const Result = require("../models/result");
 
@@ -47,8 +47,7 @@ const prev = await Quiz.count({userId :userId});
   
     let quiz = new Quiz( aa );
     await quiz.save();
-    const finalOkResp = respOk(res,"new quiz created",{ quiz });
-    return finalOkResp;
+    return res.status(200).json({ quiz });
   
   } catch (error) {
     const r = await respFail(res,"unknown error","unknownError");
@@ -238,7 +237,7 @@ quizRouter.get('/all_questions', async (req, res) => {
     const user= req.user;
     const userId  = req.userId;
 
-    const questions = await Subscriber.findById(userId).select('questions');
+    const members = await Subscriber.findById(userId).select('questions');
     res.json({questions});
   } catch (err) {
     const r = await respFail(res,"unknown error","unknownError");

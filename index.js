@@ -15,7 +15,7 @@ const db = require("./mongoDb/mongo.js");
 ////////////////////////////////////////////////
 
 const userRouter = require('./routes/userRouter');
-const quizRouter = require('./routes/quizRouter');
+const quizRouter = require('./quizRouter/quizRouter');
 const resultRouter = require('./routes/resultRouter');
 const nonAuthRouter = require('./routes/nonAuthRouter.js');
 
