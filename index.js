@@ -7,20 +7,22 @@ process.on('uncaughtException', function (err) {
 });
 //.......................................................
 const express  =require('express');
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 const cors = require('cors');
-const path = require('path');
+// const path = require('path');
 const db = require("./mongoDb/mongo.js");
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 ////////////////////////////////////////////////
 
 const userRouter = require('./routes/userRouter');
 const quizRouter = require('./routes/quizRouter');
 const resultRouter = require('./routes/resultRouter');
+const nonAuthRouter = require('./routes/nonAuthRouter.js');
+
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 80;
-const Quiz = require("./models/quiz.js");
-const Subscriber = require("./models/subscriber.js");
+// const Quiz = require("./models/quiz.js");
+// const Subscriber = require("./models/subscriber.js");
 ////////////////////////////////////////////////////
 
 const app = express()
@@ -36,6 +38,7 @@ app.use(cors( )); //working
 app.use(express.urlencoded({ extended: true }));
 
 //.. Route middlewares--/////////////////////////////////////
+app.use("/",nonAuthRouter);
 app.use("/user",userRouter);
 app.use("/quiz",quizRouter);
 app.use("/result",resultRouter);
@@ -44,31 +47,7 @@ app.use("/result",resultRouter);
 app.get('/', async (req, res) =>{
 res.status(200).json({success :true ,  message : "Welcome to the api"});
 });
-
-//-----middle ware
-async  function  authToken(req, res, next) {
-  const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      req.login = false;
-      next();      
-    }
-    // get token from request header
-    const token = req.headers.authorization.split(" ")[1];
-    if(token == null || token == ""){
-      return res.status(404).json({message : "Auth token not found:you may not be logged in."});
-    }
-    // verify token with JWT_SECRET
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // get user id from decoded token
-    const userId = decoded.id;
-    // find user by id
-    const user = await Subscriber.findById(userId);
-    req.user = user;
-    req.login = true;
-next();
-}
-
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 db.once('open',()=> {
     console.log("MongoDb ===> connection established")

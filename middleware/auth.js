@@ -7,7 +7,7 @@ const Subscriber = require("../models/subscriber");
 const auth = async (req,res,next)=>{
 
  try {
-    debugger;
+    // debugger;
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     // const token = req.token;
@@ -26,7 +26,8 @@ const auth = async (req,res,next)=>{
 
     if (user) {
           req.user = user;
-          console.log(user);
+          req.userId = userId;
+          // console.log(user);
           next();
           return;
     } else {

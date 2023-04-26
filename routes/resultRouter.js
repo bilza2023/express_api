@@ -1,5 +1,6 @@
 
 require('dotenv').config();
+const auth = require('../middleware/auth');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const express = require('express');
@@ -9,11 +10,15 @@ const Quiz = require("../models/quiz");
 const Subscriber = require("../models/subscriber.js");
 /////////////////////////////////////////////////
 ////////-----------------SAVE---------/////////
+resultRouter.use(auth);
 ////////////////////////////////////////////////
 
 resultRouter.post('/save', async (req, res) => {
   try {
-  debugger;
+  // debugger;
+  const user= req.user;
+  const userId  = req.userId;
+
   const newResult = req.body.result;
   //  const { quizId, email } = newResult;
     // const existingResult = await Result.findOne({ quizId, email });
@@ -31,6 +36,8 @@ resultRouter.post('/save', async (req, res) => {
 });
 resultRouter.post('/analytics', async (req, res) => {
 try {
+// const user= req.user;
+    // const userId  = req.userId;
     const quizId = req.body.quizId;
     const quiz =  await Quiz.findById(quizId);
     const results = await Result.find({ quizId });
@@ -45,9 +52,9 @@ resultRouter.post( "/del" , async function(req,res) {
   try {
   debugger;
     const resultId = req.body.resultId;
-    const token= req.body.token;
+const user= req.user;
+    const userId  = req.userId;
 
-  const userId  = await checkLogin(token);
   if (userId == null) {
     return res.status(400).json({ msg: "please register or login" });
   }
@@ -64,9 +71,9 @@ resultRouter.post( "/del" , async function(req,res) {
 resultRouter.post("/deleteAll", async function(req, res) {
   try {
     const quizId = req.body.quizId;
-    const token = req.body.token;
-
-    const userId = await checkLogin(token);
+   const user= req.user;
+    const userId  = req.userId;
+   
     if (userId == null) {
       return res.status(400).json({ msg: "please register or login" });
     }
@@ -80,28 +87,6 @@ resultRouter.post("/deleteAll", async function(req, res) {
 ////////////////////////////////////////////////////////
 module.exports = resultRouter;
 
-async function checkLogin(token) {
-  try {
-    // const token = req.body.token;
-    if (token == null || token == "") {
-      return null;
-    }
-    // verify token with JWT_SECRET
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // get user id from decoded token
-    const userId = decoded.id;
-    // find user by id--user still exists???
-    const user = await Subscriber.findById(userId);
-    
-    if (!user) {
-      return null;
-    }
-    
-    return userId;
-  } catch (e) {
-    return null;
-  }
-}
 
 
 

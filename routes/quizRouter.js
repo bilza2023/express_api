@@ -1,6 +1,7 @@
 
 require('dotenv').config();
-const bcrypt = require('bcryptjs');
+const auth = require('../middleware/auth');
+// const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const quizRouter = express.Router();
@@ -14,48 +15,16 @@ const qExistInR = require("./qExistInR.js");
 
 quizRouter.use(auth);
 /////////////////////////////////////////////////
-async function auth(req, res , next){
-
- try {
- debugger;
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    // const token = req.token;
-    // console.log("token",token);
-    if(token == null || token == ""){
-    return res.status(404).json({ msg : "Auth token not found:you may not be logged in." , errorcode : 001 , errormsg : "authError" });
-    }
-    // verify token with JWT_SECRET
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // get user id from decoded token
-    const userId = decoded.id;
-
-    // // find user by id
-    const user = await Subscriber.findById(userId);
-
-    if (user) {
-          req.user = user;
-          console.log(user);
-          next();
-          return;
-    } else {
-      return res.status(404).json({ msg : "User  not found:you may not be logged in." , errorcode : 002 , errormsg : "userNotFound" });
-    }
-
-  } catch (error) {
-    return res.status(500).json({ msg : "Auth token not found:you may not be logged in." , errorcode : 003 , errormsg : "unownAuthError" });
-  }
-}
-
-////////////////////////////////////////////////
 
 quizRouter.post("/new", async function(req, res) {
    try {
+   debugger;
    const title = req.body.title;
-   const token = req.body.token;
+  //  const token = req.body.token;
    const quizType  = req.body.quizType;
-   const userId  = await checkLogin(token);
+
+   const user= req.user;
+   const userId  = user.userId;
 
   if (userId == null) {
     return res.status(400).json({ msg: "please register or login" });
@@ -90,13 +59,15 @@ quizRouter.post("/clone", async function(req, res) {
   try {
   debugger;
     const id = req.body.id;
+        const user= req.user;
+    const userId  = user.userId;
     const title = req.body.title;
     const originalQuiz = await Quiz.findById(id);
     if (!originalQuiz) {
       return res.status(404).json({ msg: "Quiz not found" });
     }
     const newQuiz = new Quiz(originalQuiz.toObject());
-    // newQuiz._id = mongoose.Types.ObjectId();
+    // userId is already set
     newQuiz._id = undefined;
     newQuiz.isNew = true;
     newQuiz.title = title;
@@ -111,11 +82,12 @@ quizRouter.post("/clone", async function(req, res) {
 
 quizRouter.post("/update", async function(req, res) {
   try {
+  debugger;
     const quiz = req.body.quiz; // the updated fields
     const id = quiz._id; // the updated fields
-    const token = req.body.token;
-    
-  const userId  = await checkLogin(token);
+    const user= req.user;
+    const userId  = req.userId;
+
   if (userId == null) {
     return res.status(400).json({ status:"error",  msg: "please register or login", error });
   }
@@ -135,6 +107,8 @@ quizRouter.post("/update", async function(req, res) {
 quizRouter.get( "/featured" , async function(req,res) {
   try {
     const { limit = 20, count = 0 } = req.params;
+  // const user= req.user;
+    // const userId  = req.userId;
 
       const quizzes = await Quiz.find({"userId" : '64202224fd8518cb214bd138' , published : true })
       .sort({ createdAt: -1 }) // Sort by createdAt field in descending order
@@ -152,13 +126,10 @@ quizRouter.get("/page/:limit?/:count?" , async function(req,res) {
   try {
     const { limit = 20, count = 0 } = req.params;
 // debugger;
-   const token = req.headers['authorization'];
-   //---here is the place to remove Bearer if added
-   const userId  = await checkLogin(token);
+const user= req.user;
+    // const userId  = user.userId;
+   const userId  = req.userId;
 
-  if (userId == null) {
-    return res.status(400).json({  msg: "please register or login", error });
-  }
       const quizzes = await Quiz.find({"userId" : userId})
       .sort({ createdAt: -1 }) // Sort by createdAt field in descending order
       .limit(Number(limit))
@@ -174,11 +145,13 @@ quizRouter.get("/page/:limit?/:count?" , async function(req,res) {
 quizRouter.post("/find" , async function(req,res) {
   try {
     debugger;
+    const user= req.user;
+    const userId  = user.userId;
     const id= req.body.quizId;
     const incommingQuiz = await Quiz.findById(id);
     if (incommingQuiz){
-      const userId = incommingQuiz.userId;
-      const user = await Subscriber.findById(userId);
+      // const userId = req.userId;
+      // const user = await Subscriber.findById(userId);
       const incommingMembers = user.members;
     return res.status(200).json({ incommingQuiz, incommingMembers, status:"ok" });
     }
@@ -187,39 +160,19 @@ quizRouter.post("/find" , async function(req,res) {
   }
 });
 // ////////////////////////////////////////////////////////
-quizRouter.get("/show/:quizId" , async function(req,res) {
-  try {
-  const quizId  = req.params.quizId;
-  // console.log(quizId)
-    const quiz = await Quiz.findById( quizId );
-      if (quiz == null){
-        return res.status(404).json({ msg: "Item not found" });
-      }
-    
-      if (quiz.published == true){
-        return res.status(200).json({ quiz, msg: "success" });
-      }else {
-        return res.status(404).json({ msg: "Item Not Published" });
-      }
-  } catch(error) {
-    return res.status(400).json({msg : 'unknown error!'  });
-  }
-});
+
 ////////////////////////////////////////////////////////
 
 quizRouter.post( "/del" , async function(req,res) {
   try {
   // debugger;
+    const user= req.user;
+    const userId  = req.userId;
     const quizId= req.body.quizId;
-    const token= req.body.token;
 
-  const userId  = await checkLogin(token);
-  if (userId == null) {
-    return res.status(400).json({ status:"error",  msg: "please register or login", error });
-  }
 //---check if quiz has responses
  const allQuizResults = await Result.find({"quizId" : quizId});
-debugger;
+// debugger;
     if (allQuizResults.length > 0) {
        return res.status(404).json({msg : "The Quiz has responses. Failed to delete"  });
     }else{
@@ -234,15 +187,12 @@ debugger;
 
 quizRouter.post( "/question/delete" , async function(req,res) {
   try {
-  debugger;
+  // debugger;
     const questionId= req.body.questionId;
     const quizId= req.body.quizId;
-    const token= req.body.token;
-
-  const userId  = await checkLogin(token);
-  if (userId == null) {
-    return res.status(400).json({ status:"error",  msg: "please register or login", error });
-  }
+    // const token= req.body.token;
+  const user= req.user;
+    const userId  = req.userId;
 
 
     const allQuizResults = await Result.find({"quizId" : quizId});
@@ -273,8 +223,11 @@ quizRouter.post( "/question/delete" , async function(req,res) {
 //-------------------------------------------------------
 quizRouter.get('/all_questions', async (req, res) => {
   try {
-  const id = '64202224fd8518cb214bd138';
-    const members = await Subscriber.findById(id).select('questions');
+  // const id = '64202224fd8518cb214bd138';
+    const user= req.user;
+    const userId  = req.userId;
+
+    const members = await Subscriber.findById(userId).select('questions');
     res.json({questions});
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -287,7 +240,10 @@ quizRouter.post('/question/new', async (req, res) => {
   const quizId = req.body.quizId;
   // const  = '6439b3eb5c3ba7e9432be31e';
   // const token = req.body.token;
-  const userId = '64202224fd8518cb214bd138';
+  // const userId = '64202224fd8518cb214bd138';
+    const user= req.user;
+    const userId  = req.userId;
+
 
   try {
     // const user = await Subscriber.findById(id);
@@ -310,27 +266,5 @@ quizRouter.post('/question/new', async (req, res) => {
 module.exports = quizRouter;
 
 ////////////////////////////////////////////////////////
-async function checkLogin(token) {
-  try {
-    // const token = req.body.token;
-    if (token == null || token == "") {
-      return null;
-    }
-    // verify token with JWT_SECRET
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // get user id from decoded token
-    const userId = decoded.id;
-    // find user by id--user still exists???
-    const user = await Subscriber.findById(userId);
-    
-    if (!user) {
-      return null;
-    }
-    
-    return userId;
-  } catch (e) {
-    return null;
-  }
-}
 
 
