@@ -16,6 +16,11 @@ const resultSchema = new mongoose.Schema({
     required: false,
     default : []
   },
+  countryCode: {
+    type: String,
+    required: false,
+    default : ""
+  },
   wrongAnswers: {
     type: [String],
     required: false,

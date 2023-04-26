@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const resultRouter = express.Router();
 const Result = require("../models/result");
+const Quiz = require("../models/quiz");
 const Subscriber = require("../models/subscriber.js");
 /////////////////////////////////////////////////
 ////////-----------------SAVE---------/////////
@@ -31,11 +32,12 @@ resultRouter.post('/save', async (req, res) => {
 resultRouter.post('/analytics', async (req, res) => {
 try {
     const quizId = req.body.quizId;
+    const quiz =  await Quiz.findById(quizId);
     const results = await Result.find({ quizId });
-    res.json({ success: true, results });
+    res.json({ results,quiz });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: 'Server error' });
+    res.status(500).json({  msg: 'Server error' });
   }
 });
 

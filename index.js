@@ -1,5 +1,5 @@
 require('dotenv').config();
-const sgMail = require('@sendgrid/mail');
+// const sgMail = require('@sendgrid/mail');
 process.on('uncaughtException', function (err) {
     console.error((new Date).toUTCString() + ' uncaughtException:', err.message);
     console.error(err.stack);
@@ -44,29 +44,6 @@ app.use("/result",resultRouter);
 app.get('/', async (req, res) =>{
 res.status(200).json({success :true ,  message : "Welcome to the api"});
 });
-
-//////////////////////////////////////////////////////
-// app.get('/sendMail', async (req, res) =>{
-// sgMail.setApiKey('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');
-// const msg = {
-//   to: 'skillzaa.com@gmail.com', // Change to your recipient
-//   from: 'bilza2023@gmail.com', // Change to your verified sender
-//   subject: 'Sending with SendGrid is Fun',
-//   text: 'and easy to do anywhere, even with Node.js',
-//   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-// }
-// sgMail
-//   .send(msg)
-//   .then((resp) => {
-//     // console.log(resp);
-//     res.status(200).json({success :true ,  message : "Email Mail Sent..."});
-//   })
-//   .catch((error) => {
-//     console.error(error)
-//   });
-// });
-
-
 
 //-----middle ware
 async  function  authToken(req, res, next) {

@@ -11,7 +11,43 @@ const newQuiz = require('../models/new_quiz.js');
 const Subscriber = require("../models/subscriber.js");
 const qExistInR = require("./qExistInR.js");
 /////////////////////////////////////////////////
-////////-----------------CREATE---------/////////
+
+quizRouter.use(auth);
+/////////////////////////////////////////////////
+async function auth(req, res , next){
+
+ try {
+ debugger;
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    // const token = req.token;
+    // console.log("token",token);
+    if(token == null || token == ""){
+    return res.status(404).json({ msg : "Auth token not found:you may not be logged in." , errorcode : 001 , errormsg : "authError" });
+    }
+    // verify token with JWT_SECRET
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // get user id from decoded token
+    const userId = decoded.id;
+
+    // // find user by id
+    const user = await Subscriber.findById(userId);
+
+    if (user) {
+          req.user = user;
+          console.log(user);
+          next();
+          return;
+    } else {
+      return res.status(404).json({ msg : "User  not found:you may not be logged in." , errorcode : 002 , errormsg : "userNotFound" });
+    }
+
+  } catch (error) {
+    return res.status(500).json({ msg : "Auth token not found:you may not be logged in." , errorcode : 003 , errormsg : "unownAuthError" });
+  }
+}
+
 ////////////////////////////////////////////////
 
 quizRouter.post("/new", async function(req, res) {
@@ -137,9 +173,9 @@ quizRouter.get("/page/:limit?/:count?" , async function(req,res) {
 // ////////////////////////////////////////////////////////
 quizRouter.post("/find" , async function(req,res) {
   try {
+    debugger;
     const id= req.body.quizId;
     const incommingQuiz = await Quiz.findById(id);
-    // debugger;
     if (incommingQuiz){
       const userId = incommingQuiz.userId;
       const user = await Subscriber.findById(userId);
