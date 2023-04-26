@@ -40,7 +40,6 @@ userRouter.post('/members/save', async (req, res) => {
     const newMembers = req.body.members;
    user.members = newMembers;
 
-   
     user.members = newMembers;
     await user.save();
 const members = await user.members;

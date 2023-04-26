@@ -1,24 +1,27 @@
 
+//--Require
 require('dotenv').config();
 const auth = require('../middleware/auth');
-// const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const express = require('express');
-const quizRouter = express.Router();
+const appConfig = require("./appConfig");
 const Quiz = require("../models/quiz");
 const Result = require("../models/result");
 
+const respOk = require("./respOk");
+const respFail = require("./respFail");
 const newQuiz = require('../models/new_quiz.js');
 const Subscriber = require("../models/subscriber.js");
-const qExistInR = require("./qExistInR.js");
-/////////////////////////////////////////////////
 
+/////////////////////////////////////////////////
+const quizRouter = express.Router();
 quizRouter.use(auth);
 /////////////////////////////////////////////////
 
+
+
 quizRouter.post("/new", async function(req, res) {
    try {
-   debugger;
+  //  debugger;
    const title = req.body.title;
   //  const token = req.body.token;
    const quizType  = req.body.quizType;
@@ -26,14 +29,12 @@ quizRouter.post("/new", async function(req, res) {
    const user= req.user;
    const userId  = user.userId;
 
-  if (userId == null) {
-    return res.status(400).json({ msg: "please register or login" });
-  }
 ///////////////////---limit new quiz--////
 if (userId !== process.env.OWNER_ID ){
 const prev = await Quiz.count({userId :userId});
-    if (prev > 10){
-    return res.status(400).json({ msg: "At the momnent no more than 10 Quizzes are allowed"});
+    if (prev > appConfig.MAX_QUIZ_ALLOWED ){
+    return respFail(res,`At the momnent no more than ${appConfig.MAX_QUIZ_ALLOWED} Quizzes are allowed`,"maxQuizReached");
+    // return res.status(400).json({ msg: ""});
     }
 }
 //////--limit ends
@@ -49,9 +50,8 @@ const prev = await Quiz.count({userId :userId});
     return res.status(200).json({ quiz });
   
   } catch (error) {
-    //--do not send error to the user
-    // return res.status(400).json({ msg: "failured to create.", error });
-    return res.status(400).json({ msg: "failured to create." });
+    const r = await respFail(res,"unknown error","unknownError");
+    return r;
   }
 });
 
@@ -76,30 +76,30 @@ quizRouter.post("/clone", async function(req, res) {
     return res.status(200).json({ quiz: newQuiz ,msg: "Cloned.." });
   } catch (error) {
     // console.log(error);
-    return res.status(400).json({ msg: "Failed to clone quiz." });
+    // return res.status(400).json({ msg: "Failed to clone quiz." });
+    const r = await respFail(res,"unknown error","unknownError");
+    return r;
   }
 });
 
 quizRouter.post("/update", async function(req, res) {
   try {
-  debugger;
+  // debugger;
     const quiz = req.body.quiz; // the updated fields
     const id = quiz._id; // the updated fields
     const user= req.user;
+    //  debugger;
     const userId  = req.userId;
 
-  if (userId == null) {
-    return res.status(400).json({ status:"error",  msg: "please register or login", error });
-  }
-
      const options = { new: true, upsert: true }; 
-    //  debugger;
     const updatedQuiz = await Quiz.findByIdAndUpdate( id , quiz,options);
 
     return res.status(200).json({ msg : "Quiz Saved" });
        
   } catch (error) {
-    return res.status(400).json({ error , msg : "failed to save"});
+    // return res.status(400).json({ error , msg : "failed to save"});
+    const r = await respFail(res,"failed to save quiz","failedToSaveQuiz");
+    return r;
   }
 });
 ////////////////////////////////////////////////////////
@@ -117,7 +117,9 @@ quizRouter.get( "/featured" , async function(req,res) {
 
     return res.status(200).json({status : "ok" , quizzes });
   } catch(error) {
-    return res.status(400).json({status : "error" , error  });
+    // return res.status(400).json({status : "error" , error  });
+    const r = await respFail(res,"unknown error","unknownError");
+    return r;
   }
 });
 // ////////////////////////////////////////////////////////
@@ -137,14 +139,16 @@ const user= req.user;
 
     return res.status(200).json({msg : "success" , quizzes });
   } catch(error) {
-    return res.status(400).json({msg : "failure" , error  });
+    // return res.status(400).json({msg : "failure" , error  });
+    const r = await respFail(res,"unknown error","unknownError");
+    return r;
   }
 });
 // ////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////
 quizRouter.post("/find" , async function(req,res) {
   try {
-    debugger;
+    // debugger;
     const user= req.user;
     const userId  = user.userId;
     const id= req.body.quizId;
@@ -156,7 +160,9 @@ quizRouter.post("/find" , async function(req,res) {
     return res.status(200).json({ incommingQuiz, incommingMembers, status:"ok" });
     }
   } catch(error) {
-    return res.status(400).json({msg : "failure" , error  });
+    // return res.status(400).json({msg : "failure" , error  });
+    const r = await respFail(res,"unknown error","unknownError");
+    return r;
   }
 });
 // ////////////////////////////////////////////////////////
@@ -181,7 +187,9 @@ quizRouter.post( "/del" , async function(req,res) {
     }
 //----------------------------------
   } catch(error) {
-    return res.status(400).json({msg : "failed to delete", error  });
+    // return res.status(400).json({msg : "failed to delete", error  });
+    const r = await respFail(res,"unknown error","unknownError");
+    return r;
   }
 });
 
@@ -216,7 +224,9 @@ quizRouter.post( "/question/delete" , async function(req,res) {
     }
     
   } catch(error) {
-    return res.status(400).json({msg : "failed to delete", error  });
+    // return res.status(400).json({msg : "failed to delete", error  });
+    const r = await respFail(res,"unknown error","unknownError");
+    return r;
   }
 });
 
@@ -230,7 +240,9 @@ quizRouter.get('/all_questions', async (req, res) => {
     const members = await Subscriber.findById(userId).select('questions');
     res.json({questions});
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    const r = await respFail(res,"unknown error","unknownError");
+    return r;
+    // res.status(500).json({ message: err.message });
   }
 });
 
@@ -238,19 +250,12 @@ quizRouter.get('/all_questions', async (req, res) => {
 quizRouter.post('/question/new', async (req, res) => {
   const newQuestion = req.body.question;
   const quizId = req.body.quizId;
-  // const  = '6439b3eb5c3ba7e9432be31e';
-  // const token = req.body.token;
-  // const userId = '64202224fd8518cb214bd138';
     const user= req.user;
     const userId  = req.userId;
 
 
   try {
-    // const user = await Subscriber.findById(id);
-
-    // if (!user) {
-    //   return res.status(404).json({ success: false, message: 'User not found' });
-    // }
+    
      const quiz = await Quiz.findById(quizId);
 
    quiz.questions.push(newQuestion); //--check this
@@ -258,8 +263,9 @@ quizRouter.post('/question/new', async (req, res) => {
 
     res.status(200).json({ msg: 'Question updated successfully' ,questions :quiz.questions });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: 'Server error' });
+    // console.error(err);
+    const r = await respFail(res,"unknown error","unknownError");
+    return r;
   }
 });
 ////////////////////////////////////////////////////////
