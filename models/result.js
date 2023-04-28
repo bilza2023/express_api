@@ -6,6 +6,10 @@ const resultSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  userId: { 
+    type: String,
+    required: true
+  },
   correctAnswers: {
     type: [String],
     required: false,

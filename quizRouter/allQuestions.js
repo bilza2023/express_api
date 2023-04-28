@@ -5,8 +5,8 @@
 // const Quiz = require("../models/quiz");
 // const Result = require("../models/result");
 
-const respOk = require("./respOk");
-const respFail = require("./respFail");
+const respOk = require("../common/respOk");
+const respFail = require("../common/respFail");
 const Subscriber = require("../models/subscriber.js");
 
 /////////////////////////////////////////////////

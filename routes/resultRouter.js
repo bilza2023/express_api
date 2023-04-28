@@ -1,8 +1,12 @@
 
 require('dotenv').config();
 const auth = require('../middleware/auth');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+
+const respOk = require("../common/respOk");
+const respFail = require("../common/respFail");
+
+const appConfig = require("../common/appConfig");
+
 const express = require('express');
 const resultRouter = express.Router();
 const Result = require("../models/result");
@@ -15,16 +19,32 @@ resultRouter.use(auth);
 
 resultRouter.post('/save', async (req, res) => {
   try {
-  // debugger;
+  debugger;
   const user= req.user;
-  const userId  = req.userId;
-
+  const userId  = user._id;
+ 
   const newResult = req.body.result;
-  //  const { quizId, email } = newResult;
-    // const existingResult = await Result.findOne({ quizId, email });
-    // if (existingResult) {
-      // res.status(400).json({ success: false, message: 'Result already exists' });
-    // } else {
+
+//--total number of responses
+const totalRespCount = await Result.countDocuments({userId});
+// console.log("totalRespCount" , totalRespCount);
+ if (totalRespCount > appConfig.MAX_RESPONSES_ALLOWED ){
+    return respFail(res,`No more than ${appConfig.MAX_RESPONSES_ALLOWED} Responses are allowed to be saved`,"maxResponsesReached");
+    }
+//////////////////////////
+
+  //--do not store 2 responses
+  // debugger;
+  
+  const quizId = newResult.quizId;
+    const existingResult = await Result.findOne({ quizId:newResult.quizId , email:newResult.email });
+    if (existingResult) {
+         return respFail(res,`Result already exists for this member`,"resultAlreadyExists");
+    }
+    
+    
+    
+      newResult.userId = user._id;
       let result = new Result(newResult);
       await result.save();
       res.json({ success: true, message: 'Result saved successfully' });

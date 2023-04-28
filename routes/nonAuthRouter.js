@@ -13,7 +13,7 @@ const Subscriber = require("../models/subscriber.js");
 
 nonAuthRouter.get("/show/:quizId" , async function(req,res) {
   try {
-  debugger;
+  // debugger;
   const quizId  = req.params.quizId;
   // console.log(quizId)
     const quiz = await Quiz.findById( quizId );

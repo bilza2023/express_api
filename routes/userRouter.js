@@ -2,8 +2,10 @@
 require('dotenv').config();
 
 const auth = require('../middleware/auth');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+
+const respOk = require("../common/respOk");
+const respFail = require("../common/respFail");
+
 const express = require('express');
 const userRouter = express.Router();
 const Subscriber = require("../models/subscriber");
@@ -33,9 +35,11 @@ userRouter.get('/members', async (req, res) => {
 
 userRouter.post('/members/save', async (req, res) => {
   try {
-  debugger;
+  // debugger;
       const user= req.user;
     const userId  = req.userId;
+
+
 
     const newMembers = req.body.members;
    user.members = newMembers;
