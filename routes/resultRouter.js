@@ -24,6 +24,7 @@ resultRouter.post('/save', async (req, res) => {
   const userId  = user._id;
  
   const newResult = req.body.result;
+  const quiz = req.body.quiz;
 
 //--total number of responses
 const totalRespCount = await Result.countDocuments({userId});
@@ -35,12 +36,13 @@ const totalRespCount = await Result.countDocuments({userId});
 
   //--do not store 2 responses
   // debugger;
-  
-  const quizId = newResult.quizId;
-    const existingResult = await Result.findOne({ quizId:newResult.quizId , email:newResult.email });
-    if (existingResult) {
-         return respFail(res,`Result already exists for this member`,"resultAlreadyExists");
-    }
+  if (quiz.quizType == "quiz" ){
+      const quizId = newResult.quizId;
+      const existingResult = await Result.findOne({ quizId:newResult.quizId , email:newResult.email });
+      if (existingResult) {
+          return respFail(res,`Result already exists for this member`,"resultAlreadyExists");
+      }
+  }
     
     
     
