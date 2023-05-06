@@ -1,16 +1,18 @@
+const lorem = require('./lorem');
+const uuid = require('./uuid');
 
 const baseMCQ = {
-    id : '333de',
+    id : uuid(),
     required : true,
-    content : "This is the base question",
-    explanation : "This is the base question",
+    content : lorem(5),
+    explanation : lorem(5),
     multiSelect:true,
-    selectedOptions :['23ed','dcxs'],
+    selectedOptions :['xxx','xxx'],
     displayOptions : 'bars',
     options :[
-    {id : '23ed' , content : 'This is the base question'},
-    {id : 'dcxs' , content : 'This is the base 2'},
-    {id : '665g' , content : 'This is the base 3'}
+    {id : uuid() , content : lorem(3)},
+    {id : uuid() , content : lorem(6)},
+    {id : uuid() , content : lorem(8)}
     ]
 }
 

@@ -7,7 +7,7 @@ const baseInput = {
     required : true,
     content :       lorem(12),
     explanation :   lorem(25),
-    payload  :      lorem(15)
+    payload  :      0
 }
 
 module.exports = baseInput;

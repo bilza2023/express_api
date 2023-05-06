@@ -21,7 +21,7 @@ const nonAuthRouter = require('./routes/nonAuthRouter.js');
 
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 80;
-// const Quiz = require("./models/quiz.js");
+const Survey = require("./models/survey/survey.js");
 
 ////////////////////////////////////////////////////
 
@@ -45,9 +45,14 @@ app.use("/result",resultRouter);
 
 ///////////////////////////Routes////////////////////////
 app.get('/', async (req, res) =>{
+const ret = Survey.findById()
 res.status(200).json({success :true ,  message : "Welcome to the api"});
 });
 
+app.get('/inspect/:id', async (req, res) =>{
+    const survey = await Survey.findById(req.params.id);
+res.status(200).json({survey});
+});    
 
 ////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
