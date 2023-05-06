@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const optionSchema = new mongoose.Schema({
+const svyOptionSchema = new mongoose.Schema({
   id: { //This is not mongodb _id rather the app assigned id
     type: String,
     required: true
@@ -12,13 +12,39 @@ const optionSchema = new mongoose.Schema({
 });
  
 const questionSchema = new mongoose.Schema({
-  content: {
-    type: String,
-    required: false
-  },
   id: { //This is not mongodb _id rather the app assigned id
     type: String,
     required: true
+  },
+  required: {
+    type: Boolean,
+    required: false,
+    default : false
+  },
+  multiSelect: {
+    type: Boolean,
+    required: false,
+    default : false
+  },
+  correctOptions: {
+    type: [String],
+    required: true,
+    default : []
+  },
+  displayOptions: {
+    type: String,
+    enum: ["dropdown", "radio", "check" , "bars"],
+    required: true,
+    default : "bars"
+  },
+  type: {
+    type: String,
+    enum: ["mcq", "inputText", "inputEmail" , "inputNumber"],
+    required: true,
+  },
+  content: {
+    type: String,
+    required: false
   },
   correctOption: {
     type: String,
@@ -29,7 +55,7 @@ const questionSchema = new mongoose.Schema({
     required: false
   },
   options: {
-    type: [optionSchema],
+    type: [svyOptionSchema],
     required: true
   }
 });

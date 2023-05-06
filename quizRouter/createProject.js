@@ -36,7 +36,7 @@ const prev = await Quiz.count({userId :userId});
    newQuizObj.userId = userId; // importantay
   
     let quiz = new Quiz( newQuizObj );
-       debugger;
+      //  debugger;
     await quiz.save();
     const finalOkResp = await respOk(res,"new quiz created",{ quiz });
     return finalOkResp;

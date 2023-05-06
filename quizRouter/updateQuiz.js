@@ -15,13 +15,13 @@ const respFail = require("../common/respFail");
 async function updateQuiz(req, res){
 
   try {
-  // debugger;
     const quiz = req.body.quiz; // the updated fields
     const id = quiz._id; // the updated fields
 
+    // debugger;
     // const userId  = req.user._id;
 
-     const options = { new: true, upsert: true }; 
+    const options = { new: true, upsert: true }; 
     const updatedQuiz = await Quiz.findByIdAndUpdate( id , quiz,options);
 
     return res.status(200).json({ msg : "Quiz Saved",updatedQuiz });

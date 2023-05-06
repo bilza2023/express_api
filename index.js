@@ -22,7 +22,7 @@ const nonAuthRouter = require('./routes/nonAuthRouter.js');
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 80;
 // const Quiz = require("./models/quiz.js");
-// const Subscriber = require("./models/subscriber.js");
+
 ////////////////////////////////////////////////////
 
 const app = express()
@@ -46,6 +46,37 @@ app.use("/result",resultRouter);
 ///////////////////////////Routes////////////////////////
 app.get('/', async (req, res) =>{
 res.status(200).json({success :true ,  message : "Welcome to the api"});
+});
+
+const Survey = require("./models/survey/survey.js");
+const {SurveyQuestion,SurveyMCQ} = require("./models/survey/svyQuestion.js");
+// const {ClickedLinkEvent, Event} = require("./models/event");
+// const baseQuestion = require('./tests/surveyBaseQ.js')
+const Svy = require('./models/survey/tests/getSurvey.js')
+const baseMCQ = require('./models/survey/tests/getMCQ.js')
+
+app.get('/survey', async (req, res) =>{
+// Svy.questions.push(baseQuestion);
+// Svy.questions.push(baseMCQ);
+let survey = new Survey( Svy );
+const mcq = new SurveyMCQ(baseMCQ);
+// const mcq = new SurveyMCQ(baseMCQ);
+await mcq.save();
+survey.questions.push(mcq);
+
+      //  debugger;
+    await survey.save();
+    return res.status(200).json({success :true , survey});
+// When you create a generic event, it can't have a URL field...
+// const genericEvent = new Event({ time: Date.now(), url: 'google.com' });
+// assert.ok(!genericEvent.url);
+  // await genericEvent.save();
+
+// But a ClickedLinkEvent can
+// const clickedEvent = new ClickedLinkEvent({ time: Date.now(), url: 'google.com' });
+// assert.ok(clickedEvent.url);
+// await clickedEvent.save();
+// res.status(200).json({success :true ,  message : "Welcome to the api"});
 });
 ////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////

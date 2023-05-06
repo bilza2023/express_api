@@ -43,6 +43,7 @@ quizRouter.get( "/page/:limit?/:count?" , async function(req,res) {
 });
 
 quizRouter.post( "/find" , async function(req,res) {
+// debugger;
   findQuiz(req,res);
 });
 
