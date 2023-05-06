@@ -1,17 +1,7 @@
 
 const mongoose = require('mongoose');
-// const svyMCQSchema = require('./svyMCQ');
+const options = { discriminatorKey: 'kind' };
 
-const optionSchema = new mongoose.Schema({
-  id: { 
-    type: String,
-    required: true
-  },
-  content: {
-    type: String,
-    required: false
-  }
-});
 
 ///////////////////////////////////
 const svyQuestionSchema = new mongoose.Schema({
@@ -34,8 +24,22 @@ const svyQuestionSchema = new mongoose.Schema({
   }
 });
 const SurveyQuestion  = mongoose.model('SurveyQuestion', svyQuestionSchema);
-///////////////////////////////////
-const options = { discriminatorKey: 'kind' };
+
+
+///////////////////////////////////--MCQ--////////////////////////
+//---Options schema for MCQ
+const optionSchema = new mongoose.Schema({
+  id: { 
+    type: String,
+    required: true
+  },
+  content: {
+    type: String,
+    required: false
+  }
+});
+
+//..
 
 const SurveyMCQ = SurveyQuestion.discriminator('SurveyMCQ',
   new mongoose.Schema({ 
@@ -60,14 +64,26 @@ const SurveyMCQ = SurveyQuestion.discriminator('SurveyMCQ',
           required: true
         }
   })
-  
-  
+  , options);
+
+///////////////////////////////////--Input --////////////////////////
+
+const SurveyInput = SurveyQuestion.discriminator('SurveyInput',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          required: true
+        }
+  })
   , options);
 
 
-
-
-//////////////////////////////////////////////////
-
-module.exports = {SurveyQuestion,SurveyMCQ,svyQuestionSchema};
+//..Export section
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//SurveyQuestion dont export since its abstract
+module.exports = {svyQuestionSchema,SurveyMCQ , SurveyInput};
 
