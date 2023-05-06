@@ -9,7 +9,7 @@ const baseNumber = require('./getSurveyNumber.js')
 
 
 
-async function createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyInputParagraph,SurveyInputNumber,SurveyInputUrl,SurveyInputPassword,SurveyInputEmail) {
+async function createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail) {
 debugger;
   let survey = new Survey( Svy );
   
@@ -21,23 +21,23 @@ debugger;
   inpt.save();
   survey.questions.push(inpt);
   //...
-  const para = new SurveyInputParagraph( baseParagraph );
+  const para = new SurveyParagraph( baseParagraph );
   para.save();
   survey.questions.push(para);
   //...
-  const no = new SurveyInputNumber( baseNumber );
+  const no = new SurveyNumber( baseNumber );
   no.save();
   survey.questions.push(no);
   //...
-  const eml = new SurveyInputEmail( baseEmail );
+  const eml = new SurveyEmail( baseEmail );
   eml.save();
   survey.questions.push(eml);
   //...
-  const pass = new SurveyInputPassword( basePassword );
+  const pass = new SurveyPassword( basePassword );
   pass.save();
   survey.questions.push(pass);
   //...
-  const ur = new SurveyInputUrl( baseUrl );
+  const ur = new SurveyUrl( baseUrl );
   ur.save();
   survey.questions.push(ur);
 

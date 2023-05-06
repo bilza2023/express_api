@@ -11,7 +11,7 @@ const svyQuestionSchema = new mongoose.Schema({
   },
   required: {
     type: Boolean,
-    required: false,
+    required: true,
     default : false
   },
   content: {
@@ -21,6 +21,11 @@ const svyQuestionSchema = new mongoose.Schema({
   explanation: {
     type: String,
     required: false
+  },
+  backendType: {
+    type: String,
+    enum: [ 'SurveyMCQ' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],
+    required: true,
   }
 });
 const SurveyQuestion  = mongoose.model('SurveyQuestion', svyQuestionSchema);
@@ -90,7 +95,7 @@ const SurveyInput = SurveyQuestion.discriminator('SurveyInput',
 
 ///////////////////////////////////--Paragrapg --////////////////////////
 
-const SurveyInputParagraph = SurveyQuestion.discriminator('SurveyInputParagraph',
+const SurveyParagraph = SurveyQuestion.discriminator('SurveyParagraph',
   new mongoose.Schema({ 
         payload: {
           type: String,
@@ -112,7 +117,7 @@ const SurveyInputParagraph = SurveyQuestion.discriminator('SurveyInputParagraph'
 
 ///////////////////////////////////--Number --////////////////////////
 
-const SurveyInputNumber = SurveyQuestion.discriminator('SurveyInputNumber',
+const SurveyNumber = SurveyQuestion.discriminator('SurveyNumber',
   new mongoose.Schema({ 
         payload: {
         type: Number,
@@ -133,7 +138,7 @@ const SurveyInputNumber = SurveyQuestion.discriminator('SurveyInputNumber',
 
 ///////////////////////////////////--Url --////////////////////////
 
-const SurveyInputUrl = SurveyQuestion.discriminator('SurveyInputUrl',
+const SurveyUrl = SurveyQuestion.discriminator('SurveyUrl',
   new mongoose.Schema({ 
         payload: {
           type: String,
@@ -155,7 +160,7 @@ const SurveyInputUrl = SurveyQuestion.discriminator('SurveyInputUrl',
 
 ///////////////////////////////////--email --////////////////////////
 
-const SurveyInputEmail = SurveyQuestion.discriminator('SurveyInputEmail',
+const SurveyEmail = SurveyQuestion.discriminator('SurveyEmail',
   new mongoose.Schema({ 
         payload: {
           type: String,
@@ -171,7 +176,7 @@ const SurveyInputEmail = SurveyQuestion.discriminator('SurveyInputEmail',
 
 ///////////////////////////////////--password --////////////////////////
 
-const SurveyInputPassword = SurveyQuestion.discriminator('SurveyInputPassword',
+const SurveyPassword = SurveyQuestion.discriminator('SurveyPassword',
   new mongoose.Schema({ 
         payload: {
           type: String,
@@ -189,5 +194,5 @@ const SurveyInputPassword = SurveyQuestion.discriminator('SurveyInputPassword',
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 //SurveyQuestion dont export since its abstract
-module.exports = {svyQuestionSchema,SurveyMCQ , SurveyInput,SurveyInputParagraph,SurveyInputNumber,SurveyInputUrl,SurveyInputPassword,SurveyInputEmail};
+module.exports = {svyQuestionSchema,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail};
 

@@ -7,6 +7,7 @@ const baseInput = {
     required : true,
     content :       lorem(12),
     explanation :   lorem(25),
+    backendType : 'SurveyNumber',
     payload  :      0
 }
 

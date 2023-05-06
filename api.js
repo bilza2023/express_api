@@ -2,7 +2,7 @@ require('dotenv').config();
 const db = require("./mongoDb/mongo.js");
 //////---survey section--
 const Survey = require("./models/survey/survey.js");
-const {SurveyMCQ , SurveyInput,SurveyInputParagraph,SurveyInputNumber,SurveyInputUrl,SurveyInputPassword,SurveyInputEmail} = require("./models/survey/svyQuestion.js");
+const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require("./models/survey/svyQuestion.js");
 ///--survey related fn
 const createBasicSvy=require('./apiTest/createBasicSvy/createBasicSvy.js');
 //--example  : createBasicSvy(Survey,SurveyInput,SurveyMCQ);
@@ -13,7 +13,7 @@ console.log("api test");
 db.once('open',()=> {
     console.log("MongoDb ===> connection established");
     //////////////////////////////////////////////////////
-    createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyInputParagraph,SurveyInputNumber,SurveyInputUrl,SurveyInputPassword,SurveyInputEmail);
+    createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail);
     // deleteAllSurveys(Survey);
 });
 

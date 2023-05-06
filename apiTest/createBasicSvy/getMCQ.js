@@ -9,6 +9,7 @@ const baseMCQ = {
     multiSelect:true,
     selectedOptions :['xxx','xxx'],
     displayOptions : 'bars',
+    backendType : 'SurveyMCQ',
     options :[
     {id : uuid() , content : lorem(3)},
     {id : uuid() , content : lorem(6)},
