@@ -16,6 +16,7 @@ const db = require("./mongoDb/mongo.js");
 
 const userRouter = require('./routes/userRouter');
 const quizRouter = require('./quizRouter/quizRouter');
+const routerSurvey = require('./routerSurvey/routerSurvey.js');
 const resultRouter = require('./routes/resultRouter');
 const nonAuthRouter = require('./routes/nonAuthRouter.js');
 
@@ -42,6 +43,7 @@ app.use("/",nonAuthRouter);
 app.use("/user",userRouter);
 app.use("/quiz",quizRouter);
 app.use("/result",resultRouter);
+app.use("/survey",routerSurvey);
 
 ///////////////////////////Routes////////////////////////
 app.get('/', async (req, res) =>{

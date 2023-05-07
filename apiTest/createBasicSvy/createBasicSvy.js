@@ -1,19 +1,16 @@
-const Svy = require('./getSurvey.js');
-const baseMCQ = require('./getMCQ.js')
-const baseInput = require('./getSurveyInput.js')
-const baseParagraph = require('./getSurveyParagraph.js')
-const baseEmail = require('./getSurveyEmail.js')
-const basePassword = require('./getSurveyPassword.js')
-const baseUrl = require('./getSurveyUrl.js')
-const baseNumber = require('./getSurveyNumber.js')
-
+const getSurvey = require('../../projectFiles/newSurvey/getSurvey');
+const baseMCQ = require('../../projectFiles/newSurvey/getMCQ.js');
+const baseInput = require('../../projectFiles/newSurvey/getSurveyInput.js');
+const baseParagraph = require('../../projectFiles/newSurvey/getSurveyParagraph.js');
+const baseEmail = require('../../projectFiles/newSurvey/getSurveyEmail.js');
+const basePassword = require('../../projectFiles/newSurvey/getSurveyPassword.js');
+const baseUrl = require('../../projectFiles/newSurvey/getSurveyUrl.js');
+const baseNumber = require('../../projectFiles/newSurvey/getSurveyNumber.js');
 
 
 async function createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail) {
 // debugger;
   let questions =[];
-  // const mcq = new SurveyMCQ(baseMCQ);
-  // await mcq.save();
   questions.push(baseMCQ);
   questions.push(baseInput);
   questions.push(baseParagraph);
@@ -23,7 +20,7 @@ async function createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,Sur
   questions.push( baseUrl  );
 
 /////////////////////////////////////////////////////////////
- let survey = new Survey( Svy );
+ let survey = new Survey( getSurvey('64202224fd8518cb214bd138' , "Test...") );
 
     for (let i = 0; i < questions.length; i++) {
       const question = questions[i];
