@@ -1,15 +1,15 @@
 
 //--Require
 require('dotenv').config();
-const express = require('express');
-const auth = require('../middleware/auth');
+// const express = require('express');
+// const auth = require('../middleware/auth');
 
 const Survey = require("../models/survey/survey");
 const respOk = require("../common/respOk");
 const respFail = require("../common/respFail");
 /////////////////////////////////////////////////
-const surveyRouter = express.Router();
-surveyRouter.use(auth);
+// const surveyRouter = express.Router();
+// surveyRouter.use(auth);
 /////////////////////////////////////////////////
 
 async function clone(req, res) {

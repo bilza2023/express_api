@@ -6,6 +6,8 @@ const createNew = require("./createNew");
 const updateSurvey = require("./updateSurvey");
 const clone = require("./clone");
 const find = require("./find");
+const deleteSurvey = require('./deleteSurvey');
+const truncateSurvey  = require('./truncateSurvey');
 // const featuredQuiz = require("./featuredQuiz");
 // const paginate = require("./paginate");
 // const deleteQuiz = require("./deleteQuiz");
@@ -33,10 +35,14 @@ surveyRouter.post( "/find" , async function(req,res) {
 });
 
 
-// surveyRouter.post( "/delete" , async function(req,res) {
-// // debugger;
-//   deleteQuiz(req,res);
-// });
+surveyRouter.post( "/delete" , async function(req,res) {
+  deleteSurvey(req,res);
+});
+
+surveyRouter.post( "/truncate" , async function(req,res) {
+  truncateSurvey(req,res);
+});
+ 
 
 // surveyRouter.get( "/featured" , async function(req,res) {
 //   featuredQuiz(req,res);
