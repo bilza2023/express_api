@@ -1,9 +1,8 @@
 
 const mongoose = require('mongoose');
 const options = { discriminatorKey: 'kind' };
-
-
-///////////////////////////////////
+ 
+//--This is schema for a base question for a survey
 const svyQuestionSchema = new mongoose.Schema({
   id: { 
     type: String,
@@ -22,14 +21,13 @@ const svyQuestionSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  backendType: {
+  questionType: {
     type: String,
     enum: [ 'SurveyMCQ' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],
     required: true,
   }
 });
 const SurveyQuestion  = mongoose.model('SurveyQuestion', svyQuestionSchema);
-
 
 ///////////////////////////////////--MCQ--////////////////////////
 //---Options schema for MCQ
@@ -111,7 +109,7 @@ const SurveyParagraph = SurveyQuestion.discriminator('SurveyParagraph',
           type: Number,
           required: false,
           default : 0
-        },
+        }
   })
   , options);
 
@@ -145,16 +143,11 @@ const SurveyUrl = SurveyQuestion.discriminator('SurveyUrl',
           default : "",
           required: false
         },
-        minVal: {
-          type: Number,
+        validate: {
+          type: Boolean,
           required: false,
-          default : 0
-        },
-        maxVal: {
-          type: Number,
-          required: false,
-          default : 0
-        },
+          default : true
+        }
   })
   , options);
 
@@ -167,9 +160,10 @@ const SurveyEmail = SurveyQuestion.discriminator('SurveyEmail',
           default : "",
           required: false
         },
-        validateAtFrontEnd: {
+        validate: {
           type: Boolean,
-          default : true,
+          required: false,
+          default : true
         }
   })
   , options);
@@ -182,6 +176,21 @@ const SurveyPassword = SurveyQuestion.discriminator('SurveyPassword',
           type: String,
           default : "",
           required: false
+        },
+        validate: {
+          type: Boolean,
+          required: false,
+          default : true
+        },
+        minChar: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+        maxChar: {
+          type: Number,
+          required: false,
+          default : 0
         }
   })
   , options);
@@ -193,6 +202,6 @@ const SurveyPassword = SurveyQuestion.discriminator('SurveyPassword',
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
-//SurveyQuestion dont export since its abstract
+//SurveyQuestion dont export since its abstract but 
 module.exports = {svyQuestionSchema,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail};
 

@@ -1,13 +1,13 @@
 const uuid = require('../uuid');
 
 
-const baseInput = {
+const baseNumber = {
     id : uuid(),
     required : true,
     content :       '',
     explanation :   '',
-    backendType : 'SurveyNumber',
+    questionType : 'SurveyNumber',
     payload  :      0
 }
 
-module.exports = baseInput;
+module.exports = baseNumber;

@@ -6,7 +6,7 @@ const baseEmail = require('../../projectFiles/newSurvey/getSurveyEmail.js');
 const basePassword = require('../../projectFiles/newSurvey/getSurveyPassword.js');
 const baseUrl = require('../../projectFiles/newSurvey/getSurveyUrl.js');
 const baseNumber = require('../../projectFiles/newSurvey/getSurveyNumber.js');
-
+ 
 
 async function createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail) {
 // debugger;
@@ -25,7 +25,7 @@ async function createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,Sur
     for (let i = 0; i < questions.length; i++) {
       const question = questions[i];
 
-            switch (question.backendType) {
+            switch (question.questionType) {
               case "SurveyMCQ":
                 const q = new SurveyMCQ(question);
                 await q.save();

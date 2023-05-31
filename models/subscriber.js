@@ -28,11 +28,6 @@ const subscriberSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  },  
-  questionsDb: {
-    type: [questionSchema],
-    required: false,
-    default : []
   },
    members: {
     type: [membersSchema],

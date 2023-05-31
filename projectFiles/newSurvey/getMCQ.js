@@ -8,7 +8,7 @@ const baseMCQ = {
     multiSelect:true,
     selectedOptions :[],
     displayOptions : 'bars',
-    backendType : 'SurveyMCQ',
+    questionType : 'SurveyMCQ',
     options :[
     {id : uuid() , content : ""},
     {id : uuid() , content : ""}

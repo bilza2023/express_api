@@ -1,12 +1,12 @@
 
 require('dotenv').config();
-const auth = require('../middleware/auth');
+// const auth = require('../middleware/auth');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const nonAuthRouter = express.Router();
 // const Result = require("../models/result");
-const Quiz = require("../models/quiz");
+const Survey = require("../models/survey/survey");
 const Subscriber = require("../models/subscriber.js");
 
 /////////////////////////////////////////////////
@@ -16,7 +16,7 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
   // debugger;
   const quizId  = req.params.quizId;
   // console.log(quizId)
-    const quiz = await Quiz.findById( quizId );
+    const quiz = await Survey.findById( quizId );
       if (quiz == null){
         return res.status(404).json({ msg: "Item not found" });
       }

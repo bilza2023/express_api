@@ -1,5 +1,4 @@
 require('dotenv').config();
-// const sgMail = require('@sendgrid/mail');
 process.on('uncaughtException', function (err) {
     console.error((new Date).toUTCString() + ' uncaughtException:', err.message);
     console.error(err.stack);
@@ -7,22 +6,19 @@ process.on('uncaughtException', function (err) {
 });
 //.......................................................
 const express  =require('express');
-// const nodemailer = require('nodemailer');
 const cors = require('cors');
-// const path = require('path');
 const db = require("./mongoDb/mongo.js");
-// const jwt = require('jsonwebtoken');
 ////////////////////////////////////////////////
-
+//--Routers user , quiz , survey , result, nonAuth ,test 
 const userRouter = require('./routes/userRouter');
 const quizRouter = require('./quizRouter/quizRouter');
 const routerSurvey = require('./routerSurvey/routerSurvey.js');
+const routerTest = require('./routerTest/routerTest.js');
 const resultRouter = require('./routes/resultRouter');
 const nonAuthRouter = require('./routes/nonAuthRouter.js');
 
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 80;
-const Survey = require("./models/survey/survey.js");
 
 ////////////////////////////////////////////////////
 
@@ -32,10 +28,10 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname,"build")));
 //..
 app.use(express.json());
-// app.use(cors({origin: "http://localhost/"}));
-// app.use(cors({origin: process.env.HOME_URL})); //use this
 app.use(cors( )); //working
+// app.use(cors({origin: "http://localhost/"}));
 // app.use(cors({ origin: '*' })); //working
+// app.use(cors({origin: process.env.HOME_URL})); //use this
 app.use(express.urlencoded({ extended: true }));
 
 //.. Route middlewares--/////////////////////////////////////
@@ -44,17 +40,14 @@ app.use("/user",userRouter);
 app.use("/quiz",quizRouter);
 app.use("/result",resultRouter);
 app.use("/survey",routerSurvey);
+app.use("/test",routerTest);
 
 ///////////////////////////Routes////////////////////////
 app.get('/', async (req, res) =>{
-const ret = Survey.findById()
-res.status(200).json({success :true ,  message : "Welcome to the api"});
+// const ret = Survey.findById()
+res.status(200).json({success :true ,  message : "Welcome to skillza api"});
 });
 
-app.get('/inspect/:id', async (req, res) =>{
-    const survey = await Survey.findById(req.params.id);
-res.status(200).json({survey});
-});    
 
 ////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////

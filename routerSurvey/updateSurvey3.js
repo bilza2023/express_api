@@ -5,20 +5,17 @@ const Survey = require("../models/survey/survey.js");
 const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require("../models/survey/svyQuestion.js");
 const respOk = require("../common/respOk");
 const respFail = require("../common/respFail");
-const {ObjToSchema} = require('./schemaObj.js');
 
 async function updateSurvey(req, res){
   // try {
     const incommingSurvey = req.body.survey; // the updated fields
     //---------------------------------------
-    const questions = incommingSurvey.questions;
-    const newQuestions = await ObjToSchema(questions)
-      incommingSurvey.questions = newQuestions;
     
+    // await survey.save();
     //---------------------------------------
     const id = incommingSurvey._id; // the updated fields
-//new :true to send the updated version
-    const options = { new: true, upsert: true }; 
+
+    const options = { new: false, upsert: true }; 
     const survey = await Survey.findByIdAndUpdate( id , incommingSurvey,options);
 
     if(survey){

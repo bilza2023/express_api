@@ -1,13 +1,13 @@
 const uuid = require('../uuid');
 
 
-const baseInput = {
+const baseParagraph = {
     id : uuid(),
     required : true,
     content :       '',
     explanation :   '',
-    backendType : 'SurveyParagraph',
+    questionType : 'SurveyParagraph',
     payload  :      ''
 }
 
-module.exports = baseInput;
+module.exports = baseParagraph;

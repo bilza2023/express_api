@@ -6,7 +6,7 @@ const baseInput = {
     required : false,
     content :       '',
     explanation :   '',
-    backendType : 'SurveyInput',
+    questionType : 'SurveyInput',
     payload  :      ''
 }
 

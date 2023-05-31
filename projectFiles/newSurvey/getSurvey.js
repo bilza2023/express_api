@@ -1,6 +1,6 @@
 
 
-
+ 
 function getSurvey(user_id, incomming_title) {
    const svy = { 
         userId : user_id,
@@ -18,4 +18,5 @@ function getSurvey(user_id, incomming_title) {
  return svy;   
 }
 
-module.exports = getSurvey;   
+
+module.exports = getSurvey;
