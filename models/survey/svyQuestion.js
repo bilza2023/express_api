@@ -143,7 +143,7 @@ const SurveyUrl = SurveyQuestion.discriminator('SurveyUrl',
           default : "",
           required: false
         },
-        validate: {
+        check: {
           type: Boolean,
           required: false,
           default : true
@@ -160,7 +160,7 @@ const SurveyEmail = SurveyQuestion.discriminator('SurveyEmail',
           default : "",
           required: false
         },
-        validate: {
+        check: {
           type: Boolean,
           required: false,
           default : true
@@ -177,7 +177,7 @@ const SurveyPassword = SurveyQuestion.discriminator('SurveyPassword',
           default : "",
           required: false
         },
-        validate: {
+        check: {
           type: Boolean,
           required: false,
           default : true
