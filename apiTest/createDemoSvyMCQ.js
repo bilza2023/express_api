@@ -1,8 +1,8 @@
 
-const getSurvey = require('../projectFiles/newSurvey/getSurvey');
-const Survey = require('../models/survey/survey');
-const baseMCQ = require('../projectFiles/newSurvey/getMCQ.js');
-const {SurveyMCQ} = require('../models/survey/svyQuestion');
+const getSurvey = require('../models/newSvyData/getSurvey');
+const baseMCQ = require  ('../models/newSvyData/getMCQ.js');
+const Survey = require('../models/survey');
+const {SurveyMCQ} = require('../models/svyQuestion');
 
 async function createDemoSvyMCQ() {
 

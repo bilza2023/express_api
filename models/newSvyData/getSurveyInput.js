@@ -1,10 +1,10 @@
-const uuid = require('../uuid');
+const uuid = require('./uuid');
 
 
 const baseInput = {
     id : uuid(),
     required : false,
-    content :       '',
+    content :       'Question Statement',
     explanation :   '',
     questionType : 'SurveyInput',
     payload  :      ''

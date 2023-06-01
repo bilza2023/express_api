@@ -1,12 +1,12 @@
 //--The project files has all the data where as all the models are send by api.js
-const getSurvey = require('../projectFiles/newSurvey/getSurvey');
-const baseMCQ = require('../projectFiles/newSurvey/getMCQ.js');
-const baseInput = require('../projectFiles/newSurvey/getSurveyInput.js');
-const baseParagraph = require('../projectFiles/newSurvey/getSurveyParagraph.js');
-const baseEmail = require('../projectFiles/newSurvey/getSurveyEmail.js');
-const basePassword = require('../projectFiles/newSurvey/getSurveyPassword.js');
-const baseUrl = require('../projectFiles/newSurvey/getSurveyUrl.js');
-const baseNumber = require('../projectFiles/newSurvey/getSurveyNumber.js');
+const getSurvey = require('../models/newSvyData/getSurvey.js');
+const baseMCQ = require('../models/newSvyData/getMCQ.js');
+const baseInput = require('../models/newSvyData/getSurveyInput.js');
+const baseParagraph = require('../models/newSvyData/getSurveyParagraph.js');
+const baseEmail = require('../models/newSvyData/getSurveyEmail.js');
+const basePassword = require('../models/newSvyData/getSurveyPassword.js');
+const baseUrl = require('../models/newSvyData/getSurveyUrl.js');
+const baseNumber = require('../models/newSvyData/getSurveyNumber.js');
  
 
 async function createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail) {

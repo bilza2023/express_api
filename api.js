@@ -1,8 +1,8 @@
 require('dotenv').config();
 const db = require("./mongoDb/mongo.js");
 //////---survey section--
-const Survey = require("./models/survey/survey.js");
-const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require("./models/survey/svyQuestion.js");
+const Survey = require("./models/survey.js");
+const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require("./models/svyQuestion.js");
 ///--survey related fn
 const createBasicSvy=require('./apiTest/createBasicSvy.js');
 //--example  : createBasicSvy(Survey,SurveyInput,SurveyMCQ);

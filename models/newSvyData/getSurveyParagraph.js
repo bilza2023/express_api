@@ -1,10 +1,10 @@
-const uuid = require('../uuid');
+const uuid = require('./uuid');
 
 
 const baseParagraph = {
     id : uuid(),
     required : true,
-    content :       '',
+    content :       'Question Statement',
     explanation :   '',
     questionType : 'SurveyParagraph',
     payload  :      ''

@@ -1,7 +1,7 @@
 
 
  
-function getSurvey(user_id, incomming_title) {
+function getSurvey(user_id, incomming_title = "New Test") {
    const svy = { 
         userId : user_id,
         title : incomming_title,

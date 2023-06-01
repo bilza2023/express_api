@@ -1,18 +1,18 @@
-const uuid = require('../uuid');
-
+const uuid = require('./uuid');
+const correctId = uuid();
 const baseMCQ = {
     id : uuid(),
     required : false,
-    content : "",
+    content : "Question Statement",
     explanation : "",
     multiSelect: false,
     selectedOptions :[],
-    correctOptions :[],
+    correctOptions :[correctId],
     displayOptions : 'bars',
     questionType : 'SurveyMCQ',
     options :[
-    {id : uuid() , content : ""},
-    {id : uuid() , content : ""}
+    {id : correctId , content : "Option One"},
+    {id : uuid() , content : "Option Two"}
     ]
 }
 
