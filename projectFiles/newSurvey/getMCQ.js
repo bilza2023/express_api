@@ -5,8 +5,9 @@ const baseMCQ = {
     required : false,
     content : "",
     explanation : "",
-    multiSelect:true,
+    multiSelect: false,
     selectedOptions :[],
+    correctOptions :[],
     displayOptions : 'bars',
     questionType : 'SurveyMCQ',
     options :[

@@ -1,6 +1,5 @@
 // Require the necessary packages
 const mongoose = require('mongoose');
-const {questionSchema} = require("./question");
 
 const membersSchema = new mongoose.Schema({
   email: { //This is not mongodb _id rather the app assigned id

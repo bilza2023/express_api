@@ -4,7 +4,7 @@ require('dotenv').config();
 // const express = require('express');
 // const auth = require('../middleware/auth');
 
-const Survey = require("../models/survey/survey");
+const Survey = require("../models/survey");
 const respOk = require("../common/respOk");
 const respFail = require("../common/respFail");
 /////////////////////////////////////////////////

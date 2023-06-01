@@ -56,6 +56,11 @@ const SurveyMCQ = SurveyQuestion.discriminator('SurveyMCQ',
           required: true,
           default : []
         },
+        correctOptions: {
+          type: [String],
+          required: true,
+          default : []
+        },
         displayOptions: {
           type: String,
           enum: ["dropdown", "radio", "check" , "bars"],

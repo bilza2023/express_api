@@ -1,3 +1,4 @@
+//--The project files has all the data where as all the models are send by api.js
 const getSurvey = require('../projectFiles/newSurvey/getSurvey');
 const baseMCQ = require('../projectFiles/newSurvey/getMCQ.js');
 const baseInput = require('../projectFiles/newSurvey/getSurveyInput.js');
@@ -9,65 +10,46 @@ const baseNumber = require('../projectFiles/newSurvey/getSurveyNumber.js');
  
 
 async function createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail) {
-// debugger;
-  let questions =[];
-  questions.push(baseMCQ);
-  questions.push(baseInput);
-  questions.push(baseParagraph);
-  questions.push(baseNumber);
-  questions.push(baseEmail);
-  questions.push(basePassword);
-  questions.push( baseUrl  );
 
-/////////////////////////////////////////////////////////////
+//--64202224fd8518cb214bd138 this is userId remains the same
  let survey = new Survey( getSurvey('64202224fd8518cb214bd138' , "Test...") );
 
-    for (let i = 0; i < questions.length; i++) {
-      const question = questions[i];
+                const caseSurveyMCQ = new SurveyMCQ(baseMCQ);
+                await caseSurveyMCQ.save();
+                survey.questions.push(caseSurveyMCQ);
+              ///
+              
+                const caseSurveyInput = new SurveyInput(baseInput);
+                await caseSurveyInput.save();
+                survey.questions.push(caseSurveyInput);
+              ////
+              
+                const caseSurveyParagraph = new SurveyParagraph(baseParagraph);
+                await caseSurveyParagraph.save();
+                survey.questions.push(caseSurveyParagraph);
+              ///
+              
+                const caseSurveyEmail = new SurveyEmail(baseEmail);
+                await caseSurveyEmail.save();
+                survey.questions.push(caseSurveyEmail);
+              //
 
-            switch (question.questionType) {
-              case "SurveyMCQ":
-                const q = new SurveyMCQ(question);
-                await q.save();
-                survey.questions.push(q);
-              break;
-              case "SurveyInput":
-                const inpt = new SurveyInput(question);
-                await inpt.save();
-                survey.questions.push(inpt);
-              break;
-              case "SurveyParagraph":
-                const par = new SurveyParagraph(question);
-                await par.save();
-                survey.questions.push(par);
-              break;
-              case "SurveyEmail":
-                const eml = new SurveyEmail(question);
-                await eml.save();
-                survey.questions.push(eml);
-              break;
-              case "SurveyPassword":
-                const ps = new SurveyPassword(question);
-                await ps.save();
-                survey.questions.push(ps);
-              break;
-              case "SurveyUrl":
-                const ur = new SurveyUrl(question);
-                await ur.save();
-                survey.questions.push(ur);
-              break;
+                const caseSurveyPassword = new SurveyPassword(basePassword);
+                await caseSurveyPassword.save();
+                survey.questions.push(caseSurveyPassword);
+              
+              
+                const caseSurveyUrl = new SurveyUrl(baseUrl);
+                await caseSurveyUrl.save();
+                survey.questions.push(caseSurveyUrl);
+              //
 
-              case "SurveyNumber":
-                const n = new SurveyNumber(question);
-                await n.save();
-                survey.questions.push(n);
-              break;
-            
-              default:
-              break;
-            }
+              
+                const caseSurveyNumber = new SurveyNumber(baseNumber);
+                await caseSurveyNumber.save();
+                survey.questions.push(caseSurveyNumber);
+              //
       
-    }
   
     await survey.save();
     console.log("createBasicSvy: survey saved...");

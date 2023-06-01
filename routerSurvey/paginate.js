@@ -9,7 +9,7 @@ const Result = require("../models/result");
 
 const respOk = require("../common/respOk");
 const respFail = require("../common/respFail");
-const newQuiz = require('../models/new_quiz.js');
+// const newQuiz = require('../models/new_quiz.js');
 const Subscriber = require("../models/subscriber.js");
 
 

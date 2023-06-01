@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const {memberSchema} = require('../member');
+const {memberSchema} = require('./member');
 const {svyQuestionSchema} = require("./svyQuestion");
 
 

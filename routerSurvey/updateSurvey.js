@@ -1,8 +1,8 @@
 
 //--Require
 require('dotenv').config();
-const Survey = require("../models/survey/survey.js");
-const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require("../models/survey/svyQuestion.js");
+const Survey = require("../models/survey.js");
+const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require("../models/svyQuestion.js");
 const respOk = require("../common/respOk");
 const respFail = require("../common/respFail");
 const {ObjToSchema} = require('./schemaObj.js');
