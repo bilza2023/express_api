@@ -14,7 +14,7 @@ const userRouter = require('./routes/userRouter');
 // const quizRouter = require('./quizRouter/quizRouter');
 const routerSurvey = require('./routerSurvey/routerSurvey.js');
 // const routerTest = require('./routerTest/routerTest.js');
-// const resultRouter = require('./routes/resultRouter');
+const resultRouter = require('./routes/resultRouter');
 const nonAuthRouter = require('./routes/nonAuthRouter.js');
 
 const cookieParser = require('cookie-parser');
@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/",nonAuthRouter);
 app.use("/user",userRouter);
 // app.use("/quiz",quizRouter);
-// app.use("/result",resultRouter);
+app.use("/result",resultRouter);
 app.use("/survey",routerSurvey);
 // app.use("/test",routerTest);
 

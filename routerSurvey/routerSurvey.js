@@ -1,7 +1,7 @@
 require('dotenv').config();
 const auth = require('../middleware/auth');
 const express = require('express');
-
+const Survey = require("../models/survey");
 const createNew = require("./createNew");
 const updateSurvey = require("./updateSurvey");
 const clone = require("./clone");
@@ -9,7 +9,7 @@ const find = require("./find");
 const deleteSurvey = require('./deleteSurvey');
 const truncateSurvey  = require('./truncateSurvey');
 // const featuredQuiz = require("./featuredQuiz");
-// const paginate = require("./paginate");
+const paginate = require("./paginate");
 // const deleteQuiz = require("./deleteQuiz");
 
 /////////////////////////////////////////////////
@@ -48,12 +48,27 @@ surveyRouter.post( "/truncate" , async function(req,res) {
 //   featuredQuiz(req,res);
 // });
 
-// surveyRouter.get( "/page/:limit?/:count?" , async function(req,res) {
-// // debugger;
-//   const { limit = 20, count = 0 } = req.params;
-//   // console.log("page");
-//   paginate(req,res , limit , count);
-// });
+
+surveyRouter.get( "/page/:limit?/:count?" , async function(req,res) {
+debugger;
+// try{
+  const { limit = 20, count = 0 } = req.params;
+  const user= req.user;
+  const userId  = req.userId;
+
+  // const surveys = await Survey.find({});
+  const surveys = await Survey.find({"userId" : userId})
+
+  return res.status(200).json({surveys});
+  // console.log("page");
+  // paginate(req,res , limit , count);\
+
+  // } catch(error) {
+  //   // return res.status(400).json({msg : "failure" , error  });
+  //   const r = await respFail(res,"unknown error","unknownError");
+  //   return r;
+  // }
+});
 
 
 

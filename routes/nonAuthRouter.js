@@ -1,11 +1,11 @@
 
 require('dotenv').config();
-// const auth = require('../middleware/auth');
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const nonAuthRouter = express.Router();
-// const Result = require("../models/result");
+
 const Survey = require("../models/survey");
 const Subscriber = require("../models/subscriber.js");
 
@@ -61,7 +61,7 @@ const password = await bcrypt.hash(passwordPlain,3);
 ///////////////////////////////////////////////////////////////////////
 nonAuthRouter.post("/login", async function (req, res) {
   try {
-  debugger;
+  // debugger;
     const email = req.body.email;
     const passwordPlain = req.body.password;
 
