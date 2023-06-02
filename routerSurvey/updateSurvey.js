@@ -9,7 +9,7 @@ const {ObjToSchema} = require('./schemaObj.js');
 
 async function updateSurvey(req, res){
   try {
-  // debugger;
+  debugger;
     const incommingSurvey = req.body.survey; // the updated fields
     //---------------------------------------
     const questions = incommingSurvey.questions;
