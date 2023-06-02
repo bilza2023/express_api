@@ -1,7 +1,7 @@
 const uuid = require('./uuid');
 
 
-const baseInput = {
+const basePassword = {
     id : uuid(),
     required : true,
     content :       'Question Statement',
@@ -10,4 +10,4 @@ const baseInput = {
     payload  :      ''
 }
 
-module.exports = baseInput;
+module.exports = basePassword;

@@ -22,6 +22,7 @@ surveyRouter.post("/new", async function(req, res) {
 });
 
 surveyRouter.post("/update", async function(req, res) {
+// debugger;
    await updateSurvey(req,res);
 });
 

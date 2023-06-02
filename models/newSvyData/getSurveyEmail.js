@@ -1,7 +1,7 @@
 const uuid = require('./uuid');
 
 
-const baseInput = {
+const baseEmail = {
     id : uuid(),
     required : false,
     content :       'Question Statement',
@@ -10,4 +10,4 @@ const baseInput = {
     payload  :      ""
 }
 
-module.exports = baseInput;
+module.exports = baseEmail;

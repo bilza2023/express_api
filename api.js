@@ -16,7 +16,7 @@ console.log("api test");
 db.once('open',()=> {
     console.log("MongoDb ===> connection established");
     //////////////////////////////////////////////////////
-    // createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail);
+    createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail);
     // createDemoSvyMCQ(Survey,SurveyMCQ);
     // deleteAllSurveys(Survey);
     // createResult();
