@@ -1,8 +1,25 @@
 const uuid = require('./newSvyData/uuid');
+// import { v4 as uuid } from 'uuid';
 
 
-    const correctId = uuid();
-const qDataMCQ = {
+const getDataBaseMCQ = ()=>{
+    return {
+    id : uuid(),
+    required : false,
+    content : "Question Statement",
+    explanation : "",
+    multiSelect: false,
+    selectedOptions :[],
+    correctOptions :[],
+    displayOptions : 'bars',
+    questionType : 'SurveyMCQ',
+    options :[]
+    };
+}
+
+const getDataMCQ = ()=>{
+const correctId = uuid();
+    return {
     id : uuid(),
     required : false,
     content : "Question Statement",
@@ -16,60 +33,73 @@ const qDataMCQ = {
     {id : correctId , content : "Option One"},
     {id : uuid() , content : "Option Two"}
     ]
+    };
 }
 
-const qDataEmail = {
+const getDataEmail = ()=>{
+    return {
     id : uuid(),
     required : false,
     content :       'Question Statement',
     explanation :   '',
     questionType : 'SurveyEmail',
     payload  :      ""
+    };
 }
 
-const qDataInput = {
+const getDataInput = ()=>{
+    return {
     id : uuid(),
     required : false,
     content :       'Question Statement',
     explanation :   '',
     questionType : 'SurveyInput',
     payload  :      ''
+    };
 }
 
-const qDataNumber = {
+const getDataNumber = ()=>{
+    return {
     id : uuid(),
     required : true,
     content :       'Question Statement',
     explanation :   '',
     questionType : 'SurveyNumber',
     payload  :      0
+    };
 }
 
-const qDataParagraph = {
+const getDataParagraph = ()=>{
+    return {
     id : uuid(),
     required : true,
     content :       'Question Statement',
     explanation :   '',
     questionType : 'SurveyParagraph',
     payload  :      ''
+    };
 }
 
-const qDataPassword = {
+const getDataPassword = ()=>{
+    return {
     id : uuid(),
     required : true,
     content :       'Question Statement',
     explanation :   '',
     questionType : 'SurveyPassword',
     payload  :      ''
+    };
 }
 
-const qDataUrl = {
+const getDataUrl = ()=>{
+    return {
     id : uuid(),
     required : true,
     content :       'Question Statement',
     explanation :   '',
     questionType : 'SurveyUrl',
     payload  :      ''
+    };
 }
 
 function getSurvey(user_id, incomming_title = "New Test") {
@@ -89,5 +119,17 @@ function getSurvey(user_id, incomming_title = "New Test") {
  return svy;   
 }
 
+function getMcqWOption(opt=[]){
+    // debugger;
+    const newMCQ = getDataBaseMCQ();
+    for (let i = 0; i < opt.length; i++) {
+        const newOption =  {};
+        newOption.id = uuid();
+        newOption.content = opt[i];
+        newMCQ.options.push(newOption);
+    }
+return newMCQ;
+}
+module.exports = { getDataUrl,getDataPassword,getDataParagraph,getDataNumber,getDataInput,getDataEmail,getDataMCQ,getDataBaseMCQ, getMcqWOption, getSurvey }
 
-module.exports = { qDataUrl,qDataPassword,qDataParagraph,qDataNumber,qDataInput,qDataEmail,qDataMCQ, getSurvey }
+// export { getDataUrl,getDataPassword,getDataParagraph,getDataNumber,getDataInput,getDataEmail,getDataMCQ,getDataBaseMCQ, getMcqWOption, getSurvey }
