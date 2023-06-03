@@ -22,7 +22,7 @@ const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPass
     const question = questions[i];
     if (!question._id) {
     //--great technique.
-    debugger;
+    // debugger;
       const SchemaConstructor = schemaMap[question.questionType];
     //   const SchemaConstructor = schemaMap['SurveyMCQ'];
       const q = new SchemaConstructor(question);

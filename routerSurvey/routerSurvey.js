@@ -3,7 +3,10 @@ const auth = require('../middleware/auth');
 const express = require('express');
 const Survey = require("../models/survey");
 const createNew = require("./createNew");
-const updateSurvey = require("./updateSurvey");
+
+const updateSimple = require("./update/updateSimple");
+const updatePublish = require("./update/updatePublish");
+
 const clone = require("./clone");
 const find = require("./find");
 const deleteSurvey = require('./deleteSurvey');
@@ -23,7 +26,12 @@ surveyRouter.post("/new", async function(req, res) {
 
 surveyRouter.post("/update", async function(req, res) {
 // debugger;
-   await updateSurvey(req,res);
+  await updateSimple(req,res);
+});
+surveyRouter.post("/publish", async function(req, res) {
+debugger;
+   await updatePublish(req,res);
+  //  await updateSurvey(req,res);
 });
 
 surveyRouter.post("/clone", async function(req, res) {
