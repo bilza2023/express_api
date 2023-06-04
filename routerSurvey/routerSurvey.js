@@ -25,11 +25,11 @@ surveyRouter.post("/new", async function(req, res) {
 });
 
 surveyRouter.post("/update", async function(req, res) {
-// debugger;
+debugger;
   await updateSimple(req,res);
 });
 surveyRouter.post("/publish", async function(req, res) {
-debugger;
+// debugger;
    await updatePublish(req,res);
   //  await updateSurvey(req,res);
 });
@@ -59,7 +59,7 @@ surveyRouter.post( "/truncate" , async function(req,res) {
 
 
 surveyRouter.get( "/page/:limit?/:count?" , async function(req,res) {
-debugger;
+// debugger;
 // try{
   const { limit = 20, count = 0 } = req.params;
   const user= req.user;

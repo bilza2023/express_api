@@ -16,7 +16,7 @@ const Survey = require("../models/survey");
 const Subscriber = require("../models/subscriber.js");
 /////////////////////////////////////////////////
 ////////-----------------SAVE---------/////////
-// resultRouter.use(auth);
+resultRouter.use(auth);
 ////////////////////////////////////////////////
 
 resultRouter.post('/save', async (req, res) => {
@@ -97,9 +97,10 @@ const user= req.user;
 
 resultRouter.post("/deleteAll", async function(req, res) {
   try {
+  debugger;
     const quizId = req.body.quizId;
    const user= req.user;
-    const userId  = req.userId;
+    const userId  = user._id;
    
     if (userId == null) {
       return res.status(400).json({ msg: "please register or login" });
