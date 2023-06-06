@@ -1,74 +1,88 @@
+
 const mongoose = require('mongoose');
 
-//-------------------------------------
-const openAnswerSchema = new mongoose.Schema({
-   questionId: {
+const answerSchema = new mongoose.Schema({
+  id: { 
     type: String,
     required: true
-   }, 
-   questionType: { 
+  },
+  questionId: { 
     type: String,
-    enum: ['SurveyMCQ', 'SurveyInput', 'SurveyParagraph', 'SurveyNumber', 'SurveyUrl', 'SurveyPassword', 'SurveyEmail'],
     required: true
+  },
+ totalMarks: {
+    type: Number,
+    required: true,
+    default : 10
+  },
+  required: {
+    type: Boolean,
+    required: true,
+    default : false
   },
   payload: {
     type: String,
-    required: false
+    required: false,
+    default : ''
   },
+  selectedOptions: {
+    type: [String],
+    required: false,
+    default : []
+  },
+  questionType: {
+    type: String,
+    enum: [ 'SurveyMCQ' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],
+    required: true,
+  }
 });
-//-------------------------------------
-
-//--user id & 1 question
-const SurveySchema = new mongoose.Schema({
- quizId: { //This is not mongodb _id rather the app assigned id
+ 
+//--This is schema for a base result for a survey
+const resultSchema = new mongoose.Schema({
+  id: { 
     type: String,
     required: true
+  },
+  quizId: { 
+    type: String,
+    required: true
+  },
+  ip: { 
+    type: String,
+    required: false,
+    default : ''
+  },
+  countryCode: { 
+    type: String,
+    required: false,
+    default : ''
+  },
+  email: { 
+    type: String,
+    required: true,
   },
   userId: { 
     type: String,
     required: true
   },
-  correctAnswers: {
-    type: [String],
-    required: false,
-    default : []
-  },
-  skippedAnswers: {
-    type: [String],
-    required: false,
-    default : []
-  },
-  wrongAnswers: {
-    type: [String],
-    required: false,
-    default : []
-  },
-  openAnswers: {
-    type: [openAnswerSchema],
-    required: false,
-    default : []
-  },
-  countryCode: {
-    type: String,
-    required: false,
-    default : ""
-  },
-   createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  memberEmail: { 
-    type: String,
-    required: false
-  },
-  ip: { 
-    type: String,
-    required: false
+  answers: {
+  type: [answerSchema],
+  required: true
   }
 });
 
-////////////////////////////////////////////////////////
-const Result = mongoose.model('Result', SurveySchema,  'results');
 
-module.exports = Result;
+
+
+const SurveyResult = mongoose.model('SurveyResult', resultSchema, 'results');
+
+
+
+
+
+
+
+
+////////////////////////////////////////////
+module.exports = SurveyResult;
 

@@ -1,3 +1,6 @@
+here is my node.js mongoose router code for saving SurveyResults into database
+
+resultRouter.js
 
 require('dotenv').config();
 const auth = require('../middleware/auth');
@@ -23,7 +26,7 @@ resultRouter.post('/save', async (req, res) => {
 // console.log("ok");
 // return res.status(200).json({success: true });
   try {
-  
+  debugger;
   const user= req.user;
   // const userId  = user._id;
  
@@ -51,7 +54,6 @@ resultRouter.post('/save', async (req, res) => {
     
     
       // newResult.userId = user._id;
-      // debugger;
       let result = new SurveyResult(quizResult);
       await result.save();
       res.status(200).json({ success: true, message: 'Result saved successfully' });
@@ -117,6 +119,172 @@ resultRouter.post("/deleteAll", async function(req, res) {
 module.exports = resultRouter;
 
 
+here is the result model result.js
+
+const mongoose = require('mongoose');
+
+const answerSchema = new mongoose.Schema({
+  id: { 
+    type: String,
+    required: true
+  },
+ totalMarks: {
+    type: Number,
+    required: true,
+    default : 10
+  },
+  required: {
+    type: Boolean,
+    required: true,
+    default : false
+  },
+  payload: {
+    type: String,
+    required: false,
+    default : ''
+  },
+  selectedOptions: {
+    type: [String],
+    required: false,
+    default : []
+  },
+  questionType: {
+    type: String,
+    enum: [ 'SurveyMCQ' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],
+    required: true,
+  }
+});
+ 
+//--This is schema for a base result for a survey
+const resultSchema = new mongoose.Schema({
+  id: { 
+    type: String,
+    required: true
+  },
+  quizId: { 
+    type: String,
+    required: true
+  },
+  ip: { 
+    type: String,
+    required: false,
+    default : ''
+  },
+  countryCode: { 
+    type: String,
+    required: false,
+    default : ''
+  },
+  email: { 
+    type: String,
+    required: true,
+  },
+  userId: { 
+    type: String,
+    required: true
+  },
+  answers: {
+  type: [answerSchema],
+  required: true
+  }
+});
 
 
 
+
+const SurveyResult  = mongoose.model('SurveyResult', resultSchema);
+
+
+
+
+
+
+
+////////////////////////////////////////////
+module.exports = {SurveyResult};
+
+
+Here is the result object coming from front end ..
+answers
+:[
+    {
+        "id": "8005255c-fd18-4601-808d-f30796b72d94",
+        "required": false,
+        "totalMarks": 10,
+        "payload": "",
+        "selectedOptions": [
+            "fc8594f6-d12d-4c0e-9a4f-4eba7c16e6de",
+            "b41628b2-1fec-4914-9a6d-7d813b93eb0c"
+        ]
+    },
+    {
+        "id": "3decea5c-76d2-4341-b77f-197f419c557f",
+        "questionType": "SurveyParagraph",
+        "required": false,
+        "totalMarks": 10,
+        "payload": "SurveyResult",
+        "selectedOptions": []
+    },
+    {
+        "id": "e6b8a41f-63ed-493d-8b70-f6180778e7d9",
+        "questionType": "SurveyNumber",
+        "required": false,
+        "totalMarks": 10,
+        "payload": 9,
+        "selectedOptions": []
+    },
+    {
+        "id": "7020dea7-eafd-4081-af06-1247f4b1eeec",
+        "questionType": "SurveyEmail",
+        "required": false,
+        "totalMarks": 10,
+        "payload": "SurveyResult",
+        "selectedOptions": []
+    },
+    {
+        "id": "a3544fb7-6aa9-4960-acb8-ed8f1bc32b72",
+        "questionType": "SurveyPassword",
+        "required": false,
+        "totalMarks": 10,
+        "payload": "SurveyResult",
+        "selectedOptions": []
+    },
+    {
+        "id": "cc0744c2-d696-47d0-b396-b75cc00a01a0",
+        "questionType": "SurveyUrl",
+        "required": false,
+        "totalMarks": 10,
+        "payload": "",
+        "selectedOptions": []
+    },
+    {
+        "id": "3bca71cc-5dde-410f-b717-61ed37ffae53",
+        "questionType": "SurveyInput",
+        "required": false,
+        "totalMarks": 10,
+        "payload": "",
+        "selectedOptions": []
+    }
+]
+countryCode
+: 
+"PK"
+email
+: 
+"aaa@msn.com"
+ip
+: 
+"103.113.103.207"
+quizId
+: 
+"64784f0081e7c8b4afe7a310"
+userId
+: 
+"64202224fd8518cb214bd138"
+
+
+Problem : on "save" route at this line
+let result = new SurveyResult(quizResult);
+i get error
+
+"SurveyResult is not a constructor"
