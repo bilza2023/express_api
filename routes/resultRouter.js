@@ -23,7 +23,7 @@ resultRouter.post('/save', async (req, res) => {
 // console.log("ok");
 // return res.status(200).json({success: true });
   try {
-  
+  debugger;
   const user= req.user;
   // const userId  = user._id;
  

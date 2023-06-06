@@ -15,6 +15,11 @@ const answerSchema = new mongoose.Schema({
     required: true,
     default : 10
   },
+ multiSelect: {
+    type: Boolean,
+    required: true,
+    default : false
+  },
   required: {
     type: Boolean,
     required: true,
