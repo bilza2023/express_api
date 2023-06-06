@@ -1,6 +1,6 @@
 //--Require
 require('dotenv').config();
-
+   
 const appConfig = require("../common/appConfig");
 
 const respOk = require("../common/respOk");
@@ -15,20 +15,19 @@ async function createNew (req, res) {
    const title = req.body.title;
    const user= req.user;
    const userId  = user._id;
-
+// debugger;
 ///////////////////---limit new quiz--////
 if (userId !== process.env.OWNER_ID ){
 const prev = await Survey.count({userId :userId});
     if (prev > appConfig.MAX_QUIZ_ALLOWED ){
     return respFail(res,`At the momnent no more than ${appConfig.MAX_QUIZ_ALLOWED} Projects are allowed`,"maxQuizReached");
-    // return res.status(400).json({ msg: ""});
     }
 }
 //////--limit ends
    const newQuizObj = getSurvey(userId, title);
   
     let survey = new Survey( newQuizObj );
-      //  debugger;
+      
     await survey.save();
     const finalOkResp = await respOk(res,"new quiz created",{ survey });
     return finalOkResp;

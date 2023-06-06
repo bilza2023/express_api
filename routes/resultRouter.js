@@ -16,7 +16,7 @@ const Survey = require("../models/survey");
 const Subscriber = require("../models/subscriber.js");
 /////////////////////////////////////////////////
 ////////-----------------SAVE---------/////////
-resultRouter.use(auth);
+// resultRouter.use(auth);
 ////////////////////////////////////////////////
 
 resultRouter.post('/save', async (req, res) => {
@@ -24,29 +24,20 @@ resultRouter.post('/save', async (req, res) => {
 // return res.status(200).json({success: true });
   try {
   debugger;
-  const user= req.user;
+  // const user= req.user; //no user since its by member
   // const userId  = user._id;
  
   const quiz = req.body.quiz;
   const quizResult = req.body.quizResult;
  
-//--total number of responses
-// const totalRespCount = await SurveyResult.countDocuments({userId});
-// // console.log("totalRespCount" , totalRespCount);
-//  if (totalRespCount > appConfig.MAX_RESPONSES_ALLOWED ){
-//     return respFail(res,`No more than ${appConfig.MAX_RESPONSES_ALLOWED} Responses are allowed to be saved`,"maxResponsesReached");
-//     }
-//////////////////////////
 
   //--do not store 2 responses
-  // debugger;
-  // if (quiz.quizType == "quiz" ){
-  //     const quizId = newResult.quizId;
-  //     const existingResult = await SurveyResult.findOne({ quizId:newResult.quizId , email:newResult.email });
-  //     if (existingResult) {
-  //         return respFail(res,`Result already exists for this member`,"resultAlreadyExists");
-  //     }
-  // }
+  
+      const quizId = quizResult.quizId;
+      const existingResult = await SurveyResult.findOne({ quizId:quizResult.quizId , email:quizResult.email });
+      if (existingResult) {
+          return respFail(res,`Result already exists for this member`,"resultAlreadyExists");
+      }
     
     
     
@@ -54,7 +45,7 @@ resultRouter.post('/save', async (req, res) => {
       // debugger;
       let result = new SurveyResult(quizResult);
       await result.save();
-      res.status(200).json({ success: true, message: 'Result saved successfully' });
+      res.status(200).json({ success: true, msg: 'Result saved successfully' });
     // }
   } catch (err) {
     // console.error(err);

@@ -4,6 +4,8 @@ require('dotenv').config();
 // const express = require('express');
 // const auth = require('../middleware/auth');
 
+const appConfig = require("../common/appConfig");
+
 const Survey = require("../models/survey");
 const respOk = require("../common/respOk");
 const respFail = require("../common/respFail");
@@ -14,9 +16,19 @@ const respFail = require("../common/respFail");
 
 async function clone(req, res) {
   try {
-  // debugger;
+  debugger;
     const id = req.body.id;
+    const userId = req.user._id;
     const title = req.body.title;
+
+  ///////////////////---limit new quiz--////
+  if (userId !== process.env.OWNER_ID ){
+  const prev = await Survey.count({userId :userId});
+    if (prev > appConfig.MAX_QUIZ_ALLOWED ){
+    return respFail(res,`At the momnent no more than ${appConfig.MAX_QUIZ_ALLOWED} Projects are allowed`,"maxQuizReached");
+    }
+  }
+  //////--limit ends
 
     const originalQuiz = await Survey.findById(id);
     if (!originalQuiz) {
@@ -25,11 +37,13 @@ async function clone(req, res) {
     const survey = new Survey(originalQuiz.toObject());
     // userId is already set
     survey._id = undefined;
+    survey.published = false; //important
+    survey.members = []; //important
     survey.isNew = true;
     survey.title = title; //--new title
     survey.createdAt = Date.now();
     await survey.save();
-    return res.status(200).json({ survey ,msg: "Cloned.." });
+    return res.status(200).json({ survey ,msg: "Cloned.." }); 
   } catch (error) {
     // console.log(error);
     // return res.status(400).json({ msg: "Failed to clone quiz." });
