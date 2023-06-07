@@ -10,7 +10,7 @@ const appConfig = require("../common/appConfig");
 const express = require('express');
 const resultRouter = express.Router();
 const SurveyResult = require("../models/result");
-const Survey = require("../models/survey");
+const Survey = require("../models/survey/survey");
 
 
 const Subscriber = require("../models/subscriber.js");

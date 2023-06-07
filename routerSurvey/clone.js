@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const appConfig = require("../common/appConfig");
 
-const Survey = require("../models/survey");
+const Survey = require("../models/survey/survey");
 const respOk = require("../common/respOk");
 const respFail = require("../common/respFail");
 /////////////////////////////////////////////////

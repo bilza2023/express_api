@@ -1,7 +1,7 @@
 
 
 
-const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require('../models/svyQuestion');
+const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require('../models/survey/svyQuestion');
 
     const schemaMap = {
     "SurveyMCQ" : SurveyMCQ,

@@ -6,7 +6,7 @@ const appConfig = require("../common/appConfig");
 const respOk = require("../common/respOk");
 const respFail = require("../common/respFail");
 
-const Survey = require("../models/survey");
+const Survey = require("../models/survey/survey");
 
 
 async function createNew (req, res) {

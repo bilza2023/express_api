@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const nonAuthRouter = express.Router();
 
-const Survey = require("../models/survey");
+const Survey = require("../models/survey/survey");
 const Subscriber = require("../models/subscriber.js");
 
 /////////////////////////////////////////////////
