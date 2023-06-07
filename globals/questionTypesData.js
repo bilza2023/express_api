@@ -1,4 +1,4 @@
-const uuid = require('./newSvyData/uuid');
+const uuid = require('uuid');
 // import { v4 as uuid } from 'uuid';
 
 

@@ -1,8 +1,8 @@
 
-const Survey = require("../models/survey.js");
- const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require("../models/survey/svyQuestion.js");
+const Survey = require("../models/survey/survey.js");
+ const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require("../models/survey/survey.js");
 
-const {getDataUrl,getDataPassword,getDataParagraph,getDataNumber,getDataInput,getDataEmail,getDataMCQ,getDataBaseMCQ, getMcqWOption, getSurvey} = require('../models/survey/questionTypesData.js');
+const {getDataUrl,getDataPassword,getDataParagraph,getDataNumber,getDataInput,getDataEmail,getDataMCQ,getDataBaseMCQ, getMcqWOption, getSurvey} = require('../globals/questionTypesData.js');
  
  
 async function createBasicSvy(name="New Survey") {

@@ -1,4 +1,4 @@
-const Survey = require("../../models/survey"); 
+const Survey = require("../../models/survey/survey"); 
 const Result = require("../../models/result"); 
 
 const getResponseData = require('./getResponseData.js'); 
