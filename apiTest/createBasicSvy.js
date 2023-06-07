@@ -1,12 +1,14 @@
-//--The project files has all the data where as all the models are send by api.js
- 
+
+const Survey = require("../models/survey.js");
+ const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail} = require("../models/svyQuestion.js");
+
 const {getDataUrl,getDataPassword,getDataParagraph,getDataNumber,getDataInput,getDataEmail,getDataMCQ,getDataBaseMCQ, getMcqWOption, getSurvey} = require('../models/questionTypesData.js');
  
-
-async function createBasicSvy(Survey,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail) {
+ 
+async function createBasicSvy(name="New Survey") {
 
 //--64202224fd8518cb214bd138 this is userId remains the same
- let survey = new Survey( getSurvey('64202224fd8518cb214bd138' , "Test...") );
+ let survey = new Survey( getSurvey('64202224fd8518cb214bd138' , name) );
 
                 const caseSurveyMCQ = new SurveyMCQ(getDataMCQ());
                 await caseSurveyMCQ.save();

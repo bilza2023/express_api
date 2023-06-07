@@ -12,7 +12,7 @@ function getSurvey(user_id, incomming_title = "New Test") {
         showResult : true,
         showfarewellText : true,
         farewellText : "Goodbye",
-        members : [],
+        members : [{email : 'aaa@msn.com', password : '12345'}],
         questions : []
    }
  return svy;   

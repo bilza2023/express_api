@@ -6,7 +6,7 @@ const {SurveyMCQ} = require('../models/svyQuestion');
 
 async function createDemoSvyMCQ() {
 
- let survey = new Survey( getSurvey('64202224fd8518cb214bd138' , "Test...") );
+ let survey = new Survey( getSurvey('64202224fd8518cb214bd138' , "MCQ") );
 
     
     const q = new SurveyMCQ(baseMCQ);
