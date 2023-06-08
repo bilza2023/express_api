@@ -13,6 +13,8 @@ const db = require("./mongoDb/mongo.js");
 const userRouter = require('./routes/userRouter');
 // const quizRouter = require('./quizRouter/quizRouter');
 const routerSurvey = require('./routerSurvey/routerSurvey.js');
+const routerTemplate = require('./routerTemplate/routerTemplate.js');
+const routerTest = require('./routerTest/routerTest.js');
 // const routerTest = require('./routerTest/routerTest.js');
 const resultRouter = require('./routes/resultRouter');
 const nonAuthRouter = require('./routes/nonAuthRouter.js');
@@ -40,6 +42,8 @@ app.use("/user",userRouter);
 // app.use("/quiz",quizRouter);
 app.use("/result",resultRouter);
 app.use("/survey",routerSurvey);
+app.use("/template",routerTemplate);
+app.use("/test",routerTest);
 // app.use("/test",routerTest);
 
 ///////////////////////////Routes////////////////////////
