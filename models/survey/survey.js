@@ -68,6 +68,8 @@ const SurveySchema = new mongoose.Schema({
 
 ////////////////////////////////////////////////////////
 const Survey = mongoose.model('Survey', SurveySchema,  'surveys');
+const Template = mongoose.model('Template', SurveySchema);
+const Test = mongoose.model('Test', SurveySchema);
 
-module.exports = Survey;
+module.exports = {Survey , Template , Test} ;
 
