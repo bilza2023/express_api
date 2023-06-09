@@ -7,7 +7,7 @@ const createNew = require("./createNew");
 const updateSimple = require("./update/updateSimple");
 const updatePublish = require("./update/updatePublish");
 
-const clone = require("./clone");
+// const clone = require("./clone");
 const maketest = require("./maketest");
 const find = require("./find");
 const deleteSurvey = require('./deleteSurvey');
@@ -30,15 +30,12 @@ surveyRouter.post("/update", async function(req, res) {
   await updateSimple(req,res);
 });
 
-surveyRouter.post("/publish", async function(req, res) {
-// debugger;
-   await updatePublish(req,res);
-  //  await updateSurvey(req,res);
-});
+// surveyRouter.post("/publish", async function(req, res) {
+// // debugger;
+//    await updatePublish(req,res);
+//   //  await updateSurvey(req,res);
+// });
 
-surveyRouter.post("/clone", async function(req, res) {
-   clone(req, res);
-});
 
 surveyRouter.post("/maketest", async function(req, res) {
    maketest(req, res);

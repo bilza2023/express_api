@@ -2,14 +2,22 @@ require('dotenv').config();
 const auth = require('../middleware/auth');
 const express = require('express');
 const ObjToSchema = require('./ObjToSchema.js');
+const deleteTemplate = require('./deleteTemplate');
+const clone = require('./clone.js');
 const {Template} = require("../models/survey/survey");
 
 /////////////////////////////////////////////////
 const routerTemplate = express.Router();
 routerTemplate.use(auth);
 /////////////////////////////////////////////////
- 
+routerTemplate.post("/clone", async function(req, res) {
+   clone(req, res);
+});
 
+
+routerTemplate.post( "/delete" , async function(req,res) {
+  deleteTemplate(req,res);
+});
 routerTemplate.post("/save", async function(req, res) {
 
    try {
