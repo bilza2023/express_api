@@ -51,8 +51,6 @@ app.get('/', async (req, res) =>{
 // const ret = Survey.findById()
 res.status(200).json({success :true ,  message : "Welcome to skillza api"});
 });
-
-
 ////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 db.once('open',()=> {
