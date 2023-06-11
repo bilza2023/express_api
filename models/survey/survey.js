@@ -67,7 +67,18 @@ const SurveySchema = new mongoose.Schema({
 });
 
 ////////////////////////////////////////////////////////
-const Survey = mongoose.model('Survey', SurveySchema,  'surveys');
+const SurveySchemaExtended = new mongoose.Schema({
+  testId: {
+    type: String,
+    required: false,
+    default: ''
+  }
+});
+
+SurveySchemaExtended.add(SurveySchema);
+
+const Survey = mongoose.model('Survey', SurveySchemaExtended, 'surveys');
+// const Survey = mongoose.model('Survey', SurveySchema,  'surveys');
 const Template = mongoose.model('Template', SurveySchema);
 const Test = mongoose.model('Test', SurveySchema);
 

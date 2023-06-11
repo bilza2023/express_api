@@ -1,16 +1,10 @@
-so here is the code pasted below. 
-i have a suggestion to make the code very simple
+let published1 = {
+  startTime: "immediate",
+  startTimeType: "immediate",
+  endTime: {hours:2, minutes:30},
+  endTimeType: "time"
+};
 
-when
-  startTimeType ==  "immediate" we dont need to check 
-startTime: "immediate",
-startTimeType == "dateTime" or "time" 
-startTime can be = {houe: 12 , minutes: 22 } and not the string 
-
-same for endTime
-
-
-code
 
 function isPublished(published) {
   let startTime;
@@ -20,15 +14,13 @@ function isPublished(published) {
   if (published.startTimeType === "immediate") {
     startTime = currentTime;
   } else if (published.startTimeType === "time") {
-    let [hours, minutes] = published.startTime.split("after")[1].split("hours and");
-    startTime = new Date(currentTime.getTime() + hours * 60 * 60 * 1000 + minutes * 60 * 1000);
+    startTime = new Date(currentTime.getTime() + published.startTime.hours * 60 * 60 * 1000 + published.startTime.minutes * 60 * 1000);
   } else if (published.startTimeType === "dateTime") {
     startTime = new Date(published.startTime);
   }
 
   if (published.endTimeType === "time") {
-    let [hours, minutes] = published.endTime.split("after")[1].split("hours and");
-    endTime = new Date(startTime.getTime() + hours * 60 * 60 * 1000 + minutes * 60 * 1000);
+    endTime = new Date(startTime.getTime() + published.endTime.hours * 60 * 60 * 1000 + published.endTime.minutes * 60 * 1000);
   } else if (published.endTimeType === "manual") {
     endTime = null;
   } else if (published.endTimeType === "dateTime") {
@@ -38,12 +30,6 @@ function isPublished(published) {
   return currentTime >= startTime && (endTime === null || currentTime <= endTime);
 }
 
-let published1 = {
-  startTime: "immediate",
-  startTimeType: "immediate",
-  endTime: "after 2 hours and 30 minutes",
-  endTimeType: "time"
-};
 
 let published2 = {
   startTime: "1 January, 2023, 12:00",
@@ -51,9 +37,8 @@ let published2 = {
   endTime: "manual",
   endTimeType: "manual"
 };
-
 let published3 = {
-  startTime: "after 1 hour and 0 minutes",
+  startTime: {hours:1, minutes:0},
   startTimeType: "time",
   endTime: "2 January, 2023, 12:00",
   endTimeType: "dateTime"

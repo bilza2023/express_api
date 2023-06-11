@@ -9,8 +9,8 @@ const appConfig = require("../common/appConfig");
 
 const express = require('express');
 const resultRouter = express.Router();
-const SurveyResult = require("../models/result");
-const Survey = require("../models/survey/survey");
+const Result = require("../models/result");
+const {Test} = require("../models/survey/survey");
 
 
 const Subscriber = require("../models/subscriber.js");
@@ -29,21 +29,22 @@ resultRouter.post('/save', async (req, res) => {
  
   const quiz = req.body.quiz;
   const quizResult = req.body.quizResult;
- 
+  //very confusing the incomming quiz should be Test
+ quizResult.testId = quiz.testId.toString(); 
 
   //--do not store 2 responses
   
-      const quizId = quizResult.quizId;
-      const existingResult = await SurveyResult.findOne({ quizId:quizResult.quizId , email:quizResult.email });
-      if (existingResult) {
-          return respFail(res,`Result already exists for this member`,"resultAlreadyExists");
-      }
+      // const quizId = quizResult.quizId;
+      // const existingResult = await Result.findOne({ quizId:quizResult.quizId , email:quizResult.email });
+      // if (existingResult) {
+      //     return respFail(res,`Result already exists for this member`,"resultAlreadyExists");
+      // }
     
     
     
       // newResult.userId = user._id;
       // debugger;
-      let result = new SurveyResult(quizResult);
+      let result = new Result(quizResult);
       await result.save();
       res.status(200).json({ success: true, msg: 'Result saved successfully' });
     // }
@@ -58,8 +59,9 @@ try {
 // const user= req.user;
     // const userId  = req.userId;
     const quizId = req.body.quizId;
-    const quiz =  await Survey.findById(quizId);
-    const results = await SurveyResult.find({ quizId });
+    const quiz =  await Test.findById(quizId);
+    //---The _id of the incomming result is stored in the testId of the result and the Survey / Run that created it is deleted
+    const results = await Result.find({ testId :quiz._id });
     res.json({ results,quiz });
   } catch (err) {
     console.error(err);
@@ -79,7 +81,7 @@ const user= req.user;
   }
 //---check if quiz has responses
 
-    const r = await SurveyResult.deleteOne({ _id: resultId });
+    const r = await Result.deleteOne({ _id: resultId });
     return res.status(200).json({ msg : "deleted" });
 //----------------------------------
   } catch(error) {
@@ -98,7 +100,7 @@ resultRouter.post("/deleteAll", async function(req, res) {
       return res.status(400).json({ msg: "please register or login" });
     }
 
-    await SurveyResult.deleteMany({ quizId: quizId });
+    await Result.deleteMany({ quizId: quizId });
     return res.status(200).json({ msg: "deleted all results" });
   } catch (error) {
     return res.status(400).json({ msg: "failed to delete  results" });

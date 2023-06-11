@@ -4,8 +4,8 @@ const express = require('express');
 const {Survey,Test,Template} = require("../models/survey/survey");
 const createNew = require("./createNew");
 
-const updateSimple = require("./update/updateSimple");
-const updatePublish = require("./update/updatePublish");
+const save = require("./save");
+// const updatePublish = require("./update/updatePublish");
 
 // const clone = require("./clone");
 const maketest = require("./maketest");
@@ -25,9 +25,9 @@ surveyRouter.post("/new", async function(req, res) {
     await createNew(req,res);
 });
 
-surveyRouter.post("/update", async function(req, res) {
+surveyRouter.post("/save", async function(req, res) {
 // debugger;
-  await updateSimple(req,res);
+  await save(req,res);
 });
 
 // surveyRouter.post("/publish", async function(req, res) {

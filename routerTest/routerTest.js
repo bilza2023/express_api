@@ -30,6 +30,9 @@ routerTest.post("/run", async function(req, res) {
     if (!originalQuiz) {
       return res.status(404).json({ msg: "Test not found" });
     }
+    //--Store the Test id into testId since Survey/Running will be deleted.
+    originalQuiz.testId = originalQuiz._id.toString(); 
+
     const survey = new Survey(originalQuiz.toObject());
     // userId is already set
     survey._id = undefined;

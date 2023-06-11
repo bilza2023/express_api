@@ -3,7 +3,7 @@ const respFail = require('../common/respFail');
 
 async function find(req, res){
      try {
-    debugger;
+    // debugger;
     const user= req.user;
     // const userId  = user._id;
     const id= req.body.quizId;

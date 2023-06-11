@@ -48,7 +48,7 @@ const resultSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  quizId: { 
+  testId: { 
     type: String,
     required: true
   },
@@ -76,18 +76,7 @@ const resultSchema = new mongoose.Schema({
   }
 });
 
-
-
-
-const SurveyResult = mongoose.model('SurveyResult', resultSchema, 'results');
-
-
-
-
-
-
-
-
+const Result = mongoose.model('Result', resultSchema, 'results');
+module.exports = Result;
 ////////////////////////////////////////////
-module.exports = SurveyResult;
 
