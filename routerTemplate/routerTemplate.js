@@ -1,14 +1,12 @@
 require('dotenv').config();
 const auth = require('../middleware/auth');
 const express = require('express');
+
 const deleteTemplate = require('./delete/deleteTemplate');
-const clone = require('./clone/clone.js');
+const {clone,getCloneData} = require('./clone/clone.js');
 const save = require('./save/save.js');
-const createNew = require("./createNew/createNew");
-const getNewData = require("./createNew/getNewData");
-//--The Template , Test and Survey (Running) are same Schemas.
-const {Template} = require("../models/survey/survey");
-    
+const {createNew,getNewData,checkMaxTemplate} = require("./createNew/createNew");
+const getData = require('./getData');  
 /////////////////////////////////////////////////
 const routerTemplate = express.Router();
 routerTemplate.use(auth);
@@ -16,6 +14,8 @@ routerTemplate.use(auth);
 
 routerTemplate.post("/clone", async function(req, res) {
   try {
+    const data = await getCloneData(req);
+      await checkMaxTemplate(data.userId);
    clone(req, res);
    }catch (skillzaaError) {
    return res.status(skillzaaError.statusCode || 500)
@@ -25,13 +25,16 @@ routerTemplate.post("/clone", async function(req, res) {
  
 routerTemplate.post("/new", async function(req, res) {
   try{
-    debugger;
-    const data = await getNewData(req,res);
+  debugger;
+    const data = await getData(req,['title']);
+      await checkMaxTemplate(data.userId);
     const template = await createNew(data.title,data.userId);  
-    return res.status(200).json({template});
+
+      return res.status(200).json({template});
 
   }catch (skillzaaError) {
-   return res.status(skillzaaError.statusCode || 500)
+  //--child fn return errors here we convert that to resonse
+      return res.status(skillzaaError.statusCode || 500)
           .json(skillzaaError.getJson());
   }
 });

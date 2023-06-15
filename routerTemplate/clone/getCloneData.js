@@ -2,13 +2,14 @@
 
 const skillzaErrList = require('../../common/skillzaaError/skillzaaErrList');
 ////////////////////////////////////////////
-async function getNewData (req) {
+async function getCloneData (req) {
  try {
-   const title = req.body.title;//error
+   const id = req.body.id;//error
    const userId  = req.user._id;
+   const title = req.body.title;//error
   //  debugger;
-   if (title === undefined || userId === undefined){throw new Error("ok");}
-    return {title,userId};
+   if ( id === undefined || title === undefined || userId === undefined){throw new Error("ok");}
+    return {title,userId,id};
 
   } catch (error) {
     throw skillzaErrList.getErr("corruptIncommingData");
@@ -19,4 +20,4 @@ async function getNewData (req) {
 
 
 ///////////////////////////////
-module.exports  = getNewData;
+module.exports  = getCloneData;

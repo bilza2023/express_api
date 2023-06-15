@@ -2,24 +2,21 @@
 const {getSurvey} = require('../../globals/questionTypesData');
 const {Template} = require("../../models/survey/survey");
 const checkMaxQuiz = require('../fn/checkMaxQuiz');
-const getData = require('./getNewData');
+const getNewData = require('./getNewData');
+const checkMaxTemplate = require('../fn/checkMaxTemplate');
+
+const skillzaErrList = require('../../common/skillzaaError/skillzaaErrList');
 ////////////////////////////////////////////
 async function createNew (title,userId) {
  try { 
-  //limit new quiz
-    const limitCheck  = await checkMaxQuiz(userId);  
-    // debugger;
-    if ( limitCheck !== true){return limitCheck;}
-  
   //--getSurvey is in globals 
     const newQuizObj = getSurvey(userId, title);
     let template = new Template( newQuizObj );     
     await template.save();
-    
     return  template;
    
   } catch (error) {
-    return null;
+    throw skillzaErrList.getErr('failedToCreateNew');
   }
 }
 
@@ -27,4 +24,4 @@ async function createNew (title,userId) {
 
 
 ///////////////////////////////
-module.exports  = createNew;
+module.exports  = {createNew,getNewData,checkMaxTemplate};
