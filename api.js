@@ -4,6 +4,7 @@ const db = require("./mongoDb/mongo.js");
 // const createBasicSvy=require('./apiTest/createBasicSvy.js');
 const manualSurvey=require('./apiTest/manualSurvey/manualSurvey.js');
 // const createResponses=require('./apiTest/createResponses/createResponses.js');
+const createNewTemplate=require('./apiTest/template/createNew.js');
 // const createResult=require('./apiTest/createResult.js');
 // const deleteAllSurveys = require('./apiTest/deleteAllSurveys.js');
 // const deleteAllResults = require('./apiTest/deleteAllResults.js');
@@ -16,7 +17,8 @@ db.once('open',()=> {
     //////////////////////////////////////////////////////
     // createBasicSvy("Gijga Baby");
     // createResponses();
-    manualSurvey();
+    // manualSurvey();
+    createNewTemplate();
     // createDemoSvyMCQ();
     // deleteAllSurveys(Survey);
     // createResult();

@@ -1,9 +1,9 @@
 
+ function respFail(res,statusCode=500,errorSlug="unknownError", errorMsg="", otherData={} ){ 
 
-async function respFail(res ,errormsg,errorSlug="",errorcode=0){
-res.status(400).json({ msg:null , errorcode , errorSlug,errormsg});
+res.status(statusCode).json({errorSlug, errorMsg, otherData});
 return res;
 }
 
-
+ 
 module.exports = respFail;

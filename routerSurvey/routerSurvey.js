@@ -2,7 +2,7 @@ require('dotenv').config();
 const auth = require('../middleware/auth');
 const express = require('express');
 const {Survey,Test,Template} = require("../models/survey/survey");
-const createNew = require("./createNew");
+
 
 const save = require("./save");
 // const updatePublish = require("./update/updatePublish");
@@ -21,10 +21,6 @@ const surveyRouter = express.Router();
 surveyRouter.use(auth);
 /////////////////////////////////////////////////
  
-surveyRouter.post("/new", async function(req, res) {
-    await createNew(req,res);
-});
-
 surveyRouter.post("/save", async function(req, res) {
 // debugger;
   await save(req,res);

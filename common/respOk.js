@@ -1,12 +1,10 @@
 
+ 
+function respOk(res,msg="",additionalData={},statusCode=200) {
 
-
-async function respOk(res, msg="", additionalData={}) {
-
-  const responseObject = { msg, errorcode: null, errormsg: null,
-  errorSlug :null, ...additionalData };
+  const responseObject = { msg, ...additionalData };
   
-  res.status(200).json(responseObject);
+  res.status(statusCode).json(responseObject);
   return res;
 }
 

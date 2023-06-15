@@ -66,7 +66,7 @@ const resultSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userId: { 
+  userId: {  //--creator of the test id
     type: String,
     required: true
   },
