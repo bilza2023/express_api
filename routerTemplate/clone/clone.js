@@ -1,20 +1,11 @@
 
 const {Template} = require("../../models/survey/survey");
-const getCloneData = require("./getCloneData");
-const checkMaxQuiz = require('../fn/checkMaxQuiz'); 
 
-async function clone(id,userId,title) {
+async function clone(id,title) {
   try {
-  // debugger;
-  
-  //limit new quiz
-    const limitCheck  = await checkMaxQuiz(userId);  
-    // debugger;
-    if ( limitCheck !== true){return limitCheck;}
-
     const originalQuiz = await Template.findById(id);
     if (!originalQuiz) {
-      return respFail(res,404,"notFound",'Survey not found');
+      throw skillzaErrList.getErr("itemNotFound");
     }
 
     const template = new Template(originalQuiz.toObject());
@@ -29,7 +20,7 @@ async function clone(id,userId,title) {
     return  template;
 
   } catch (error) {
-    return respFail(res,500,"unknownError",'unknown error');
+    throw error;
   }
 }
 
