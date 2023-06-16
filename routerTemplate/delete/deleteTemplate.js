@@ -8,17 +8,13 @@ const {Template} = require("../../models/survey/survey");
 const respOk = require("../../common/respOk");
 const respFail = require("../../common/respFail");
 
-async function deleteTemplate (req,res) {
+async function deleteTemplate (userId,quizId) {
   try {
-  // debugger;
-    // const user= req.user;
-    const userId  = req.user._id;
-    const quizId= req.body.quizId;//check
     const r = await Template.deleteOne({ _id: quizId , userId });
-    return  respOk(res,"Template Deleted");
+    return  true;
 
   } catch(error) {
-    return respFail(res,500,"unknownError",'unknown error');
+    throw skillzaErrList.getErr("deleteError");
   }
 }
 

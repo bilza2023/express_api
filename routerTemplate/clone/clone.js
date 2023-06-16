@@ -1,13 +1,12 @@
 
 const {Template} = require("../../models/survey/survey");
+const skillzaErrList = require('../../common/skillzaaError/skillzaaErrList');
+
 
 async function clone(id,title) {
   try {
-    const originalQuiz = await Template.findById(id);
-    if (!originalQuiz) {
-      throw skillzaErrList.getErr("itemNotFound");
-    }
-
+    //fol line can be removed if oriqnalQuiz is passed as argument.
+    const originalQuiz = await Template.findById(id); 
     const template = new Template(originalQuiz.toObject());
     template._id = undefined;// userId is already set
     template.published = false; //important
@@ -20,7 +19,7 @@ async function clone(id,title) {
     return  template;
 
   } catch (error) {
-    throw error;
+    throw skillzaErrList.getErr("failedToCreateNew");
   }
 }
 

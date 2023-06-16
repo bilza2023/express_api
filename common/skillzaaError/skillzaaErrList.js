@@ -1,9 +1,12 @@
 const SkillzaaErrors = require('./SkillzaaErrors');
 const skillzaErrList = new SkillzaaErrors();
 
+skillzaErrList.addErr("failedToUpdate",500,"Failed to Update");
+skillzaErrList.addErr("QuestionTypeModelError",500,"Some of the question types do not have a valid database model");
 skillzaErrList.addErr("loginError",400,"You may not be logged in");
 skillzaErrList.addErr("maxTemplateLimitExceeded",500,"You have exceeded the maximum limit for template creation");
 skillzaErrList.addErr("failedToCreateNew",500,"Failed to create new item");
+skillzaErrList.addErr("deleteError",500,"Failed to delete");
 
 skillzaErrList.addErr("itemNotFound",404,"Sorry the item was not found");
 skillzaErrList.addErr("unknownError",500,"Unknown error");

@@ -7,6 +7,7 @@ const clone = require('./clone/clone.js');
 const save = require('./save/save.js');
 const createNew = require("./createNew/createNew");
 const getData = require('./getData');  
+const find = require('./fn/find');  
 const checkMaxTemplate = require('./fn/checkMaxTemplate');  
 /////////////////////////////////////////////////
 const routerTemplate = express.Router();
@@ -15,10 +16,11 @@ routerTemplate.use(auth);
 
 routerTemplate.post("/clone", async function(req, res) {
   try{
-  debugger;
+  // debugger;
     const data = await getData(req,['id','title']);
       await checkMaxTemplate(data.userId);
-    const template = await clone(data.id,data.userId,data.title);  
+      await find(data.id);
+    const template = await clone(data.id,data.title);  
 
       return res.status(200).json({template});
 
@@ -48,8 +50,14 @@ routerTemplate.post("/new", async function(req, res) {
 
 routerTemplate.post( "/delete" , async function(req,res) {
   try {
-  deleteTemplate(req,res);
+  debugger;
+    const data = await getData(req,['quizId']);
+    await find(data.quizId);
+    await deleteTemplate(data.userId,data.quizId);
+      return res.status(200).json({});
+
   }catch (skillzaaError) {
+  // debugger;
    return res.status(skillzaaError.statusCode || 500)
           .json(skillzaaError.getJson());
   }
@@ -57,7 +65,10 @@ routerTemplate.post( "/delete" , async function(req,res) {
 
 routerTemplate.post("/save", async function(req, res) {
   try {
-  save(req,res);
+  const data = await getData(req,['survey']);
+  const survey = await save(data.survey);
+    return  res.status(200).json({ survey });
+
   }catch (skillzaaError) {
    return res.status(skillzaaError.statusCode || 500)
           .json(skillzaaError.getJson());

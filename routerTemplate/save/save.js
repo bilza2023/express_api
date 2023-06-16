@@ -1,17 +1,16 @@
-const respOk = require("../../common/respOk");
-const respFail = require("../../common/respFail");
 const {Template} = require("../../models/survey/survey");
 const ObjToSchema = require('../ObjToSchema');
-async function save(req,res){
+const skillzaErrList = require('../../common/skillzaaError/skillzaaErrList');
+
+async function save(incommingSurvey){
    try {
-   debugger;
-    const incommingSurvey = req.body.survey; // the updated fields
+  //  debugger;
     //---------------------------------------
     const questions = incommingSurvey.questions;
     //---object to schema.
     const newQuestions = await ObjToSchema(questions);
     if (newQuestions == null) {
-        return respFail(res,500,"QuestionTypeCastingError",'Failed Question Type Casting');  
+        throw skillzaErrList.getErr("QuestionTypeModelError");
     }
       incommingSurvey.questions = newQuestions;
 
@@ -20,12 +19,13 @@ async function save(req,res){
     const survey = await Template.findByIdAndUpdate( incommingSurvey._id , incommingSurvey,options);
 
     if(survey){
-      return  respOk(res,"Survey Saved",{ survey });
+    //when status is 200 no need for any further message.
+      
     }else {
-      return respFail(res,404,"NotFound",'Item not found');  
+      throw skillzaErrList.getErr("failedToUpdate");
     }
   } catch (error) {
-    return respFail(res,500,"unknownError",'unknown error');
+    throw error;
   }
 }
 
