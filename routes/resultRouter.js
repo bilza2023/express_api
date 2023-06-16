@@ -2,9 +2,6 @@
 require('dotenv').config();
 const auth = require('../middleware/auth');
 
-const respOk = require("../common/respOk");
-const respFail = require("../common/respFail");
-
 const appConfig = require("../common/appConfig");
 
 const express = require('express');
@@ -16,7 +13,7 @@ const {Test} = require("../models/survey/survey");
 const Subscriber = require("../models/subscriber.js");
 /////////////////////////////////////////////////
 ////////-----------------SAVE---------/////////
-// resultRouter.use(auth);
+resultRouter.use(auth);
 ////////////////////////////////////////////////
 
 resultRouter.post('/save', async (req, res) => {
@@ -92,15 +89,14 @@ const user= req.user;
 resultRouter.post("/deleteAll", async function(req, res) {
   try {
   debugger;
-    const quizId = req.body.quizId;
-   const user= req.user;
-    const userId  = user._id;
+    const testId = req.body.quizId;
+    const userId  = req.user._id;
    
     if (userId == null) {
       return res.status(400).json({ msg: "please register or login" });
     }
 
-    await Result.deleteMany({ quizId: quizId });
+    await Result.deleteMany({ testId , userId });
     return res.status(200).json({ msg: "deleted all results" });
   } catch (error) {
     return res.status(400).json({ msg: "failed to delete  results" });

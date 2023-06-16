@@ -8,7 +8,7 @@ async function getData(req, fields) {
     if (userId == undefined){
         throw skillzaErrList.getErr("loginError");
     }else {
-        data.userId = userId;
+        data.userId = userId.toString();
     }
     
     for (const field of fields) {

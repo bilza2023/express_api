@@ -5,6 +5,7 @@ class SkillzaaError extends Error {
   //message is the default message of the error a little more descriptive form of slug/name
     super(message);
     this.name = name;
+    this.type = 'skillzaaError';
     this.description = description; //for later for local use
     this.statusCode = statusCode;
   }

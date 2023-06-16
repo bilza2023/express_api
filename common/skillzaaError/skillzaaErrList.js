@@ -1,6 +1,7 @@
 const SkillzaaErrors = require('./SkillzaaErrors');
 const skillzaErrList = new SkillzaaErrors();
 
+skillzaErrList.addErr("testHasResponses",400,"This test has responses and can not be deleted");
 skillzaErrList.addErr("failedToUpdate",500,"Failed to Update");
 skillzaErrList.addErr("QuestionTypeModelError",500,"Some of the question types do not have a valid database model");
 skillzaErrList.addErr("loginError",400,"You may not be logged in");

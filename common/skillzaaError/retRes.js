@@ -1,10 +1,12 @@
 
 
-  function retRes(res,err) {
-    res.message = err.message;
-    res.description = err.description; 
-    res.name = err.name;
-   return res.status(err.statusCode);
+  function retRes(err,res) {
+  if (err.type == 'skillzaaError'){
+      return res.status(err.statusCode || 500)
+          .json(err.getJson()); 
+    }else {
+      return res.status(500).json({message:"process failure"}); 
+    }
   }
 
   module.exports = retRes;
