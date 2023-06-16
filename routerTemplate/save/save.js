@@ -18,12 +18,9 @@ async function save(incommingSurvey){
     const options = { new: true, upsert: true }; 
     const survey = await Template.findByIdAndUpdate( incommingSurvey._id , incommingSurvey,options);
 
-    if(survey){
-    //when status is 200 no need for any further message.
+    if(!survey){
+      throw skillzaErrList.getErr("failedToUpdate");  }
       
-    }else {
-      throw skillzaErrList.getErr("failedToUpdate");
-    }
   } catch (error) {
     throw error;
   }

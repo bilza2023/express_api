@@ -6,7 +6,7 @@ const deleteTemplate = require('./delete/deleteTemplate');
 const clone = require('./clone/clone.js');
 const save = require('./save/save.js');
 const createNew = require("./createNew/createNew");
-const getData = require('./getData');  
+const getData = require('../common/getData');  
 const find = require('./fn/find');  
 const checkMaxTemplate = require('./fn/checkMaxTemplate');  
 /////////////////////////////////////////////////
@@ -64,7 +64,7 @@ routerTemplate.post( "/delete" , async function(req,res) {
 });
 
 routerTemplate.post("/save", async function(req, res) {
-  try {
+  try { 
   const data = await getData(req,['survey']);
   const survey = await save(data.survey);
     return  res.status(200).json({ survey });
