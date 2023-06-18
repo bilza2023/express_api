@@ -21,6 +21,11 @@ const svyQuestionSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  marks: {
+    type: Number,
+    required: true,
+    default : 0
+  },
   questionType: {
     type: String,
     enum: [ 'SurveyMCQ' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],

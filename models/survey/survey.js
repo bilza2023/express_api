@@ -59,6 +59,11 @@ const SurveySchema = new mongoose.Schema({
     required: false,
     default : []
   },
+  marks: {  //Marks per question
+    type: Number,
+    required: true,
+    default : 10
+  },
   questions: {
     type: [svyQuestionSchema],
     required: false,

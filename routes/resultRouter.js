@@ -9,7 +9,6 @@ const resultRouter = express.Router();
 const Result = require("../models/result");
 const {Test} = require("../models/survey/survey");
 
-
 const Subscriber = require("../models/subscriber.js");
 /////////////////////////////////////////////////
 ////////-----------------SAVE---------/////////
@@ -30,12 +29,11 @@ resultRouter.post('/save', async (req, res) => {
  quizResult.testId = quiz.testId.toString(); 
 
   //--do not store 2 responses
-  
-      // const quizId = quizResult.quizId;
-      // const existingResult = await Result.findOne({ quizId:quizResult.quizId , email:quizResult.email });
-      // if (existingResult) {
-      //     return respFail(res,`Result already exists for this member`,"resultAlreadyExists");
-      // }
+      const quizId = quizResult.quizId;
+      const existingResult = await Result.findOne({ quizId:quizResult.quizId , email:quizResult.email });
+      if (existingResult) {
+          return res.status(400).json('Result already exists for this member');
+      }
     
     
     
