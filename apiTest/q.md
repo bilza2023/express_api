@@ -1,64 +1,701 @@
-so here is the code pasted below. 
-i have a suggestion to make the code very simple
+I am running this node.js function
+I am running this node.js function
+const { Template } = require("../models/survey/survey.js");
+const { SurveyMCQ } = require("../models/survey/svyQuestion.js");
+const uuid = require('../common/uuid.js');
 
-when
-  startTimeType ==  "immediate" we dont need to check 
-startTime: "immediate",
-startTimeType == "dateTime" or "time" 
-startTime can be = {houe: 12 , minutes: 22 } and not the string 
+async function addQuestionsToQuiz(templateId, questions) {
+  try {
+    // Find the template using the templateId
+    const template = await Template.findById(templateId);
 
-same for endTime
+    await addIdsToAOO(questions);
+    await addIdsToOptions(questions);
+    await addCorrectOptions(questions);
 
+    const castedQuestions = await castQuestions(questions);
+    // Set the template.questions to the provided questions
+    template.questions = castedQuestions;
 
-code
+    // Save the template
+    await template.save();
 
-function isPublished(published) {
-  let startTime;
-  let endTime;
-  let currentTime = new Date();
-
-  if (published.startTimeType === "immediate") {
-    startTime = currentTime;
-  } else if (published.startTimeType === "time") {
-    let [hours, minutes] = published.startTime.split("after")[1].split("hours and");
-    startTime = new Date(currentTime.getTime() + hours * 60 * 60 * 1000 + minutes * 60 * 1000);
-  } else if (published.startTimeType === "dateTime") {
-    startTime = new Date(published.startTime);
+    console.log("Questions added to the Template");
+  } catch (error) {
+    console.error(error);
   }
-
-  if (published.endTimeType === "time") {
-    let [hours, minutes] = published.endTime.split("after")[1].split("hours and");
-    endTime = new Date(startTime.getTime() + hours * 60 * 60 * 1000 + minutes * 60 * 1000);
-  } else if (published.endTimeType === "manual") {
-    endTime = null;
-  } else if (published.endTimeType === "dateTime") {
-    endTime = new Date(published.endTime);
-  }
-
-  return currentTime >= startTime && (endTime === null || currentTime <= endTime);
 }
 
-let published1 = {
-  startTime: "immediate",
-  startTimeType: "immediate",
-  endTime: "after 2 hours and 30 minutes",
-  endTimeType: "time"
-};
+module.exports = addQuestionsToQuiz;
 
-let published2 = {
-  startTime: "1 January, 2023, 12:00",
-  startTimeType: "dateTime",
-  endTime: "manual",
-  endTimeType: "manual"
-};
+///////////////////////////////////////////
+///////////////////////////////////////////
+///////////////////////////////////////////
+async function addIdsToAOO(aoo){
+    for (let i = 0; i < aoo.length; i++) {
+        const e = aoo[i];
+        e.id = uuid();
+    }
 
-let published3 = {
-  startTime: "after 1 hour and 0 minutes",
-  startTimeType: "time",
-  endTime: "2 January, 2023, 12:00",
-  endTimeType: "dateTime"
-};
+}
+async function castQuestions(questions){
+const castedQuestions = [];
+    for (let i = 0; i < questions.length; i++) {
+            const q = new SurveyMCQ( questions[i]  );
+            castedQuestions.push( q );
+    }
+return castedQuestions;
+}
 
-console.log(isPublished(published1)); // true or false depending on the current time
-console.log(isPublished(published2)); // true or false depending on the current time
-console.log(isPublished(published3)); // true or false depending on the current time
+async function addCorrectOptions(questions){
+    for (let i = 0; i < questions.length; i++) {
+        
+        const question = questions[i];
+            question.correctOptions = [];
+            question.questionType = 'SurveyMCQ';
+        
+        for (let j = 0; j < question.options.length; j++) {
+            const option = question.options[j];
+            if (option.correct === true){
+                question.correctOptions.push(option.id);6
+            }
+        }
+    }
+}
+async function addIdsToOptions(aoo){
+    for (let i = 0; i < aoo.length; i++) {
+        const e = aoo[i];
+        if(e.options.length > 0) {
+            addIdsToAOO(e.options)
+            // console.log(e.options);    
+        }
+    }
+}
+
+
+
+here is the svyQuestion model ==>
+
+const mongoose = require('mongoose');
+const options = { discriminatorKey: 'kind' };
+ 
+//--This is schema for a base question for a survey
+const svyQuestionSchema = new mongoose.Schema({
+  id: { 
+    type: String,
+    required: true
+  },
+  required: {
+    type: Boolean,
+    required: true,
+    default : false
+  },
+  content: {
+    type: String,
+    required: false
+  },
+  explanation: {
+    type: String,
+    required: false
+  },
+  marks: {
+    type: Number,
+    required: true,
+    default : 0
+  },
+  questionType: {
+    type: String,
+    enum: [ 'SurveyMCQ' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],
+    required: true,
+  }
+});
+const SurveyQuestion  = mongoose.model('SurveyQuestion', svyQuestionSchema);
+
+///////////////////////////////////--MCQ--////////////////////////
+//---Options schema for MCQ
+const optionSchema = new mongoose.Schema({
+  id: { 
+    type: String,
+    required: true
+  },
+  content: {
+    type: String,
+    required: false
+  }
+});
+
+//..
+
+const SurveyMCQ = SurveyQuestion.discriminator('SurveyMCQ',
+  new mongoose.Schema({ 
+        multiSelect: {
+          type: Boolean,
+          required: false,
+          default : false
+        },
+        selectedOptions: {
+          type: [String],
+          required: true,
+          default : []
+        },
+        correctOptions: {
+          type: [String],
+          required: true,
+          default : []
+        },
+        displayOptions: {
+          type: String,
+          enum: ["dropdown", "radio", "check" , "bars"],
+          required: true,
+          default : "bars"
+        },
+        options: {
+          type: [optionSchema],
+          required: true
+        }
+  })
+  , options);
+
+///////////////////////////////////--Input --////////////////////////
+
+const SurveyInput = SurveyQuestion.discriminator('SurveyInput',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          required: false,
+          default: "",
+        },
+        minChar: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+        maxChar: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+  })
+  , options);
+
+///////////////////////////////////--Paragrapg --////////////////////////
+
+const SurveyParagraph = SurveyQuestion.discriminator('SurveyParagraph',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          default : "",
+          required: false
+        },
+        minChar: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+        maxChar: {
+          type: Number,
+          required: false,
+          default : 0
+        }
+  })
+  , options);
+
+///////////////////////////////////--Number --////////////////////////
+
+const SurveyNumber = SurveyQuestion.discriminator('SurveyNumber',
+  new mongoose.Schema({ 
+        payload: {
+        type: Number,
+          required: false
+        },
+        minVal: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+        maxVal: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+  })
+  , options);
+
+///////////////////////////////////--Url --////////////////////////
+
+const SurveyUrl = SurveyQuestion.discriminator('SurveyUrl',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          default : "",
+          required: false
+        },
+        check: {
+          type: Boolean,
+          required: false,
+          default : true
+        }
+  })
+  , options);
+
+///////////////////////////////////--email --////////////////////////
+
+const SurveyEmail = SurveyQuestion.discriminator('SurveyEmail',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          default : "",
+          required: false
+        },
+        check: {
+          type: Boolean,
+          required: false,
+          default : true
+        }
+  })
+  , options);
+
+///////////////////////////////////--password --////////////////////////
+
+const SurveyPassword = SurveyQuestion.discriminator('SurveyPassword',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          default : "",
+          required: false
+        },
+        check: {
+          type: Boolean,
+          required: false,
+          default : true
+        },
+        minChar: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+        maxChar: {
+          type: Number,
+          required: false,
+          default : 0
+        }
+  })
+  , options);
+
+
+//..Export section
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//SurveyQuestion dont export since its abstract but 
+module.exports = {svyQuestionSchema,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail};
+
+here is survey model ==>
+const mongoose = require('mongoose');
+
+const {memberSchema} = require('./member');
+const {svyQuestionSchema} = require("./svyQuestion");
+
+
+//--user id & 1 question
+const SurveySchema = new mongoose.Schema({
+  title: { 
+    type: String,
+    required: true,
+    // default : ""
+  },
+  userId: {
+    type: String,
+    required: true
+  },
+  saveResponse: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  showIntro: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  introText: {
+    type: String,
+    default : "Welcome",
+    required: false
+  },
+  published: {
+    type: Boolean,
+    required: true,
+    default : false
+  },
+  showResult: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  showfarewellText: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  farewellText: {
+    type: String,
+    default : "Goodbye",
+    required: false
+  },
+   createdAt: {
+    type: Date,
+    default: Date.now
+  }, 
+   members: {
+    type: [memberSchema],
+    required: false,
+    default : []
+  },
+  marks: {  //Marks per question
+    type: Number,
+    required: true,
+    default : 10
+  },
+  questions: {
+    type: [svyQuestionSchema],
+    required: false,
+    default : []
+  }
+});
+
+////////////////////////////////////////////////////////
+const SurveySchemaExtended = new mongoose.Schema({
+  testId: {
+    type: String,
+    required: false,
+    default: ''
+  }
+});
+
+SurveySchemaExtended.add(SurveySchema);
+
+const Survey = mongoose.model('Survey', SurveySchemaExtended, 'surveys');
+// const Survey = mongoose.model('Survey', SurveySchema,  'surveys');
+const Template = mongoose.model('Template', SurveySchema);
+const Test = mongoose.model('Test', SurveySchema);
+
+module.exports = {Survey , Template , Test} ;
+
+the questions saved in mongodb are missing question.content why ?
+
+
+
+here is the svyQuestion model ==>
+
+const mongoose = require('mongoose');
+const options = { discriminatorKey: 'kind' };
+ 
+//--This is schema for a base question for a survey
+const svyQuestionSchema = new mongoose.Schema({
+  id: { 
+    type: String,
+    required: true
+  },
+  required: {
+    type: Boolean,
+    required: true,
+    default : false
+  },
+  content: {
+    type: String,
+    required: false
+  },
+  explanation: {
+    type: String,
+    required: false
+  },
+  marks: {
+    type: Number,
+    required: true,
+    default : 0
+  },
+  questionType: {
+    type: String,
+    enum: [ 'SurveyMCQ' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],
+    required: true,
+  }
+});
+const SurveyQuestion  = mongoose.model('SurveyQuestion', svyQuestionSchema);
+
+///////////////////////////////////--MCQ--////////////////////////
+//---Options schema for MCQ
+const optionSchema = new mongoose.Schema({
+  id: { 
+    type: String,
+    required: true
+  },
+  content: {
+    type: String,
+    required: false
+  }
+});
+
+//..
+
+const SurveyMCQ = SurveyQuestion.discriminator('SurveyMCQ',
+  new mongoose.Schema({ 
+        multiSelect: {
+          type: Boolean,
+          required: false,
+          default : false
+        },
+        selectedOptions: {
+          type: [String],
+          required: true,
+          default : []
+        },
+        correctOptions: {
+          type: [String],
+          required: true,
+          default : []
+        },
+        displayOptions: {
+          type: String,
+          enum: ["dropdown", "radio", "check" , "bars"],
+          required: true,
+          default : "bars"
+        },
+        options: {
+          type: [optionSchema],
+          required: true
+        }
+  })
+  , options);
+
+///////////////////////////////////--Input --////////////////////////
+
+const SurveyInput = SurveyQuestion.discriminator('SurveyInput',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          required: false,
+          default: "",
+        },
+        minChar: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+        maxChar: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+  })
+  , options);
+
+///////////////////////////////////--Paragrapg --////////////////////////
+
+const SurveyParagraph = SurveyQuestion.discriminator('SurveyParagraph',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          default : "",
+          required: false
+        },
+        minChar: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+        maxChar: {
+          type: Number,
+          required: false,
+          default : 0
+        }
+  })
+  , options);
+
+///////////////////////////////////--Number --////////////////////////
+
+const SurveyNumber = SurveyQuestion.discriminator('SurveyNumber',
+  new mongoose.Schema({ 
+        payload: {
+        type: Number,
+          required: false
+        },
+        minVal: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+        maxVal: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+  })
+  , options);
+
+///////////////////////////////////--Url --////////////////////////
+
+const SurveyUrl = SurveyQuestion.discriminator('SurveyUrl',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          default : "",
+          required: false
+        },
+        check: {
+          type: Boolean,
+          required: false,
+          default : true
+        }
+  })
+  , options);
+
+///////////////////////////////////--email --////////////////////////
+
+const SurveyEmail = SurveyQuestion.discriminator('SurveyEmail',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          default : "",
+          required: false
+        },
+        check: {
+          type: Boolean,
+          required: false,
+          default : true
+        }
+  })
+  , options);
+
+///////////////////////////////////--password --////////////////////////
+
+const SurveyPassword = SurveyQuestion.discriminator('SurveyPassword',
+  new mongoose.Schema({ 
+        payload: {
+          type: String,
+          default : "",
+          required: false
+        },
+        check: {
+          type: Boolean,
+          required: false,
+          default : true
+        },
+        minChar: {
+          type: Number,
+          required: false,
+          default : 0
+        },
+        maxChar: {
+          type: Number,
+          required: false,
+          default : 0
+        }
+  })
+  , options);
+
+
+//..Export section
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//SurveyQuestion dont export since its abstract but 
+module.exports = {svyQuestionSchema,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail};
+
+here is survey model ==>
+const mongoose = require('mongoose');
+
+const {memberSchema} = require('./member');
+const {svyQuestionSchema} = require("./svyQuestion");
+
+
+//--user id & 1 question
+const SurveySchema = new mongoose.Schema({
+  title: { 
+    type: String,
+    required: true,
+    // default : ""
+  },
+  userId: {
+    type: String,
+    required: true
+  },
+  saveResponse: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  showIntro: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  introText: {
+    type: String,
+    default : "Welcome",
+    required: false
+  },
+  published: {
+    type: Boolean,
+    required: true,
+    default : false
+  },
+  showResult: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  showfarewellText: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  farewellText: {
+    type: String,
+    default : "Goodbye",
+    required: false
+  },
+   createdAt: {
+    type: Date,
+    default: Date.now
+  }, 
+   members: {
+    type: [memberSchema],
+    required: false,
+    default : []
+  },
+  marks: {  //Marks per question
+    type: Number,
+    required: true,
+    default : 10
+  },
+  questions: {
+    type: [svyQuestionSchema],
+    required: false,
+    default : []
+  }
+});
+
+////////////////////////////////////////////////////////
+const SurveySchemaExtended = new mongoose.Schema({
+  testId: {
+    type: String,
+    required: false,
+    default: ''
+  }
+});
+
+SurveySchemaExtended.add(SurveySchema);
+
+const Survey = mongoose.model('Survey', SurveySchemaExtended, 'surveys');
+// const Survey = mongoose.model('Survey', SurveySchema,  'surveys');
+const Template = mongoose.model('Template', SurveySchema);
+const Test = mongoose.model('Test', SurveySchema);
+
+module.exports = {Survey , Template , Test} ;
+
+the questions saved in mongodb are missing question.content why ?

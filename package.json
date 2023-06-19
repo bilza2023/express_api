@@ -31,7 +31,8 @@
     "mysql2": "2.3.3",
     "nodemailer": "^6.9.1",
     "sequelize": "6.28.0",
-    "sqlite3": "^5.1.4"
+    "sqlite3": "^5.1.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
