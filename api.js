@@ -20,7 +20,7 @@ db.once('open',()=> {
     // createResponses();
     // manualSurvey();
     // createNewTemplate();
-    addQuestionsToQuiz( '6490b4b1f328b6b4408dc1f0',data);
+    addQuestionsToQuiz( '6492171cf2f38f342cb7c910',data);
     // createDemoSvyMCQ();
     // deleteAllSurveys(Survey);
     // createResult();

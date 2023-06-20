@@ -113,6 +113,15 @@ function getSurvey(user_id, incomming_title = "New Test") {
         showResult : true,
         showfarewellText : true,
         farewellText : "Goodbye",
+        publishObj : {
+            publishTechnique:'now' , 
+            unpublishTechnique : 'never',
+            hour:9,
+            min:0, 
+            unpublishHour:1,
+            unpublishMin :0,
+            publishDate:null
+            },
         members : [],
         questions : []
    }

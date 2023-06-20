@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const {memberSchema} = require('./member');
 const {svyQuestionSchema} = require("./svyQuestion");
+const {publishObjSchema} = require("./publishObj");
 
 
 //--user id & 1 question
@@ -29,11 +30,6 @@ const SurveySchema = new mongoose.Schema({
     type: String,
     default : "Welcome",
     required: false
-  },
-  published: {
-    type: Boolean,
-    required: true,
-    default : false
   },
   showResult: {
     type: Boolean,
@@ -68,6 +64,10 @@ const SurveySchema = new mongoose.Schema({
     type: [svyQuestionSchema],
     required: false,
     default : []
+  },
+  publishObj: {
+    type: publishObjSchema,
+    required: false,
   }
 });
 
@@ -75,7 +75,7 @@ const SurveySchema = new mongoose.Schema({
 const SurveySchemaExtended = new mongoose.Schema({
   testId: {
     type: String,
-    required: false,
+    required: true,
     default: ''
   }
 });

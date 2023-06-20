@@ -47,14 +47,6 @@ surveyRouter.post( "/delete" , async function(req,res) {
   deleteSurvey(req,res);
 });
 
-// surveyRouter.post( "/truncate" , async function(req,res) {
-//   truncateSurvey(req,res);
-// });
- 
-
-// surveyRouter.get( "/featured" , async function(req,res) {
-//   featuredQuiz(req,res);
-// });
 
 
 surveyRouter.get( "/page/:limit?/:count?" , async function(req,res) {

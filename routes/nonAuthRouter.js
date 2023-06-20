@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const nonAuthRouter = express.Router();
-
+const isPublished = require('../globals/isPublished')
 const {Survey} = require("../models/survey/survey");
 const Subscriber = require("../models/subscriber.js");
 
@@ -20,11 +20,17 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
       if (quiz == null){
         return res.status(404).json({ msg: "Item not found" });
       }
-    
-      if (quiz.published == true){
+      
+      const pub = isPublished(quiz.publishObj);
+
+      // console.log("isPublished" , pub);
+      // return;
+      if (pub.publishStatus == 'published'){
         return res.status(200).json({ quiz, msg: "success" });
-      }else {
-        return res.status(404).json({ msg: "Item Not Published" });
+      }else if (pub.publishStatus == 'unpublished') {
+        return res.status(404).json({ msg: "This Test was Un Published" });
+      }else if (pub.publishStatus == 'waiting') {
+        return res.status(404).json({ msg: `This Test is in Waiting and shall start in ${pub.waitingTime.hours} hours and  ${pub.waitingTime.minutes} minutes` });
       }
   } catch(error) {
     return res.status(400).json({msg : 'unknown error!'  });
