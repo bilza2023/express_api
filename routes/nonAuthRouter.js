@@ -29,7 +29,7 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
         return res.status(200).json({ quiz, msg: "success" });
 
       }else if (pub.publishStatus == 'unpublished') {
-
+          // Survey.deleteOne({_id:quizId});
         return res.status(404).json({ msg: "This Test was Un Published",pub });
 
       }else if (pub.publishStatus == 'waiting') {

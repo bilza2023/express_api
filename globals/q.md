@@ -11,15 +11,16 @@ This is a publishObj in my node.js mongodb express app.
             },
 
 I give publishObj to a function called isPublished.
+
 function isPublished(publishObj) {
   let ret = {
-    publishTime: null, // rename it to publishDate
-    unpublishTime: null, //rename to unpublishDate
+    publishTime: null, 
+    unpublishTime: null, 
     publishStatus: null, 
     waitingTime: null, 
-    remainingTime: null // in days , hours and minutes
+    remainingTime: null
   };
-
+  // debugger;
   // Calculate the start time of the survey
   let startTime;
   if (publishObj.publishTechnique === "now") {
@@ -27,6 +28,10 @@ function isPublished(publishObj) {
   } else if (publishObj.publishTechnique === "at") {
     startTime = new Date(publishObj.publishDate);
     startTime.setHours(publishObj.hour, publishObj.min);
+    debugger;
+  //--auto convert to Pk Std Time 
+    startTime = startTime.toLocaleString("en-US", { timeZone: "Asia/Karachi" });
+
   }
   ret.publishTime = startTime;
 
@@ -38,11 +43,14 @@ function isPublished(publishObj) {
     endTime = new Date(startTime.getTime());
     endTime.setHours(endTime.getHours() + publishObj.unpublishHour);
     endTime.setMinutes(endTime.getMinutes() + publishObj.unpublishMin);
+   //===> convert to Pakistan Standard Time
+    endTime = endTime.toLocaleString("en-US", { timeZone: "Asia/Karachi" });
   }
   ret.unpublishTime = endTime;
 
   // Determine the publish status and waiting/remaining times
   let now = new Date();
+  now = now.toLocaleString("en-US", { timeZone: "Asia/Karachi" });
   if (now < startTime) {
     ret.publishStatus = "waiting";
     let waitingMs = startTime - now;
@@ -62,25 +70,7 @@ function isPublished(publishObj) {
 module.exports = isPublished;
 
 
-The purpose of this function is to create and return this object
-let ret = {
-    publishTime: null, // rename it to publishDate
-    unpublishTime: null, //rename to unpublishDate
-    publishStatus: null, 
-    waitingTime: null, 
-    remainingTime: null // in days , hours and minutes
-  };
+-- There are some problems since the time on my localhost is Pakistan standard time where as on the actual server time is not  Pakistan/karachi time. for this the isPublished works well when on localhost but on server it does not. 
+The issue is that in mongodb time is saved in UTC format  so when i get it in publishObj i must convert it into localtime/karachi time. 
 
-   publishTime =   publishObj.publishDate  BUT date in publishObj.publishDate in in UTC and publishTime  need to be in PAkistan standard Time. 
-
-   let startTime;
-  if (publishObj.publishTechnique === "now") {
-    startTime = new Date(publishObj.runStartTime);
-  } else if (publishObj.publishTechnique === "at") {
-  ====> here the time needs to be converted into Pakistan / Karachi Time.
-    startTime = new Date(publishObj.publishDate);
-    startTime.setHours(publishObj.hour, publishObj.min);
-  }
-  ret.publishTime = startTime;
-
-  please do that
+please check this code to see if i am doing it correctly.i have changed startTime , endTime and also "now" to the Pakistan standard time so that they can be compared.
