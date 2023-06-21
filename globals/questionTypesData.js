@@ -116,8 +116,8 @@ function getSurvey(user_id, incomming_title = "New Test") {
         publishObj : {
             publishTechnique:'now' , 
             unpublishTechnique : 'never',
-            hour:9,
-            min:0, 
+            hour:9, 
+            min: 30, 
             unpublishHour:1,
             unpublishMin :0,
             publishDate:null

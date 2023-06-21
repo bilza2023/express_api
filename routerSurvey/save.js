@@ -6,7 +6,7 @@ const {Survey,Test} = require("../models/survey/survey.js");
 
 async function save(req,res){
   try {
-  debugger;
+  // debugger;
         const incomingTest = req.body.survey;
   const urseId  = req.user._id; 
       const testId = incomingTest._id

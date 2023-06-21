@@ -1,21 +1,32 @@
+This is a publishObj in my node.js mongodb express app.
+
+  publishObj : {
+            publishTechnique:'now' , 
+            unpublishTechnique : 'never',
+            hour:9, 
+            min: 30, 
+            unpublishHour:1,
+            unpublishMin :0,
+            publishDate:null
+            },
+
+I give publishObj to a function called isPublished.
 function isPublished(publishObj) {
   let ret = {
-    publishTime: null, 
-    unpublishTime: null, 
+    publishTime: null, // rename it to publishDate
+    unpublishTime: null, //rename to unpublishDate
     publishStatus: null, 
     waitingTime: null, 
     remainingTime: null // in days , hours and minutes
   };
-  debugger;
+
   // Calculate the start time of the survey
   let startTime;
   if (publishObj.publishTechnique === "now") {
     startTime = new Date(publishObj.runStartTime);
   } else if (publishObj.publishTechnique === "at") {
-  //--auto convert to Pk Std Time 
     startTime = new Date(publishObj.publishDate);
     startTime.setHours(publishObj.hour, publishObj.min);
-
   }
   ret.publishTime = startTime;
 
@@ -49,3 +60,27 @@ function isPublished(publishObj) {
 }
 
 module.exports = isPublished;
+
+
+The purpose of this function is to create and return this object
+let ret = {
+    publishTime: null, // rename it to publishDate
+    unpublishTime: null, //rename to unpublishDate
+    publishStatus: null, 
+    waitingTime: null, 
+    remainingTime: null // in days , hours and minutes
+  };
+
+   publishTime =   publishObj.publishDate  BUT date in publishObj.publishDate in in UTC and publishTime  need to be in PAkistan standard Time. 
+
+   let startTime;
+  if (publishObj.publishTechnique === "now") {
+    startTime = new Date(publishObj.runStartTime);
+  } else if (publishObj.publishTechnique === "at") {
+  ====> here the time needs to be converted into Pakistan / Karachi Time.
+    startTime = new Date(publishObj.publishDate);
+    startTime.setHours(publishObj.hour, publishObj.min);
+  }
+  ret.publishTime = startTime;
+
+  please do that

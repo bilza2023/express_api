@@ -13,7 +13,7 @@ const Subscriber = require("../models/subscriber.js");
 
 nonAuthRouter.get("/show/:quizId" , async function(req,res) {
   try {
-  // debugger;
+  
   const quizId  = req.params.quizId;
   // console.log(quizId)
     const quiz = await Survey.findById( quizId );
@@ -22,7 +22,7 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
       }
       
       const pub = isPublished(quiz.publishObj);
-
+      // debugger;
       // console.log("isPublished" , pub);
       // return;
       if (pub.publishStatus == 'published'){
