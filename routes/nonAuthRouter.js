@@ -27,10 +27,14 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
       // return;
       if (pub.publishStatus == 'published'){
         return res.status(200).json({ quiz, msg: "success" });
+
       }else if (pub.publishStatus == 'unpublished') {
-        return res.status(404).json({ msg: "This Test was Un Published" });
+
+        return res.status(404).json({ msg: "This Test was Un Published",pub });
+
       }else if (pub.publishStatus == 'waiting') {
-        return res.status(404).json({ msg: `This Test is in Waiting and shall start in ${pub.waitingTime.hours} hours and  ${pub.waitingTime.minutes} minutes` });
+        return res.status(404).json({ msg: "This Test is in Waiting",pub});
+        
       }
   } catch(error) {
     return res.status(400).json({msg : 'unknown error!'  });
