@@ -6,16 +6,18 @@ function isPublished(publishObj) {
     waitingTime: null,
     remainingTime: null
   };
-
+// debugger;
   // Calculate the start time of the survey
   let startTime;
   if (publishObj.publishTechnique === "now") {
     startTime = new Date(publishObj.runStartTime);
-    startTime = convertToPakistanTime(startTime);
+    startTime = convertToPST(startTime);
+
   } else if (publishObj.publishTechnique === "at") {
     startTime = new Date(publishObj.publishDate);
-    startTime.setHours(publishObj.hour, publishObj.min);
-    startTime = convertToPakistanTime(startTime);
+//--not required since i has been done at front end
+    // startTime.setUTCHours(publishObj.hour, publishObj.min);
+    startTime = convertToPST(startTime);
   }
   ret.publishTime = startTime;
 
@@ -25,16 +27,18 @@ function isPublished(publishObj) {
     endTime = null;
   } else if (publishObj.unpublishTechnique === "after") {
     endTime = new Date(startTime);
-    endTime.setHours(endTime.getHours() + publishObj.unpublishHour);
-    endTime.setMinutes(endTime.getMinutes() + publishObj.unpublishMin);
-    endTime = convertToPakistanTime(endTime);
+    endTime.setHours(startTime.getHours() + publishObj.unpublishHour);
+    endTime.setMinutes(startTime.getMinutes() + publishObj.unpublishMin);
+    //not req already there 
+    // endTime = convertToUTC(endTime);
   }
   ret.unpublishTime = endTime;
 
   // Determine the publish status and waiting/remaining times
   let now = new Date();
-  now = convertToPakistanTime(now);
-  let waitingMs = new Date(startTime) - new Date(now);
+  now = convertToPST(now); // important
+
+  let waitingMs = startTime - now;
   if (now < startTime) {
     ret.publishStatus = "waiting";
     let waitingHours = Math.floor(waitingMs / (1000 * 60 * 60));
@@ -49,10 +53,11 @@ function isPublished(publishObj) {
 
   return ret;
 }
+function convertToPST(dateString) {
+  const options = { timeZone: 'Asia/Karachi' };
+  const dateObj = new Date(dateString);
 
-function convertToPakistanTime(date) {
-  const options = { timeZone: "Asia/Karachi" };
-  return date.toLocaleString("en-US", options);
+  return new Date(dateObj.toLocaleString('en-US', options));
 }
 
 module.exports = isPublished;
