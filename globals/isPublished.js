@@ -1,3 +1,15 @@
+/**
+This proved to be very complicated code:
+  1. Mongodb saves all dates in UTC format.
+  2. when we get date data from mongoDB it is in string fomrat and has to be converted int javascript Date object by : new Date(xxx);
+  3. when we read date string from mongoDB it is converted from UTC to the time zone of the server. That is why the code would work fine on localhost but not on server.
+  4. to ensure that the date is always in PST when used use convertToPST(). on localhost it has  no effect on but on server it does.
+  5. One of the mistake that confused me a lot was that the publishDate was saved in UTC , I will read it , setHours and setMinutes using the "hour"
+  and "min" props in publishObj.AND after that try to convert to PST. Just set it and its already in PST but still use convertToPST.
+  5b. The publishDate is just date the hours and minutes are in "hour" and "min" props.
+  6.  No need to convert endTime into PST just use startTime and add hours and minutes using publishObj.unpublishHour/unpublishMin.
+  7. the "now" must be converted to PST since that has to be measured.
+ */
 function isPublished(publishObj) {
   let ret = {
     publishTime: null,
@@ -6,7 +18,7 @@ function isPublished(publishObj) {
     waitingTime: null,
     remainingTime: null
   };
-// debugger;
+debugger;
   // Calculate the start time of the survey
   let startTime;
   if (publishObj.publishTechnique === "now") {
@@ -15,8 +27,8 @@ function isPublished(publishObj) {
 
   } else if (publishObj.publishTechnique === "at") {
     startTime = new Date(publishObj.publishDate);
-//--not required since i has been done at front end
-    // startTime.setUTCHours(publishObj.hour, publishObj.min);
+    startTime.setHours(publishObj.hour);
+    startTime.setMinutes(publishObj.min);
     startTime = convertToPST(startTime);
   }
   ret.publishTime = startTime;
@@ -29,8 +41,6 @@ function isPublished(publishObj) {
     endTime = new Date(startTime);
     endTime.setHours(startTime.getHours() + publishObj.unpublishHour);
     endTime.setMinutes(startTime.getMinutes() + publishObj.unpublishMin);
-    //not req already there 
-    // endTime = convertToUTC(endTime);
   }
   ret.unpublishTime = endTime;
 
