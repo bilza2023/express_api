@@ -52,6 +52,14 @@ const resultSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  runId: { 
+    type: String,
+    required: true
+  },
+  runTitle: { 
+    type: String,
+    required: true
+  },
   ip: { 
     type: String,
     required: false,

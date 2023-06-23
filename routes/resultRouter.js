@@ -29,16 +29,16 @@ resultRouter.post('/save', async (req, res) => {
  quizResult.testId = quiz.testId.toString(); 
 
   //--do not store 2 responses
-      const quizId = quizResult.quizId;
-      const existingResult = await Result.findOne({ quizId:quizResult.quizId , email:quizResult.email });
-      if (existingResult) {
-          return res.status(400).json('Result already exists for this member');
-      }
+      // const quizId = quizResult.quizId;
+      // const existingResult = await Result.findOne({ quizId:quizResult.quizId , email:quizResult.email });
+      // if (existingResult) {
+      //     return res.status(400).json('Result already exists for this member');
+      // }
     
     
     
       // newResult.userId = user._id;
-      // debugger;
+
       let result = new Result(quizResult);
       await result.save();
       res.status(200).json({ success: true, msg: 'Result saved successfully' });

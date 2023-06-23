@@ -9,6 +9,11 @@ const memberSchema = new mongoose.Schema({
     type: String,
     required: false,
     default : ""
+  },
+  tags : {
+      type: [String],
+    required: false,
+    default : []
   }
 });
 

@@ -68,6 +68,11 @@ const SurveySchema = new mongoose.Schema({
   publishObj: {
     type: publishObjSchema,
     required: false,
+  },
+  tags : {
+      type: [String],
+    required: false,
+    default : []
   }
 });
 

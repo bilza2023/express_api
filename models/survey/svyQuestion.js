@@ -1,4 +1,4 @@
-
+ 
 const mongoose = require('mongoose');
 const options = { discriminatorKey: 'kind' };
  
@@ -30,6 +30,11 @@ const svyQuestionSchema = new mongoose.Schema({
     type: String,
     enum: [ 'SurveyMCQ' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],
     required: true,
+  },
+  tags : {
+      type: [String],
+    required: false,
+    default : []
   }
 });
 const SurveyQuestion  = mongoose.model('SurveyQuestion', svyQuestionSchema);

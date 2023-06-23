@@ -17,13 +17,16 @@ const routerTemplate = require('./routerTemplate/routerTemplate.js');
 const routerTest = require('./routerTest/routerTest.js');
 // const routerTest = require('./routerTest/routerTest.js');
 const resultRouter = require('./routes/resultRouter');
+const routerStudent = require('./routes/routerStudent.js');
+const routerTag = require('./routes/routerTag.js');
+const routerClass = require('./routes/routerClass.js');
 const nonAuthRouter = require('./routes/nonAuthRouter.js');
 
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 80;
 
 ////////////////////////////////////////////////////
-
+// debugger;
 const app = express()
 app.use(cookieParser());
 //.. static files
@@ -39,12 +42,13 @@ app.use(express.urlencoded({ extended: true }));
 //.. Route middlewares--/////////////////////////////////////
 app.use("/",nonAuthRouter);
 app.use("/user",userRouter);
-// app.use("/quiz",quizRouter);
 app.use("/result",resultRouter);
 app.use("/survey",routerSurvey);
 app.use("/template",routerTemplate);
+app.use("/student",routerStudent);
+app.use("/class",routerClass);
+app.use("/tag",routerTag);
 app.use("/test",routerTest);
-// app.use("/test",routerTest);
 
 ///////////////////////////Routes////////////////////////
 app.get('/', async (req, res) =>{
