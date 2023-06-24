@@ -1,8 +1,7 @@
 require('dotenv').config();
 const auth = require('../middleware/auth');
 const express = require('express');
-// const {SkillzaaError} = require('../mongoWrapper/skillzaaError/SkillzaaErrors');
-// const skillzaErrList = require('../mongoWrapper/skillzaaError/skillzaaErrList');
+
 const appConfig = require("../common/appConfig");
 const catchFn = require('../mongoWrapper/catchFn');
 const deleteTemplate = require('./delete/deleteTemplate');
@@ -39,7 +38,7 @@ routerTemplate.post("/new", async function(req, res) {
 
 routerTemplate.post("/save", async function(req, res) {
   try{
-  debugger;
+  // debugger;
     const backendData = {};
 
         return  await mongoWrapper.update(
@@ -52,8 +51,49 @@ routerTemplate.post("/save", async function(req, res) {
     return catchFn(error,res);
   }
 });
+//--read is get since Get cant have data just token
+routerTemplate.get( "/read" , async function(req,res) {
+ try{   debugger;
+    const backendData = {};
 
+        return  await mongoWrapper.read(
+        req,res, //--The usual req and res
+        [ ], //--array for getData from post.body
+        [], //--check functions
+        backendData);//--data that did not come from front-end
+  }catch (error) {
+    return catchFn(error,res);
+  }
+});
+
+//--readOne is post since it needs to send id
+routerTemplate.post( "/readOne" , async function(req,res) {
+ try{   //debugger;
+    const backendData = {};
+        return  await mongoWrapper.readOne(
+        req,res, //--The usual req and res
+        ['id'], //--array for getData from post.body
+        [], //--check functions
+        backendData);//--data that did not come from front-end
+  }catch (error) {
+    return catchFn(error,res);
+  }
+});
 ////////////////////////////////////////////////////////
+//--readOne is post since it needs to send id
+routerTemplate.post( "/delete" , async function(req,res) {
+ try{   //debugger;
+    const backendData = {};
+        return  await mongoWrapper.delete(
+        req,res, //--The usual req and res
+        ['id'], //--array for getData from post.body
+        [], //--check functions
+        backendData);//--data that did not come from front-end
+  }catch (error) {
+    return catchFn(error,res);
+  }
+});
+
 
 routerTemplate.post("/clone", async function(req, res) {
   try{
@@ -72,18 +112,7 @@ routerTemplate.post("/clone", async function(req, res) {
   }
 });
 
-routerTemplate.post( "/delete" , async function(req,res) {
-  try {
-  debugger;
-    const data = await getData(req,['quizId']);
-    await find(data.quizId);
-    await deleteTemplate(data.userId,data.quizId);
-      return res.status(200).json({});
 
-  }catch (error) {
-      console.log("Non-SkillzaaError", error);
-  }
-});
 ////////////////////////////////////////////////////////
 module.exports = routerTemplate;
 ////////////////////////////////////////////////////////

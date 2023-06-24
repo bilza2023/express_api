@@ -12,7 +12,7 @@ class MongoWrapper {
     this.checkMaxValue = 10;
   }
 
-  async create(req,res,newObjDataFunction,getDataArray=[],checks=[],backendData) {
+  async create(req,res,newObjDataFunction,getDataArray=[],checks=[],backendData={}) {
     try{
     debugger;
         const data = await getData(req,getDataArray);
@@ -33,7 +33,57 @@ class MongoWrapper {
     }
   }
 ///////////////////////////////////
-  async update(req,res,updateItemName,getDataArray=[],checks=[],backendData) {
+  async readOne(req,res,getDataArray=[],checks=[],backendData={}) {
+    try{ // there should be an "id" in the getDataArray
+    // debugger;
+        const data = await getData(req,getDataArray);
+        //------Run Checks-----------------
+        for (let i = 0; i < checks.length; i++) {
+          const check = checks[i];
+          await check(this.model,data,backendData);
+        }
+        // ------Run ChecksEnd ----------------
+        // ------Core Activity ----------------
+        //--should  i check for userId ???????????????????????
+      const finalItem = await this.model.findById(data.id);
+      
+      if(!finalItem){
+        throw skillzaErrList.getErr("failedToUpdate");  
+      }
+      return res.status(200).json({item:finalItem});
+  
+    } catch (error) {//catch block is delt at top level here just throw
+        throw error; 
+    }
+  }
+///////////////////////////////////
+//--read many 
+///////////////////////////////////
+  async read(req,res,getDataArray=[],checks=[],backendData={}) {
+    try{ 
+    // debugger;
+        const data = await getData(req,getDataArray);
+        //------Run Checks-----------------
+        for (let i = 0; i < checks.length; i++) {
+          const check = checks[i];
+          await check(this.model,data,backendData);
+        }
+        // ------Run ChecksEnd ----------------
+        // ------Core Activity ----------------
+      const finalItems = await this.model.find({"userId" : data.userId})
+
+      if(!finalItems){
+        throw skillzaErrList.getErr("failedToUpdate");  
+      }
+      return res.status(200).json({items:finalItems});
+  
+    } catch (error) {//catch block is delt at top level here just throw
+        throw error; 
+    }
+  }
+///////////////////////////////////
+///////////////////////////////////
+  async update(req,res,updateItemName,getDataArray=[],checks=[],backendData={}) {
     try{
     // debugger;
         const data = await getData(req,getDataArray);
@@ -57,6 +107,27 @@ class MongoWrapper {
     }
   }
 ///////////////////////////////////
+///////////////////////////////////
+  async delete(req,res,getDataArray=[],checks=[],backendData={}) {
+    try{ // there should be an "id" in the getDataArray
+    // debugger;
+        const data = await getData(req,getDataArray);
+        //------Run Checks-----------------
+        for (let i = 0; i < checks.length; i++) {
+          const check = checks[i];
+          await check(this.model,data,backendData);
+        }
+        // ------Run ChecksEnd ----------------
+        // ------Core Activity ----------------
+        //--should  i check if deleted ???????????????????????
+      await this.model.deleteOne({ _id: data.id , userId :data.userId });
+      return res.status(200).json({success:true});
+  
+    } catch (error) {//catch block is delt at top level here just throw
+        throw error; 
+    }
+  }
+
 
 } //class
 

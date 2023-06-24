@@ -2,7 +2,7 @@
 const auth = require('../middleware/auth');
 const express = require('express');
 
-const getData = require('../common/getData');
+const getData = require('../mongoWrapper/getData');
 
 const find = require('./find');
 const retRes = require('../common/skillzaaError/retRes');
@@ -23,7 +23,7 @@ routerTest.post("/find", async function(req, res){find(req,res);});
 
 routerTest.post("/save", async function(req, res) {
   try {
-  // debugger;
+  debugger;
   const data = await getData(req,['test']);
   const test = await save(data.test);
     return  res.status(200).json({ test });
