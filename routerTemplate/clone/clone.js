@@ -1,7 +1,7 @@
 
 const {Template} = require("../../models/survey/survey");
-const skillzaErrList = require('../../common/skillzaaError/skillzaaErrList');
-
+// const skillzaErrList = require('../../common/skillzaaError/skillzaaErrList');
+const skillzaErrList = [];
 
 async function clone(id,title) {
   try {

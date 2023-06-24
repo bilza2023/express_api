@@ -1,6 +1,6 @@
 
 const {Template} = require("../../models/survey/survey");
-const skillzaErrList = require('../../common/skillzaaError/skillzaaErrList');
+const skillzaErrList = require('../../mongoWrapper/skillzaaError/skillzaaErrList');
 
 async function find(id) {
   try {
