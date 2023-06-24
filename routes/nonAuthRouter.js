@@ -86,7 +86,7 @@ nonAuthRouter.post("/login", async function (req, res) {
     }
 
     if (await bcrypt.compare(passwordPlain, user.password)) {
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "30d" });
+      const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
       // Set Authorization with Bearer token syntax also send as token 
       //(USE BOTH)

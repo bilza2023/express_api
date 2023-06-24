@@ -18,16 +18,14 @@ const auth = async (req,res,next)=>{
     // verify token with JWT_SECRET
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // get user id from decoded token
-    const userId = decoded.id;
-
     // // find user by id
-    const user = await Subscriber.findById(userId);
+    // const user = await Subscriber.findById(userId);
+    const user = decoded.user;
 
     if (user) {
           req.user = user;
           //-- in user table it is _id but for others it is "userId"
-          req.userId = userId;
+          req.userId = user._id;
           // console.log(user);
           next();
           return;
