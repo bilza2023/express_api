@@ -10,6 +10,7 @@ const bcrypt = require('bcrypt');
 module.exports =  async (req, res ) => {
 // return res.status(200).json({"ok" : "ok"});
 try{
+// debugger;
 const email = req.body.email;
 const passwordRec = req.body.password;
 //--

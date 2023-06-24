@@ -13,7 +13,7 @@ const auth = async (req,res,next)=>{
     // const token = req.token;
     // console.log("token",token);
     if(token == null || token == ""){
-    return res.status(404).json({ msg : "Auth token not found:you may not be logged in." , errorcode : 001 , errormsg : "authError" });
+    return res.status(404).json({ msg : "Auth token not found:you may not be logged in."  , errormsg : "authError" });
     }
     // verify token with JWT_SECRET
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -26,16 +26,17 @@ const auth = async (req,res,next)=>{
 
     if (user) {
           req.user = user;
+          //-- in user table it is _id but for others it is "userId"
           req.userId = userId;
           // console.log(user);
           next();
           return;
     } else {
-      return res.status(404).json({ msg : "User  not found:you may not be logged in." , errorcode : 002 , errormsg : "userNotFound" });
+      return res.status(404).json({ msg : "User  not found:you may not be logged in."  , errormsg : "userNotFound" });
     }
 
   } catch (error) {
-    return res.status(500).json({ msg : "Auth token not found:you may not be logged in." , errorcode : 003 , errormsg : "unownAuthError" });
+    return res.status(500).json({ msg : "Auth token not found:you may not be logged in."  , errormsg : "unownAuthError" });
   }
 }
 
