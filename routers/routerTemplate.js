@@ -1,19 +1,20 @@
+/**
+2023-6-26
+
+ */
+//////////----dont change these ------//////////////////////////////
 require('dotenv').config();
 const auth = require('../middleware/auth');
 const express = require('express');
-
 const appConfig = require("../common/appConfig");
 const catchFn = require('../mongoWrapper/catchFn');
-const clone = require('./clone/clone.js');
-
 const MongoWrapper = require('../mongoWrapper/mongoWrapper');
+//////////----Mongoose Model Object----//////////////////
 const {Template} = require("../models/survey/survey");
 /////////////////////////////////////////////////////////////
-const getSurvey = require('./getSurvey');  
-const updateSurvey = require('./updateSurvey');  
-const getData = require('../mongoWrapper/getData');  
-const find = require('./fn/find');  
-const checkMaxTemplate = require('./fn/checkMaxTemplate');  
+const getSurvey = require('./templateFn/getSurvey');  
+const updateSurvey = require('./templateFn/updateSurvey');  
+// const getData = require('../mongoWrapper/getData');  
 /////////////////////////////////////////////////
 const routerTemplate = express.Router();
 routerTemplate.use(auth);
@@ -98,23 +99,6 @@ routerTemplate.post( "/delete" , async function(req,res) {
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
-routerTemplate.post("/clone", async function(req, res) {
-  try{
-  // debugger;
-    const data = await getData(req,['id','title']);
-      await checkMaxTemplate(data.userId);
-      await find(data.id);
-    const template = await clone(data.id,data.title);  
-
-      return res.status(200).json({template});
-
-  }catch (skillzaaError) {
-  //--child fn return errors here we convert that to resonse
-      return res.status(skillzaaError.statusCode || 500)
-          .json(skillzaaError.getJson());
-  }
-});
-
 ////////////////////////////////////////////////////////
 module.exports = routerTemplate;
 ////////////////////////////////////////////////////////

@@ -1,17 +1,11 @@
 const {SkillzaaError} = require('./skillzaaError/SkillzaaErrors');
 
 
+//--2023-6-26
+//This is one line but it is very important
+//--Every final error comes here..
+//--return is must
 function catchFn(error,res){
-  if (error && error instanceof SkillzaaError && error.type === 'skillzaaError') {
-    debugger;
-    const retValue = error.getJson(); 
-      return res
-        .status(error.statusCode || 500)
-        .json(retValue);
-    } else {
-       return res
-        .status( 500).json({message : 'Unknown Error',error});
-    }
-
+  return res.status(500).json({message:error.message || 'error message not found'});
 }
 module.exports = catchFn;

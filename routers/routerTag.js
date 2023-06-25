@@ -1,34 +1,36 @@
+/**
+2023-6-26
+
+ */
+//////////----dont change these ------//////////////////////////////
 require('dotenv').config();
 const auth = require('../middleware/auth');
 const express = require('express');
-
 const appConfig = require("../common/appConfig");
 const catchFn = require('../mongoWrapper/catchFn');
-const clone = require('./clone/clone.js');
-
 const MongoWrapper = require('../mongoWrapper/mongoWrapper');
-const {Template} = require("../models/survey/survey");
+//////////----Mongoose Model Object----//////////////////
+const {Tag} = require("../models/tag");
 /////////////////////////////////////////////////////////////
-const getSurvey = require('./getSurvey');  
-const updateSurvey = require('./updateSurvey');  
-const getData = require('../mongoWrapper/getData');  
-const find = require('./fn/find');  
-const checkMaxTemplate = require('./fn/checkMaxTemplate');  
+const getSurvey = require('./templateFn/getSurvey');  
+const updateSurvey = require('./templateFn/updateSurvey');  
+// const getData = require('../mongoWrapper/getData');  
 /////////////////////////////////////////////////
-const routerTemplate = express.Router();
-routerTemplate.use(auth);
-const mongoWrapper = new MongoWrapper(Template);
+const routerTag = express.Router();
+routerTag.use(auth);
+const mongoWrapper = new MongoWrapper(Tag);
+const getTag =  require('./tagFn/getTag');
 /////////////////////////////////////////////////
 
-routerTemplate.post("/create", async function(req, res) {
+routerTag.post("/create", async function(req, res) {
   try{ 
-  // debugger;
-    const backendData = {checkMaxValue : appConfig.MAX_TEMPLATE_ALLOWED};
+  
+    const backendData = {checkMaxValue : appConfig.MAX_TAGS_ALLOWED};
 
         return  await mongoWrapper.create(
         req,res, //--The usual req and res
-        getSurvey, //--the data fn for new object newObjDataFunction
-        ['title'], //--array for getData from post.body
+        getTag, //--the data fn for new object newObjDataFunction
+        ['name','description'], //--array for getData from post.body
         [mongoWrapper.checks.checkMax], //--check functions
         backendData);//--data that did not come from front-end
   }catch (error) {
@@ -36,7 +38,7 @@ routerTemplate.post("/create", async function(req, res) {
   }
 });
 
-routerTemplate.post("/update", async function(req, res) {
+routerTag.post("/update", async function(req, res) {
   try{
   debugger;
     const backendData = {};
@@ -45,14 +47,14 @@ routerTemplate.post("/update", async function(req, res) {
         req,res, //--The usual req and res
          'item',
         ['item'], //--array for getData from post.body
-        [updateSurvey], //--check functions
+        [], //--check functions
         backendData);//--data that did not come from front-end
   }catch (error) {
     return catchFn(error,res);
   }
 });
 //--read is get since Get cant have data just token
-routerTemplate.get( "/read" , async function(req,res) {
+routerTag.get( "/read" , async function(req,res) {
  try{   
     debugger;
     const backendData = {};
@@ -68,7 +70,7 @@ routerTemplate.get( "/read" , async function(req,res) {
 });
 
 //--readOne is post since it needs to send id
-routerTemplate.post( "/readone" , async function(req,res) {
+routerTag.post( "/readone" , async function(req,res) {
  try{   //debugger;
     const backendData = {};
         return  await mongoWrapper.readOne(
@@ -82,7 +84,7 @@ routerTemplate.post( "/readone" , async function(req,res) {
 });
 ////////////////////////////////////////////////////////
 //--readOne is post since it needs to send id
-routerTemplate.post( "/delete" , async function(req,res) {
+routerTag.post( "/delete" , async function(req,res) {
  try{   //debugger;
     const backendData = {};
         return  await mongoWrapper.delete(
@@ -98,23 +100,6 @@ routerTemplate.post( "/delete" , async function(req,res) {
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
-routerTemplate.post("/clone", async function(req, res) {
-  try{
-  // debugger;
-    const data = await getData(req,['id','title']);
-      await checkMaxTemplate(data.userId);
-      await find(data.id);
-    const template = await clone(data.id,data.title);  
-
-      return res.status(200).json({template});
-
-  }catch (skillzaaError) {
-  //--child fn return errors here we convert that to resonse
-      return res.status(skillzaaError.statusCode || 500)
-          .json(skillzaaError.getJson());
-  }
-});
-
 ////////////////////////////////////////////////////////
-module.exports = routerTemplate;
+module.exports = routerTag;
 ////////////////////////////////////////////////////////

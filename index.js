@@ -13,13 +13,13 @@ const db = require("./mongoDb/mongo.js");
 const userRouter = require('./routes/userRouter');
 // const quizRouter = require('./quizRouter/quizRouter');
 // const routerSurvey = require('./routerSurvey/routerSurvey.js');
-const routerTemplate = require('./routerTemplate/routerTemplate.js');
-// const routerTest = require('./routerTest/routerTest.js');
-// const routerTest = require('./routerTest/routerTest.js');
+const routerTemplate = require('./routers/routerTemplate.js');
+const routerTag = require('./routers/routerTag.js');
+const routerClass = require('./routers/routerClass.js');
+// const routerTest = require('./routers/routerTest.js');
+// const routerTest = require('./routers/routerTest.js');
 // const resultRouter = require('./routes/resultRouter');
 // const routerStudent = require('./routes/routerStudent.js');
-// const routerTag = require('./routes/routerTag.js');
-// const routerClass = require('./routes/routerClass.js');
 const nonAuthRouter = require('./routes/nonAuthRouter.js');
 
 const cookieParser = require('cookie-parser');
@@ -45,9 +45,9 @@ app.use("/user",userRouter);
 // app.use("/result",resultRouter);
 // app.use("/survey",routerSurvey);
 app.use("/template",routerTemplate);
+app.use("/tag",routerTag);
+app.use("/class",routerClass);
 // app.use("/student",routerStudent);
-// app.use("/class",routerClass);
-// app.use("/tag",routerTag);
 // app.use("/test",routerTest);
 
 ///////////////////////////Routes////////////////////////
