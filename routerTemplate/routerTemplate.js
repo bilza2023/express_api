@@ -4,12 +4,11 @@ const express = require('express');
 
 const appConfig = require("../common/appConfig");
 const catchFn = require('../mongoWrapper/catchFn');
-const deleteTemplate = require('./delete/deleteTemplate');
 const clone = require('./clone/clone.js');
 
 const MongoWrapper = require('../mongoWrapper/mongoWrapper');
 const {Template} = require("../models/survey/survey");
-
+/////////////////////////////////////////////////////////////
 const getSurvey = require('./getSurvey');  
 const updateSurvey = require('./updateSurvey');  
 const getData = require('../mongoWrapper/getData');  
@@ -21,8 +20,9 @@ routerTemplate.use(auth);
 const mongoWrapper = new MongoWrapper(Template);
 /////////////////////////////////////////////////
 
-routerTemplate.post("/new", async function(req, res) {
-  try{ //debugger;
+routerTemplate.post("/create", async function(req, res) {
+  try{ 
+  // debugger;
     const backendData = {checkMaxValue : appConfig.MAX_TEMPLATE_ALLOWED};
 
         return  await mongoWrapper.create(
@@ -32,19 +32,20 @@ routerTemplate.post("/new", async function(req, res) {
         [mongoWrapper.checks.checkMax], //--check functions
         backendData);//--data that did not come from front-end
   }catch (error) {
-    return catchFn(error,res);
+    // debugger;
+    return res.status(500).json({message:error.message});
   }
 });
 
-routerTemplate.post("/save", async function(req, res) {
+routerTemplate.post("/update", async function(req, res) {
   try{
-  // debugger;
+  debugger;
     const backendData = {};
 
         return  await mongoWrapper.update(
         req,res, //--The usual req and res
-        'survey',
-        ['survey'], //--array for getData from post.body
+         'item',
+        ['item'], //--array for getData from post.body
         [updateSurvey], //--check functions
         backendData);//--data that did not come from front-end
   }catch (error) {
@@ -53,7 +54,8 @@ routerTemplate.post("/save", async function(req, res) {
 });
 //--read is get since Get cant have data just token
 routerTemplate.get( "/read" , async function(req,res) {
- try{   debugger;
+ try{   
+    debugger;
     const backendData = {};
 
         return  await mongoWrapper.read(
@@ -67,7 +69,7 @@ routerTemplate.get( "/read" , async function(req,res) {
 });
 
 //--readOne is post since it needs to send id
-routerTemplate.post( "/readOne" , async function(req,res) {
+routerTemplate.post( "/readone" , async function(req,res) {
  try{   //debugger;
     const backendData = {};
         return  await mongoWrapper.readOne(
@@ -94,7 +96,9 @@ routerTemplate.post( "/delete" , async function(req,res) {
   }
 });
 
-
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 routerTemplate.post("/clone", async function(req, res) {
   try{
   // debugger;
@@ -111,7 +115,6 @@ routerTemplate.post("/clone", async function(req, res) {
           .json(skillzaaError.getJson());
   }
 });
-
 
 ////////////////////////////////////////////////////////
 module.exports = routerTemplate;

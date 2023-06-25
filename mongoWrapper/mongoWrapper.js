@@ -14,7 +14,7 @@ class MongoWrapper {
 
   async create(req,res,newObjDataFunction,getDataArray=[],checks=[],backendData={}) {
     try{
-    debugger;
+    // debugger;
         const data = await getData(req,getDataArray);
         //------Run Checks-----------------
         for (let i = 0; i < checks.length; i++) {
@@ -23,12 +23,13 @@ class MongoWrapper {
         }
 
         //------Run ChecksEnd ----------------
-        const newObjData = newObjDataFunction(data);
-        let template = new this.model( newObjData );     
-        await template.save();
-        return res.status(200).json({template});
+        const newObjData = newObjDataFunction(data); //unique to create
+        let item = new this.model( newObjData );     
+        await item.save();
+        return res.status(200).json({item});
     
     } catch (error) {
+      // debugger;
         throw error;
     }
   }
@@ -120,8 +121,9 @@ class MongoWrapper {
         // ------Run ChecksEnd ----------------
         // ------Core Activity ----------------
         //--should  i check if deleted ???????????????????????
-      await this.model.deleteOne({ _id: data.id , userId :data.userId });
-      return res.status(200).json({success:true});
+      const delResult = await this.model.deleteOne({ _id: data.id , userId :data.userId });
+
+      return res.status(200).json(delResult);
   
     } catch (error) {//catch block is delt at top level here just throw
         throw error; 

@@ -1,121 +1,96 @@
 require('dotenv').config();
 const auth = require('../middleware/auth');
 const express = require('express');
-const {Survey,Test,Template} = require("../models/survey/survey");
 
+const appConfig = require("../common/appConfig");
+const catchFn = require('../mongoWrapper/catchFn');
 
-const save = require("./save");
-// const updatePublish = require("./update/updatePublish");
- 
-// const clone = require("./clone");
-const maketest = require("./maketest");
-const find = require("./find");
-const deleteSurvey = require('./deleteSurvey');
-const truncateSurvey  = require('./truncateSurvey');
-// const featuredQuiz = require("./featuredQuiz");
-const paginate = require("./paginate");
-// const deleteQuiz = require("./deleteQuiz");
-
+const MongoWrapper = require('../mongoWrapper/mongoWrapper');
+const {Survey} = require("../models/survey/survey");
+/////////////////////////////////////////////////////////////
+const getData = require('../mongoWrapper/getData');  
 /////////////////////////////////////////////////
-const surveyRouter = express.Router();
-surveyRouter.use(auth);
+const routerSurvey = express.Router();
+routerSurvey.use(auth);
+const mongoWrapper = new MongoWrapper(Survey);
 /////////////////////////////////////////////////
- 
-surveyRouter.post("/save", async function(req, res) {
-// debugger;
-  await save(req,res);
+
+routerSurvey.post("/create", async function(req, res) {
+  try{ //debugger;
+    const backendData = {checkMaxValue : appConfig.MAX_TEMPLATE_ALLOWED};
+
+        return  await mongoWrapper.create(
+        req,res, //--The usual req and res
+        getSurvey, //--the data fn for new object newObjDataFunction
+        ['title'], //--array for getData from post.body
+        [mongoWrapper.checks.checkMax], //--check functions
+        backendData);//--data that did not come from front-end
+  }catch (error) {
+    return catchFn(error,res);
+  }
 });
 
-// surveyRouter.post("/publish", async function(req, res) {
-// // debugger;
-//    await updatePublish(req,res);
-//   //  await updateSurvey(req,res);
-// });
+routerSurvey.post("/update", async function(req, res) {
+  try{
+  // debugger;
+    const backendData = {};
 
+        return  await mongoWrapper.update(
+        req,res, //--The usual req and res
+        'item',
+        ['item'], //--array for getData from post.body
+        [], //--check functions
+        backendData);//--data that did not come from front-end
+  }catch (error) {
+    return catchFn(error,res);
+  }
+});
+//--read is get since Get cant have data just token
+routerSurvey.get( "/read" , async function(req,res) {
+ try{   //debugger;
+    const backendData = {};
 
-surveyRouter.post("/maketest", async function(req, res) {
-   maketest(req, res);
+        return  await mongoWrapper.read(
+        req,res, //--The usual req and res
+        [ ], //--array for getData from post.body
+        [], //--check functions
+        backendData);//--data that did not come from front-end
+  }catch (error) {
+    return catchFn(error,res);
+  }
 });
 
-surveyRouter.post( "/find" , async function(req,res) {
-// debugger;
-  find(req,res);
+//--readOne is post since it needs to send id
+routerSurvey.post( "/readOne" , async function(req,res) {
+ try{   //debugger;
+    const backendData = {};
+        return  await mongoWrapper.readOne(
+        req,res, //--The usual req and res
+        ['id'], //--array for getData from post.body
+        [], //--check functions
+        backendData);//--data that did not come from front-end
+  }catch (error) {
+    return catchFn(error,res);
+  }
+});
+////////////////////////////////////////////////////////
+//--readOne is post since it needs to send id
+routerSurvey.post( "/delete" , async function(req,res) {
+ try{   //debugger;
+    const backendData = {};
+        return  await mongoWrapper.delete(
+        req,res, //--The usual req and res
+        ['id'], //--array for getData from post.body
+        [], //--check functions
+        backendData);//--data that did not come from front-end
+  }catch (error) {
+    return catchFn(error,res);
+  }
 });
 
-
-surveyRouter.post( "/delete" , async function(req,res) {
-  deleteSurvey(req,res);
-});
-
-
-
-surveyRouter.get( "/page/:limit?/:count?" , async function(req,res) {
-// debugger;
-// try{
-  const { limit = 20, count = 0 } = req.params;
-  const user= req.user;
-  const userId  = req.userId;
-
-  // const surveys = await Survey.find({});
-  const surveys = await Survey.find({"userId" : userId})
-
-  return res.status(200).json({surveys});
-  // console.log("page");
-  // paginate(req,res , limit , count);\
-
-  // } catch(error) {
-  //   // return res.status(400).json({msg : "failure" , error  });
-  //   const r = await respFail(res,"unknown error","unknownError");
-  //   return r;
-  // }
-});
-surveyRouter.get( "/pagetest/:limit?/:count?" , async function(req,res) {
-// debugger;
-// try{
-  const { limit = 20, count = 0 } = req.params;
-  const user= req.user;
-  const userId  = req.userId;
-
-  // const surveys = await Survey.find({});
-  const surveys = await Test.find({"userId" : userId})
-
-  return res.status(200).json({surveys});
-  // console.log("page");
-  // paginate(req,res , limit , count);\
-
-  // } catch(error) {
-  //   // return res.status(400).json({msg : "failure" , error  });
-  //   const r = await respFail(res,"unknown error","unknownError");
-  //   return r;
-  // }
-});
-surveyRouter.get( "/pagetemplate/:limit?/:count?" , async function(req,res) {
-// debugger;
-// try{
-  const { limit = 20, count = 0 } = req.params;
-  const user= req.user;
-  const userId  = req.userId;
-
-  // const surveys = await Survey.find({});
-  const surveys = await Template.find({"userId" : userId})
-
-  return res.status(200).json({surveys});
-  // console.log("page");
-  // paginate(req,res , limit , count);\
-
-  // } catch(error) {
-  //   // return res.status(400).json({msg : "failure" , error  });
-  //   const r = await respFail(res,"unknown error","unknownError");
-  //   return r;
-  // }
-});
-
-
-
-
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////
-module.exports = surveyRouter;
+module.exports = routerSurvey;
 ////////////////////////////////////////////////////////
-
-
