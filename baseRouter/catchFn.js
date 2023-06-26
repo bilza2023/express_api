@@ -1,5 +1,3 @@
-const {SkillzaaError} = require('../skillzaaError/SkillzaaErrors');
-
 
 //--2023-6-26
 //This is one line but it is very important

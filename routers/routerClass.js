@@ -1,7 +1,4 @@
-/**
-2023-6-26
-
- */
+/** 2023-6-26 */
 //////////----dont change these ------//////////////////////////////
 require('dotenv').config();
 const auth = require('../middleware/auth');
@@ -23,7 +20,6 @@ routerClass.post("/create", async function(req, res) {
   try{ 
   
     const backendData = {checkMaxValue : appConfig.MAX_CLASSES_ALLOWED};
-
         return  await mongoWrapper.create(
         req,res, //--The usual req and res
         getClass, //--the data fn for new object newObjDataFunction

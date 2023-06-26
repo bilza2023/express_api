@@ -1,3 +1,4 @@
+/** 2023-6-26 */
 //////////----dont change these ------//////////////////////////////
 require('dotenv').config();
 const auth = require('../middleware/auth');
@@ -6,27 +7,24 @@ const appConfig = require("../common/appConfig");
 const catchFn = require('../mongoWrapper/catchFn');
 const MongoWrapper = require('../mongoWrapper/mongoWrapper');
 //////////----Mongoose Model Object----//////////////////
-const {Tag} = require("../models/tag");
+const student = require("../models/student");
+const getStudent =  require('./studentFn/getStudent.js');
 /////////////////////////////////////////////////////////////
-const getSurvey = require('./templateFn/getSurvey');  
-const updateSurvey = require('./templateFn/updateSurvey');  
-// const getData = require('../mongoWrapper/getData');  
 /////////////////////////////////////////////////
-const routerTag = express.Router();
-routerTag.use(auth);
-const mongoWrapper = new MongoWrapper(Tag);
-const getTag =  require('./tagFn/getTag');
+const routerStudent = express.Router();
+routerStudent.use(auth);
+const mongoWrapper = new MongoWrapper(student);
 /////////////////////////////////////////////////
 
-routerTag.post("/create", async function(req, res) {
+routerStudent.post("/create", async function(req, res) {
   try{ 
   
-    const backendData = {checkMaxValue : appConfig.MAX_TAGS_ALLOWED};
+    const backendData = {checkMaxValue : appConfig.MAX_STUDENTS_ALLOWED};
 
         return  await mongoWrapper.create(
         req,res, //--The usual req and res
-        getTag, //--the data fn for new object newObjDataFunction
-        ['name','description'], //--array for getData from post.body
+        getStudent, //--the data fn for new object newObjDataFunction
+        ['id','name'], //--array for getData from post.body
         [mongoWrapper.checks.checkMax], //--check functions
         backendData);//--data that did not come from front-end
   }catch (error) {
@@ -34,11 +32,10 @@ routerTag.post("/create", async function(req, res) {
   }
 });
 
-routerTag.post("/update", async function(req, res) {
+routerStudent.post("/update", async function(req, res) {
   try{
-  debugger;
+//   debugger;
     const backendData = {};
-
         return  await mongoWrapper.update(
         req,res, //--The usual req and res
          'item',
@@ -50,7 +47,7 @@ routerTag.post("/update", async function(req, res) {
   }
 });
 //--read is get since Get cant have data just token
-routerTag.get( "/read" , async function(req,res) {
+routerStudent.get( "/read" , async function(req,res) {
  try{   
     debugger;
     const backendData = {};
@@ -66,7 +63,7 @@ routerTag.get( "/read" , async function(req,res) {
 });
 
 //--readOne is post since it needs to send id
-routerTag.post( "/readone" , async function(req,res) {
+routerStudent.post( "/readone" , async function(req,res) {
  try{   //debugger;
     const backendData = {};
         return  await mongoWrapper.readOne(
@@ -80,7 +77,7 @@ routerTag.post( "/readone" , async function(req,res) {
 });
 ////////////////////////////////////////////////////////
 //--readOne is post since it needs to send id
-routerTag.post( "/delete" , async function(req,res) {
+routerStudent.post( "/delete" , async function(req,res) {
  try{   //debugger;
     const backendData = {};
         return  await mongoWrapper.delete(
@@ -97,5 +94,5 @@ routerTag.post( "/delete" , async function(req,res) {
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
-module.exports = routerTag;
+module.exports = routerStudent;
 ////////////////////////////////////////////////////////

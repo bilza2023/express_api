@@ -1,5 +1,5 @@
 
-const skillzaErrList = require('./skillzaaError/skillzaaErrList');
+const skillzaErrList = require('../skillzaaError/skillzaaErrList');
 ////////////////////////////////////////////
 async function getData(req, fields) {
   try {

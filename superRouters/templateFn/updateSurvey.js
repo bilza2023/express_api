@@ -1,5 +1,5 @@
 const ObjToSchema = require('./ObjToSchema');
-const skillzaErrList = require('../../skillzaaError/skillzaaErrList');
+const skillzaErrList = require('../../mongoWrapper/skillzaaError/skillzaaErrList');
 
 async function updateSurvey(mdl , data){
 const questions = data.item.questions;

@@ -8,23 +8,19 @@ process.on('uncaughtException', function (err) {
 const express  =require('express');
 const cors = require('cors');
 const db = require("./mongoDb/mongo.js");
-////////////////////////////////////////////////
-//--Routers user , quiz , survey , result, nonAuth ,test 
+/////////////////////////////////////////////----->>>>
+const routerTemplate = require('./superRouters/superTemplate.js');
+const routerTest = require('./superRouters/superTest.js');
+const routerSurvey = require('./superRouters/superSurvey.js');
+const routerTag = require('./superRouters/superTag.js');
+const routerClass = require('./superRouters/superClass.js');
+const routerStudent = require('./superRouters/superStudent.js');
+const resultRouter = require('./routes/resultRouter');
 const userRouter = require('./routes/userRouter');
-// const quizRouter = require('./quizRouter/quizRouter');
-// const routerSurvey = require('./routerSurvey/routerSurvey.js');
-const routerTemplate = require('./routers/routerTemplate.js');
-const routerTag = require('./routers/routerTag.js');
-const routerClass = require('./routers/routerClass.js');
-// const routerTest = require('./routers/routerTest.js');
-// const routerTest = require('./routers/routerTest.js');
-// const resultRouter = require('./routes/resultRouter');
-// const routerStudent = require('./routes/routerStudent.js');
 const nonAuthRouter = require('./routes/nonAuthRouter.js');
-
+////////////////////////////////////////////////
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 80;
-
 ////////////////////////////////////////////////////
 // debugger;
 const app = express()
@@ -42,13 +38,13 @@ app.use(express.urlencoded({ extended: true }));
 //.. Route middlewares--/////////////////////////////////////
 app.use("/",nonAuthRouter);
 app.use("/user",userRouter);
-// app.use("/result",resultRouter);
-// app.use("/survey",routerSurvey);
+app.use("/result",resultRouter);
+app.use("/run",routerSurvey);
 app.use("/template",routerTemplate);
 app.use("/tag",routerTag);
 app.use("/class",routerClass);
-// app.use("/student",routerStudent);
-// app.use("/test",routerTest);
+app.use("/student",routerStudent);
+app.use("/test",routerTest);
 
 ///////////////////////////Routes////////////////////////
 app.post('/', async (req, res) =>{

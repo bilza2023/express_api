@@ -1,17 +1,29 @@
 /*
-* 2023-6-26 : There is error in delete, it does not send back delResult.
-*
+* 2023-6-26 : 
+* MongoWrapper Wraps the CRUD operations of mongoose and provide a consistent  REST API. 
+* This is the REST Layer of Mongoose.
+
+* SIGNATURES
+*  The signature of read,readone and delete are
+ - readOne/read/delete(req,res,getDataArray=[],checks=[],backendData={}) 
+* For create and update the third item is added
+ - create(req,res,newObjDataFunction,getDataArray=[],checks=[],backendData={})
+ - update(req,res,updateItemName,getDataArray=[],checks=[],backendData={})
+* NEXT
+ - Improve Error Messaging, there are bugs
+ - Improve check running. 
+ - Move SkillzaaError out of this folder.
 */
 require('dotenv').config();
 const getData = require('./getData');  
-const checkMax = require('./checks/checkMax');
-const skillzaErrList = require('./skillzaaError/skillzaaErrList');
+const skillzaErrList = require('../skillzaaError/skillzaaErrList');
+
 /////////////////////////////////////////////////
 class MongoWrapper {
   constructor(mdl) {
     this.model = mdl;
+    this.debugMode = false;
     this.checks = {}; 
-    this.checks.checkMax = checkMax;
   }
 
   async create(req,res,newObjDataFunction,getDataArray=[],checks=[],backendData={}) {
