@@ -15,7 +15,7 @@
  - Move SkillzaaError out of this folder.
 */
 require('dotenv').config();
-const getData = require('./getData');  
+const getData = require('../superRouter/getData');  
 const skillzaErrList = require('../skillzaaError/skillzaaErrList');
 
 /////////////////////////////////////////////////
@@ -35,7 +35,6 @@ class MongoWrapper {
           const check = checks[i];
           await check(this.model,data,backendData);
         }
-
         //------Run ChecksEnd ----------------
         const newObjData = newObjDataFunction(data); //unique to create
         let item = new this.model( newObjData );     

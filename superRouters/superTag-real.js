@@ -1,18 +1,18 @@
 
-const getSuperRouter  = require('../superRouter/getSuperRouter');
-const SuperRouterOptions = require('../superRouter/superRouterOptions');
+const getBaseRouter  = require('../baseRouter/BaseRouter');
+const BaseRouterOptions = require('../baseRouter/baseRouterOptions');
 const {Tag} = require("../models/tag");
 const getTag =  require('./tagFn/getTag');
 
 ////////////////////////////////////////
     // debugger;
-const opt = new SuperRouterOptions();
+const opt = new BaseRouterOptions();
     opt.model = Tag;
     opt.data.create.getNewObjDataFn = getTag;
-    // opt.data.create.getDataArray = ['name','description'];
+    opt.data.create.getDataArray = ['name','description'];
 
  
 
 ///////////////////////////////////////////
-const superTag = getSuperRouter(opt);
+const superTag = getBaseRouter(opt);
 module.exports = superTag;

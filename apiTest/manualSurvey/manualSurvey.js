@@ -1,6 +1,5 @@
 
 const {getSurvey} = require('../../globals/questionTypesData');
-// const baseMCQ = require  ('../../models/newSvyData/getMCQ.js');
 const Survey = require('../../models/survey/survey');
 const { SurveyMCQ } = require('../../models/survey/svyQuestion');
 

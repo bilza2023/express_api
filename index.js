@@ -38,18 +38,20 @@ app.use(express.urlencoded({ extended: true }));
 //.. Route middlewares--/////////////////////////////////////
 app.use("/",nonAuthRouter);
 app.use("/user",userRouter);
-app.use("/result",resultRouter);
-app.use("/run",routerSurvey);
-app.use("/template",routerTemplate);
+//---Auth Controllers
+// app.use("/template",routerTemplate);
+// app.use("/test",routerTest);
+// app.use("/run",routerSurvey);
+// app.use("/result",resultRouter);
+
 app.use("/tag",routerTag);
-app.use("/class",routerClass);
-app.use("/student",routerStudent);
-app.use("/test",routerTest);
+// app.use("/class",routerClass);
+// app.use("/student",routerStudent);
 
 ///////////////////////////Routes////////////////////////
-app.post('/', async (req, res) =>{
+app.get('/', async (req, res) =>{
 // const ret = Survey.findById()
-res.status(500).json({success :false ,  message : "Failed"});
+res.status(500).json({success :true ,  message : "Welcome to Skillzaa.com"});
 // res.status(200).json({success :true ,  message : "Welcome to skillza api"});
 });
 ////////////////////////////////////////////////////////
