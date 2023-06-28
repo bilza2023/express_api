@@ -1,29 +1,15 @@
- 
-const getBaseRouter  = require('../baseRouter/BaseRouter');
-const BaseRouterOptions = require('../baseRouter/baseRouterOptions');
-const appConfig = require("../common/appConfig");
-/////////////////////////
-const {Template} = require("../models/survey/survey");
-//.. change just this line.
+
+const getSuperRouter  = require('../superRouter/getSuperRouter');
+const SuperRouterOptions = require('../superRouter/superRouterOptions');
+const {Survey} = require("../models/survey/survey");
 const getNewObjDataFn =  require('./templateFn/getSurvey');
 
 ////////////////////////////////////////
-//////-custome functionality --checks//
-////////////////////////////////////////
-const checkMax = require('./checks/checkMax');
-////////////////////////////////////////
-
-const opt = new BaseRouterOptions();
-    opt.model = Template;
-    opt.data.create.getNewObjDataFn = getNewObjDataFn;
-    opt.data.create.getDataArray = ['title'];
-    //---checks
-    opt.data.create.checksArray = [
-        checkMax
-    ];
-    opt.data.create.backendData = {       
-            checkMaxValue : appConfig.MAX_TEMPLATE_ALLOWED       
-        };
+    // debugger;
+    const opt = new SuperRouterOptions();
+    opt.model = Survey;
+    opt.create.getNewObjDataFn = getNewObjDataFn;
+ 
 ///////////////////////////////////////////
-const superTemplate = getBaseRouter(opt);
-module.exports = superTemplate;
+const superSurvey = getSuperRouter(opt);
+module.exports = superSurvey;

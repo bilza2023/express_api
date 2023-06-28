@@ -7,7 +7,7 @@ function catchFn(error,res,debugMode){
   if (debugMode){
       return res.status(500).json({message:error.message || 
         'error message not found'});
-  }else {
+  }else { 
       return res.status(500).json({message: 'operation failed'});
   }
 }

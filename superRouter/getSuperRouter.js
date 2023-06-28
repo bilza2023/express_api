@@ -12,7 +12,7 @@ const read = require('./read');
 const readone = require('./readone');
 const update = require('./update');
 const del = require('./delete');
-
+const  getData = require('./getData');
 const catchFn = require('./catchFn');
 //////////----Mongoose Model Object----//////////////////
 /////////////////////////////////////////////////
@@ -24,12 +24,19 @@ function getSuperRouter(opt){
 
  superRouter.use(bodyParser.json()); // for parsing application/json
  superRouter.use(bodyParser.urlencoded({ extended: true })); // for parsing 
- superRouter.debugMode = true;
  //////////////////=======CREATE
  superRouter.post("/create",  async function(req, res) { 
       try{
-      create(req, res,opt)
+      debugger;
+      const data = getData(req);
+      const item = await create(data,opt);
+            if (!item){
+                  throw new Error("");
+            }else {
+                  return res.status(200).json({item})
+            }
       }catch(err){
+            debugger;
             catchFn(err,res,opt.debugMode);
       }
 });

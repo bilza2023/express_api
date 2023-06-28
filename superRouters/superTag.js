@@ -8,8 +8,30 @@ const getTag =  require('./tagFn/getTag');
     // debugger;
     const opt = new SuperRouterOptions();
     opt.model = Tag;
+    opt.debugMode = true; ///make it false after completion.
     opt.create.getNewObjDataFn = getTag;
+    opt.create.checks = [
+        // checkFunction
+    
+    ];
  
 ///////////////////////////////////////////
 const superTag = getSuperRouter(opt);
 module.exports = superTag;
+//----a demo check function
+// async function checkFunction(model, data, backendData) {
+//   try {
+//     const random = Math.random();
+//     // if (random < 0.5) {
+//     if (true) {
+//       throw new Error('Check failed=====>');
+//     }
+//     // Other check logic
+//   } catch (err) {
+//   debugger;
+//     // Custom error handling or logging
+//     console.error('Error in checkFunction:', err);
+//     // Optionally, rethrow the error to propagate it up
+//     throw err;
+//   }
+// }

@@ -1,7 +1,9 @@
 
 const skillzaErrList = require('../skillzaaError/skillzaaErrList');
 ////////////////////////////////////////////
-//--just use this to extract out data and user-id
+/**
+ * just use this to extract out data and user-id -->just DATA AND USER_ID what is inside data let the attached functions / newobjdata fn etc worry.
+ */
  function getData(req) {
   try {
     const data  =  req.body.data;

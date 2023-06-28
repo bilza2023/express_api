@@ -1,0 +1,328 @@
+Let review the code once again
+
+first we have the create method on top. here it is
+
+  const  getData = require('./getData');
+  const  runChecks = require('./runChecks');
+
+async function create(req, res,opt) {
+  try{ 
+        debugger;
+         const data = getData(req);
+
+         //---RUN CHECKS
+         await runChecks(
+                  opt.create.checks,
+                  opt.model, 
+                  data,
+                  opt.create.backendData
+          );
+
+        //---CREATE NEW OBJECT   
+        const newObjData = opt.create.getNewObjDataFn(data); 
+        let item = opt.model( newObjData );     
+        await item.save();
+        return res.status(200).json({item});
+        
+  }catch (err) {debugger; throw err; }
+}
+module.exports = create;
+
+2- next we have runChecks
+const skillzaErrList = require('../skillzaaError/skillzaaErrList');
+
+async function runChecks(checks,model,data,backendData){
+ try {
+    //------Run Checks-----------------
+    for (let i = 0; i < checks.length; i++) {
+        const check = await checks[i];
+        await check( model,data,backendData);
+    }
+ }catch (err) {
+    throw err;
+ }
+}
+
+
+module.exports = runChecks;
+
+3- we have getSuperRouter and super router options object . look at their code to understand the process well.
+getSuperRouter.js
+/** 2023-6-28 
+
+*/
+//////////----dont change these ------//////////////////////////////
+require('dotenv').config();
+const bodyParser = require('body-parser');
+const auth = require('../middleware/auth');
+const express = require('express');
+//-methods
+const create = require('./create');
+const read = require('./read');
+const readone = require('./readone');
+const update = require('./update');
+const del = require('./delete');
+
+const catchFn = require('./catchFn');
+//////////----Mongoose Model Object----//////////////////
+/////////////////////////////////////////////////
+
+function getSuperRouter(opt){
+
+ const superRouter = express.Router();
+ superRouter.use(auth);
+
+ superRouter.use(bodyParser.json()); // for parsing application/json
+ superRouter.use(bodyParser.urlencoded({ extended: true })); // for parsing 
+ superRouter.debugMode = true;
+ //////////////////=======CREATE
+ superRouter.post("/create",  async function(req, res) { 
+      try{
+      debugger;
+      create(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+ //////////////////=======UPDATE
+ superRouter.post("/update",  async function(req, res) { 
+      try{
+      //debugger;
+      update(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+ //////////////////=======DELETE
+ superRouter.post("/delete",  async function(req, res) { 
+      try{
+      del(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+ //////////////////=======READ
+ superRouter.post("/read",  async function(req, res) { 
+      try{ 
+      //debugger;
+      read(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+ //////////////////=======READONE
+ superRouter.post("/readone",  async function(req, res) { 
+      try{
+      readone(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+
+ return superRouter;
+ ////////////////////////////////////////////////////////
+}
+
+module.exports = getSuperRouter;
+
+and here is superRouterOptions.js
+
+class SuperRouterOptions {
+    constructor(){
+    this.model = null; //mongo model object
+    this.debugMode = false; 
+
+////////////==============CREATE
+    this.create = {};
+    this.create.checks = [];
+    this.create.backendData = {};
+    this.create.getNewObjDataFn = (data)=>{
+        return {data :{} };
+    };
+
+
+/////////////////////////////////////////////////
+    this.update = {};
+    this.update.checks = [];
+    this.update.backendData = {};
+/////////////////////////////////////////////////
+    this.read = {};
+    this.read.backendData = {};
+    this.read.checks = [];
+/////////////////////////////////////////////////
+    this.readone = {}; 
+    this.readone.backendData = {};
+    this.readone.checks = [];
+/////////////////////////////////////////////////
+    this.delete = {};
+    this.delete.backendData = {};
+    this.delete.checks = [];
+/////////////////////////////////////////////////
+
+    }
+
+}
+
+
+module.exports = SuperRouterOptions;
+
+
+4- we create a copt to options and create a router with it 
+superTag.js --it also has Dummy check function
+
+const getSuperRouter  = require('../superRouter/getSuperRouter');
+const SuperRouterOptions = require('../superRouter/superRouterOptions');
+const {Tag} = require("../models/tag");
+const getTag =  require('./tagFn/getTag');
+
+////////////////////////////////////////
+    // debugger;
+    const opt = new SuperRouterOptions();
+    opt.model = Tag;
+    opt.create.getNewObjDataFn = getTag;
+    opt.create.checks = [
+    checkFunction
+    
+
+
+    
+    ];
+ 
+///////////////////////////////////////////
+const superTag = getSuperRouter(opt);
+module.exports = superTag;
+
+// Dummy check function
+async function checkFunction(model, data, backendData) {
+  const random = Math.random();
+  if (random < 0.5) {
+    throw new Error('Check failed');
+  }
+  // Other check logic
+}
+
+
+====please look at the code from the point of view of error bubbling up and also accuracy
+
+great great -- one final thing on the top is the create method of the superRouter provide by getSuperRouter() is on the top and that calls the create method so finally every thing go to superRouter
+
+the chain is superRouter.post.create==>create method ==>runChecks ==> each echec function and all the way up
+
+IS THIS CLEAR???
+here is code for superRouter.js 
+/** 2023-6-28 
+
+*/
+//////////----dont change these ------//////////////////////////////
+require('dotenv').config();
+const bodyParser = require('body-parser');
+const auth = require('../middleware/auth');
+const express = require('express');
+//-methods
+const create = require('./create');
+const read = require('./read');
+const readone = require('./readone');
+const update = require('./update');
+const del = require('./delete');
+
+const catchFn = require('./catchFn');
+//////////----Mongoose Model Object----//////////////////
+/////////////////////////////////////////////////
+
+function getSuperRouter(opt){
+
+ const superRouter = express.Router();
+ superRouter.use(auth);
+
+ superRouter.use(bodyParser.json()); // for parsing application/json
+ superRouter.use(bodyParser.urlencoded({ extended: true })); // for parsing 
+ superRouter.debugMode = true;
+ //////////////////=======CREATE
+ superRouter.post("/create",  async function(req, res) { 
+      try{
+      debugger;
+      create(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+ //////////////////=======UPDATE
+ superRouter.post("/update",  async function(req, res) { 
+      try{
+      //debugger;
+      update(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+ //////////////////=======DELETE
+ superRouter.post("/delete",  async function(req, res) { 
+      try{
+      del(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+ //////////////////=======READ
+ superRouter.post("/read",  async function(req, res) { 
+      try{ 
+      //debugger;
+      read(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+ //////////////////=======READONE
+ superRouter.post("/readone",  async function(req, res) { 
+      try{
+      readone(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+
+ return superRouter;
+ ////////////////////////////////////////////////////////
+}
+
+module.exports = getSuperRouter;
+
+
+
+so now that you know all my code check this chain and see if the error mesages will flow properly or not... at the tail end of superRouter  is a 'catchFn'
+here--> superRouter.post("/create",  async function(req, res) { 
+      try{
+      debugger;
+      create(req, res,opt)
+      }catch(err){
+            catchFn(err,res,opt.debugMode);
+      }
+});
+
+this is catchFn.js
+
+//--2023-6-26
+//This is one line but it is very important
+//--Every final error comes here..
+//--return is must
+function catchFn(error,res,debugMode){
+  if (debugMode){
+      return res.status(500).json({message:error.message || 
+        'error message not found'});
+  }else { 
+      return res.status(500).json({message: 'operation failed'});
+  }
+}
+module.exports = catchFn;
+
+NOW PLEASE CHECK THE ENTIRE CHAIN OF ERROR MESSAGE ENSURING THAT IF THE DEBUGMODE == TRUE THE ERROR MESSAGE ARE PASSED ON TO TOP LEVEL AND THEN ADDED INTO RESPONSE

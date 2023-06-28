@@ -1,20 +1,15 @@
 
-    
-const getBaseRouter  = require('../baseRouter/BaseRouter');
-const BaseRouterOptions = require('../baseRouter/baseRouterOptions');
-const {ClassObj} = require("../models/class");
-//.. change just this line.
+const getSuperRouter  = require('../superRouter/getSuperRouter');
+const SuperRouterOptions = require('../superRouter/superRouterOptions');
+const ClassObj = require("../models/class");
 const getNewObjDataFn =  require('./classFn/getClass');
 
 ////////////////////////////////////////
     // debugger;
-const opt = new BaseRouterOptions();
+    const opt = new SuperRouterOptions();
     opt.model = ClassObj;
-    opt.data.create.getNewObjDataFn = getNewObjDataFn;
-    opt.data.create.getDataArray = ['name','description'];
-
+    opt.create.getNewObjDataFn = getNewObjDataFn;
  
-
 ///////////////////////////////////////////
-const superTag = getBaseRouter(opt);
-module.exports = superTag;
+const superClass = getSuperRouter(opt);
+module.exports = superClass;

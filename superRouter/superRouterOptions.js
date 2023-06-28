@@ -9,7 +9,7 @@ class SuperRouterOptions {
     this.create.checks = [];
     this.create.backendData = {};
     this.create.getNewObjDataFn = (data)=>{
-        return {name : "Create"};
+        return {data :{} };
     };
 
 

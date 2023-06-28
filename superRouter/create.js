@@ -1,23 +1,26 @@
 
-  const  getData = require('./getData');
+  
   const  runChecks = require('./runChecks');
 
-async function create(req, res,opt) {
+async function create(data,opt) {
   try{ 
-        debugger;
-         const data = getData(req);
-         //---
-         runChecks(
-          opt.create.checks,
-          opt.model, 
-          data,
-          opt.create.backendData);
-        //unique to create  
+        // debugger;
+         //---RUN CHECKS---AWAIT IS MUST
+         await runChecks(
+                  opt.create.checks,
+                  opt.model, 
+                  data,
+                  opt.create.backendData
+          );
+        //---CREATE NEW OBJECT   
         const newObjData = opt.create.getNewObjDataFn(data); 
         let item = opt.model( newObjData );     
         await item.save();
-        return res.status(200).json({item});
+        return item
         
-  }catch (err) { throw err; }
+  }catch (err) {debugger; 
+  
+    throw err; 
+  }
 }
 module.exports = create;

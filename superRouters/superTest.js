@@ -1,29 +1,15 @@
- 
-const getBaseRouter  = require('../baseRouter/BaseRouter');
-const BaseRouterOptions = require('../baseRouter/baseRouterOptions');
-const appConfig = require("../common/appConfig");
-/////////////////////////
+
+const getSuperRouter  = require('../superRouter/getSuperRouter');
+const SuperRouterOptions = require('../superRouter/superRouterOptions');
 const {Test} = require("../models/survey/survey");
-//.. change just this line.
 const getNewObjDataFn =  require('./testFn/getSurvey');
 
 ////////////////////////////////////////
-//////-custome functionality --checks//
-////////////////////////////////////////
-const checkMax = require('./checks/checkMax');
-////////////////////////////////////////
-
-const opt = new BaseRouterOptions();
+    // debugger;
+    const opt = new SuperRouterOptions();
     opt.model = Test;
-    opt.data.create.getNewObjDataFn = getNewObjDataFn;
-    opt.data.create.getDataArray = ['title'];
-    //---checks
-    opt.data.create.checksArray = [
-        checkMax
-    ];
-    opt.data.create.backendData = {       
-            checkMaxValue : appConfig.MAX_TESTS_ALLOWED       
-        };
+    opt.create.getNewObjDataFn = getNewObjDataFn;
+ 
 ///////////////////////////////////////////
-const superTest = getBaseRouter(opt);
+const superTest = getSuperRouter(opt);
 module.exports = superTest;

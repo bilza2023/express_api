@@ -39,14 +39,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/",nonAuthRouter);
 app.use("/user",userRouter);
 //---Auth Controllers
-// app.use("/template",routerTemplate);
-// app.use("/test",routerTest);
-// app.use("/run",routerSurvey);
-// app.use("/result",resultRouter);
+app.use("/template",routerTemplate);
+app.use("/test",routerTest);
+app.use("/run",routerSurvey);
+app.use("/result",resultRouter);
 
 app.use("/tag",routerTag);
-// app.use("/class",routerClass);
-// app.use("/student",routerStudent);
+app.use("/class",routerClass);
+app.use("/student",routerStudent);
 
 ///////////////////////////Routes////////////////////////
 app.get('/', async (req, res) =>{
