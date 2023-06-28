@@ -1,71 +1,74 @@
 /** 2023-6-28 
---Rules
-all are post
-all get "data" except for read --no future openings
-merge superRouter and wrapper
+
 */
 //////////----dont change these ------//////////////////////////////
 require('dotenv').config();
+const bodyParser = require('body-parser');
 const auth = require('../middleware/auth');
 const express = require('express');
-const catchFn = require('./catchFn');
-const getData = require('./getData');
+//-methods
 const create = require('./create');
 const read = require('./read');
 const readone = require('./readone');
 const update = require('./update');
 const del = require('./delete');
 
+const catchFn = require('./catchFn');
 //////////----Mongoose Model Object----//////////////////
 /////////////////////////////////////////////////
 
 function getSuperRouter(opt){
 
  const superRouter = express.Router();
- //     superRouter.use(auth);
+ superRouter.use(auth);
+
+ superRouter.use(bodyParser.json()); // for parsing application/json
+ superRouter.use(bodyParser.urlencoded({ extended: true })); // for parsing 
  superRouter.debugMode = true;
  //////////////////=======CREATE
- superRouter.get("/create",  async function(req, res) { 
+ superRouter.post("/create",  async function(req, res) { 
       try{
       create(req, res,opt)
       }catch(err){
-            catchFn(err,res,this.debugMode);
+            catchFn(err,res,opt.debugMode);
       }
 });
  ////////////////////////////////////////////////////////
  //////////////////=======UPDATE
- superRouter.get("/update",  async function(req, res) { 
+ superRouter.post("/update",  async function(req, res) { 
       try{
+      //debugger;
       update(req, res,opt)
       }catch(err){
-            catchFn(err,res,this.debugMode);
+            catchFn(err,res,opt.debugMode);
       }
 });
  ////////////////////////////////////////////////////////
  //////////////////=======DELETE
- superRouter.get("/delete",  async function(req, res) { 
+ superRouter.post("/delete",  async function(req, res) { 
       try{
       del(req, res,opt)
       }catch(err){
-            catchFn(err,res,this.debugMode);
+            catchFn(err,res,opt.debugMode);
       }
 });
  ////////////////////////////////////////////////////////
  //////////////////=======READ
- superRouter.get("/read",  async function(req, res) { 
-      try{
+ superRouter.post("/read",  async function(req, res) { 
+      try{ 
+      //debugger;
       read(req, res,opt)
       }catch(err){
-            catchFn(err,res,this.debugMode);
+            catchFn(err,res,opt.debugMode);
       }
 });
  ////////////////////////////////////////////////////////
  //////////////////=======READONE
- superRouter.get("/readone",  async function(req, res) { 
+ superRouter.post("/readone",  async function(req, res) { 
       try{
       readone(req, res,opt)
       }catch(err){
-            catchFn(err,res,this.debugMode);
+            catchFn(err,res,opt.debugMode);
       }
 });
  ////////////////////////////////////////////////////////

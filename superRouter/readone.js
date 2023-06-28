@@ -1,17 +1,26 @@
 
+  const  getData = require('./getData');
+  const  runChecks = require('./runChecks');
 
-async function readone(req, res) {
+async function readone(req, res,opt) {
   try{ 
-        //  const data = getData(req);
-        //  runChecks(checks,this.model,data,backendData);
-        // //unique to create  
-        // const newObjData = opt.data.create.getNewObjDataFn(data); 
-        // let item = new this.model( newObjData );     
-        // await item.save();
-        return res.status(200).json({item:"Hello from readone!"});
+        debugger;
+         const data = getData(req);
+         //---
+         runChecks(
+          opt.readone.checks,
+          opt.model, 
+          data,
+          opt.readone.backendData);
+        ///--must have data and must have id
+        const item = await opt.model.findById(data.id);
+      
+      if(!item){
+        throw skillzaErrList.getErr("failedToUpdate");  
+      }
+      return res.status(200).json({item});
         
-  }catch (error) {
-    catchFn(error,res,superRouter.debugMode);
-  }
+  }catch (err) { throw err; }
 }
 module.exports = readone;
+

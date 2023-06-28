@@ -2,36 +2,33 @@
 class SuperRouterOptions {
     constructor(){
     this.model = null; //mongo model object
-    this.data = {}; //--just to create an object
+    this.debugMode = false; 
 
- /////////////////////////////////////////////////  
-    this.data.create = {};
- //{checkMaxValue : appConfig.MAX_CLASSES_ALLOWED} example backend data 
-    this.data.create.backendData = {};
- // checksArray: PROVIDE FUNCTIONALITY BY ATTACHING FUNCTIONS
-    this.data.create.checksArray = [];
- //--this is not for other methods
-    this.data.create.getNewObjDataFn = {}; //function
- // getDataArray: The req will have this data or auth will provide it
-    this.data.create.getDataArray = []; 
+////////////==============CREATE
+    this.create = {};
+    this.create.checks = [];
+    this.create.backendData = {};
+    this.create.getNewObjDataFn = (data)=>{
+        return {name : "Create"};
+    };
 
 
 /////////////////////////////////////////////////
-    this.data.update = {};
-    this.data.update.backendData = {};
-    this.data.update.checksArray = [];
+    this.update = {};
+    this.update.checks = [];
+    this.update.backendData = {};
 /////////////////////////////////////////////////
-    this.data.read = {};
-    this.data.read.backendData = {};
-    this.data.read.checksArray = [];
+    this.read = {};
+    this.read.backendData = {};
+    this.read.checks = [];
 /////////////////////////////////////////////////
-    this.data.readone = {};
-    this.data.readone.backendData = {};
-    this.data.readone.checksArray = [];
+    this.readone = {}; 
+    this.readone.backendData = {};
+    this.readone.checks = [];
 /////////////////////////////////////////////////
-    this.data.delete = {};
-    this.data.delete.backendData = {};
-    this.data.delete.checksArray = [];
+    this.delete = {};
+    this.delete.backendData = {};
+    this.delete.checks = [];
 /////////////////////////////////////////////////
 
     }

@@ -6,13 +6,10 @@ const getTag =  require('./tagFn/getTag');
 
 ////////////////////////////////////////
     // debugger;
-const opt = new SuperRouterOptions();
+    const opt = new SuperRouterOptions();
     opt.model = Tag;
-    opt.data.create.getNewObjDataFn = getTag;
-    // opt.data.create.getDataArray = ['name','description'];
-
+    opt.create.getNewObjDataFn = getTag;
  
-
 ///////////////////////////////////////////
 const superTag = getSuperRouter(opt);
 module.exports = superTag;
