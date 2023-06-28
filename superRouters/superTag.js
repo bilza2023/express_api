@@ -3,7 +3,8 @@ const getSuperRouter  = require('../superRouter/getSuperRouter');
 const SuperRouterOptions = require('../superRouter/superRouterOptions');
 const {Tag} = require("../models/tag");
 const getTag =  require('./tagFn/getTag');
-
+const checkMax =  require('./checks/checkMax');
+const {MAX_TAGS_ALLOWED} = require('../common/appConfig');
 ////////////////////////////////////////
     // debugger;
     const opt = new SuperRouterOptions();
@@ -11,10 +12,12 @@ const getTag =  require('./tagFn/getTag');
     opt.debugMode = true; ///make it false after completion.
     opt.create.getNewObjDataFn = getTag;
     opt.create.checks = [
-        // checkFunction
-    
+        checkMax
     ];
- 
+    ;
+    opt.create.backendData = {       
+            checkMaxValue : MAX_TAGS_ALLOWED       
+        };
 ///////////////////////////////////////////
 const superTag = getSuperRouter(opt);
 module.exports = superTag;

@@ -1,23 +1,24 @@
 
-  const  getData = require('./getData');
-  const  runChecks = require('./runChecks');
+  
+const  runChecks = require('./runChecks');
 
-async function del(req, res,opt) {
+async function del(data,opt) {
   try{ 
-        debugger;
-         const data = getData(req);
-         //---
-         runChecks(
-          opt.delete.checks,
-          opt.model, 
-          data,
-          opt.delete.backendData);
-        ///--must have data and must have id
-        const delResult = await opt.model.deleteOne({ _id: data.id , userId :data.userId });
-
-        return res.status(200).json({item:delResult});
+        // debugger;
+         //---RUN CHECKS---AWAIT IS MUST
+         await runChecks(
+                  opt.delete.checks,
+                  opt.model, 
+                  data,
+                  opt.delete.backendData
+          );
+        //---DELete   
+        const item = await opt.model.deleteOne({ _id: data.id , userId :data.userId });
+        return item;
         
-  }catch (err) { throw err; }
+  }catch (err) {debugger; 
+  
+    throw err; 
+  }
 }
 module.exports = del;
-

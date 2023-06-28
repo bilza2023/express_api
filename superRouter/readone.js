@@ -16,7 +16,7 @@ async function readone(req, res,opt) {
         const item = await opt.model.findById(data.id);
       
       if(!item){
-        throw skillzaErrList.getErr("failedToUpdate");  
+        throw skillzaErrList.getErr("failedToReadone");  
       }
       return res.status(200).json({item});
         

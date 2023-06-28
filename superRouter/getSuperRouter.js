@@ -41,45 +41,76 @@ function getSuperRouter(opt){
       }
 });
  ////////////////////////////////////////////////////////
- //////////////////=======UPDATE
- superRouter.post("/update",  async function(req, res) { 
-      try{
-      //debugger;
-      update(req, res,opt)
-      }catch(err){
-            catchFn(err,res,opt.debugMode);
-      }
-});
- ////////////////////////////////////////////////////////
  //////////////////=======DELETE
  superRouter.post("/delete",  async function(req, res) { 
       try{
-      del(req, res,opt)
+      debugger;
+      const data = getData(req);
+      const item = await del(data,opt);
+            if (!item){
+                  throw new Error("failedToDelete");
+            }else {
+                   return res.status(200).json({item})
+            }
       }catch(err){
+            debugger;
             catchFn(err,res,opt.debugMode);
       }
 });
  ////////////////////////////////////////////////////////
- //////////////////=======READ
+ 
+ //////////////////=======UPDATE
+ superRouter.post("/update",  async function(req, res) { 
+      try{
+      debugger;
+      const data = getData(req);
+      const item = await update(data,opt);
+            if (!item){
+                  throw new Error("failedToUpdate");
+            }else {
+                   return res.status(200).json({item})
+            }
+      }catch(err){
+            debugger;
+            catchFn(err,res,opt.debugMode);
+      }
+});
+ ////////////////////////////////////////////////////////
+ //////////////////=======UPDATE
  superRouter.post("/read",  async function(req, res) { 
-      try{ 
-      //debugger;
-      read(req, res,opt)
+      try{
+      debugger;
+      const data = getData(req);
+      const items = await read(data,opt);
+            if (!items){
+                  throw new Error("failedToRead");
+            }else {
+                   return res.status(200).json({items})
+            }
       }catch(err){
+            debugger;
             catchFn(err,res,opt.debugMode);
       }
 });
  ////////////////////////////////////////////////////////
- //////////////////=======READONE
+ //////////////////=======UPDATE
  superRouter.post("/readone",  async function(req, res) { 
       try{
-      readone(req, res,opt)
+      debugger;
+      const data = getData(req);
+      const item = await readone(data,opt);
+            if (!item){
+                  throw new Error("failedToReadone");
+            }else {
+                   return res.status(200).json({item})
+            }
       }catch(err){
+            debugger;
             catchFn(err,res,opt.debugMode);
       }
 });
- ////////////////////////////////////////////////////////
 
+ ////////////////////////////////////////////////////////
  return superRouter;
  ////////////////////////////////////////////////////////
 }

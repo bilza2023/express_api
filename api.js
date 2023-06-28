@@ -1,30 +1,23 @@
 require('dotenv').config();
 const db = require("./mongoDb/mongo.js");
-const data = require('./apiTest/first_quiz.js');
-// const createBasicSvy=require('./apiTest/createBasicSvy.js');
-// const manualSurvey=require('./apiTest/manualSurvey/manualSurvey.js');
-const addQuestionsToQuiz = require('./apiTest/addQuestionsToQuiz.js');
-// const createResponses=require('./apiTest/createResponses/createResponses.js');
-// const createNewTemplate=require('./apiTest/template/createNew.js');
-// const createResult=require('./apiTest/createResult.js');
-// const deleteAllSurveys = require('./apiTest/deleteAllSurveys.js');
-// const deleteAllResults = require('./apiTest/deleteAllResults.js');
-// const createDemoSvyMCQ = require('./apiTest/createDemoSvyMCQ.js');
-//////////////////////////////////////////////////////
+const basicTagTest = require('./apiTester/basicTagTest.js');
 
-console.log("api test");
 db.once('open',()=> {
     console.log("MongoDb ===> connection established");
+    console.log("api Tester===>>");
     //////////////////////////////////////////////////////
     // createBasicSvy("Gijga Baby");
     // createResponses();
     // manualSurvey();
     // createNewTemplate();
-    addQuestionsToQuiz( '6492171cf2f38f342cb7c910',data);
+    async function run(){
+    await basicTagTest();
+    }
     // createDemoSvyMCQ();
     // deleteAllSurveys(Survey);
     // createResult();
     // deleteAllResults();
+    run();
 });
 
 
