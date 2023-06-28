@@ -1,0 +1,167 @@
+
+Please check this code. I have 5 methods being called the "read" method does not wrok. WHY?
+
+const {Tag} = require('../models/tag');
+const getTag =  require('../superRouters/tagFn/getTag');
+const checkMax =  require('../superRouters/checks/checkMax');
+const {MAX_TAGS_ALLOWED} = require('../common/appConfig');
+const SuperRouterOptions = require('../superRouter/superRouterOptions');
+const create = require('../superRouter/create');
+const del = require('../superRouter/delete');
+const read = require('../superRouter/read');
+const readone = require('../superRouter/readone');
+const update = require('../superRouter/update');
+
+//--we are going to skip SuperRouter and thus skip req,res;
+
+const showValues = true;
+///////////////////////////////////////////////////////////////
+    const opt = new SuperRouterOptions();
+    opt.model = Tag;
+    opt.debugMode = false; ///make it false after completion.
+    //..
+    opt.create.getNewObjDataFn = getTag;
+    //..
+    opt.create.checks = [
+        checkMax
+    ];
+    //..
+    opt.create.backendData = {       
+            checkMaxValue : MAX_TAGS_ALLOWED       
+    };
+
+////////////////////////////////////////////////
+async function basicTagTest(data={name:'free-loading',description:'description' , userId : '64202224fd8518cb214bd138'}){
+debugger;
+    //--creation
+    const itemCreated = await create(data,opt);
+    if (itemCreated){
+        console.log('item created');
+        if (showValues){console.log('item created',itemCreated)}
+    }else {
+        console.log('failed to create');
+    }
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    // readone
+    const itemRead = await read({ },opt);
+    if (itemRead){
+        console.log('item itemRead');
+        if (showValues){console.log('item itemRead',itemRead)}
+    }else {
+        console.log('failed to itemRead');
+    }
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    // readone
+    const itemReadone = await readone({id :itemCreated._id },opt);
+    if (itemReadone){
+        console.log('item readone');
+        if (showValues){console.log('item itemRead',itemReadone)}
+    }else {
+        console.log('failed to readone');
+    }
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    // DELETE
+    const itemDeleted = await del({id :itemCreated._id },opt);
+    if (itemDeleted){
+        console.log('item deleted');
+        if (showValues){console.log('item itemRead',itemDeleted)}
+    }else {
+        console.log('failed to delete');
+    }
+}
+
+
+module.exports = basicTagTest
+
+
+read.js
+
+  
+const  runChecks = require('./runChecks');
+
+async function read(data,opt) {
+  try{ 
+        // debugger;
+         //---RUN CHECKS---AWAIT IS MUST
+         await runChecks(
+                  opt.read.checks,
+                  opt.model, 
+                  data,
+                  opt.read.backendData
+          );
+        //---READONE  
+        const items = await opt.model.find({"userId" : data.userId})
+        return items;
+        
+  }catch (err) {debugger; 
+  
+    throw err; 
+  }
+}
+module.exports = read;
+
+
+runChecks.js
+
+const skillzaErrList = require('../skillzaaError/skillzaaErrList');
+
+async function runChecks(checks,model,data,backendData){
+ try {
+    //------Run Checks-----------------
+    for (let i = 0; i < checks.length; i++) {
+        const check = await checks[i];
+        await check( model,data,backendData);
+    }
+ }catch (err) {
+    throw err;
+ }
+}
+
+
+module.exports = runChecks;
+
+
+class SuperRouterOptions {
+    constructor(){
+    this.model = null; //mongo model object
+    this.debugMode = false; 
+
+////////////==============CREATE
+    this.create = {};
+    this.create.checks = [];
+    this.create.backendData = {};
+    this.create.getNewObjDataFn = (data)=>{
+        return {data :{} };
+    };
+
+
+/////////////////////////////////////////////////
+    this.update = {};
+    this.update.checks = [];
+    this.update.backendData = {};
+/////////////////////////////////////////////////
+    this.read = {};
+    this.read.backendData = {};
+    this.read.checks = [];
+/////////////////////////////////////////////////
+    this.readone = {}; 
+    this.readone.backendData = {};
+    this.readone.checks = [];
+/////////////////////////////////////////////////
+    this.delete = {};
+    this.delete.backendData = {};
+    this.delete.checks = [];
+/////////////////////////////////////////////////
+
+    }
+
+}
+
+
+module.exports = SuperRouterOptions;

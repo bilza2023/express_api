@@ -1,26 +1,25 @@
 
-  const  getData = require('./getData');
-  const  runChecks = require('./runChecks');
+  
+const  runChecks = require('./runChecks');
 
-async function readone(req, res,opt) {
+async function readone(data,opt) {
   try{ 
-        debugger;
-         const data = getData(req);
-         //---
-         runChecks(
-          opt.readone.checks,
-          opt.model, 
-          data,
-          opt.readone.backendData);
-        ///--must have data and must have id
-        const item = await opt.model.findById(data.id);
+        // debugger;
+         //---RUN CHECKS---AWAIT IS MUST
+         await runChecks(
+                  opt.readone.checks,
+                  opt.model, 
+                  data,
+                  opt.readone.backendData
+          );
+        //---READONE  
+         const item = await opt.model.findById(data.id);
       
-      if(!item){
-        throw skillzaErrList.getErr("failedToReadone");  
-      }
-      return res.status(200).json({item});
+        return item;
         
-  }catch (err) { throw err; }
+  }catch (err) {debugger; 
+  
+    throw err; 
+  }
 }
 module.exports = readone;
-

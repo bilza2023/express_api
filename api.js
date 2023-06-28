@@ -5,6 +5,7 @@ const basicTagTest = require('./apiTester/basicTagTest.js');
 db.once('open',()=> {
     console.log("MongoDb ===> connection established");
     console.log("api Tester===>>");
+    debugger;
     //////////////////////////////////////////////////////
     // createBasicSvy("Gijga Baby");
     // createResponses();
@@ -12,6 +13,7 @@ db.once('open',()=> {
     // createNewTemplate();
     async function run(){
     await basicTagTest();
+    console.log("api Tester Ended..===>>");
     }
     // createDemoSvyMCQ();
     // deleteAllSurveys(Survey);

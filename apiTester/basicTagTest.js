@@ -5,8 +5,11 @@ const {MAX_TAGS_ALLOWED} = require('../common/appConfig');
 const SuperRouterOptions = require('../superRouter/superRouterOptions');
 const create = require('../superRouter/create');
 const del = require('../superRouter/delete');
-//we are going to skip SuperRouter and thus skip req,res;
+const {read} = require('../superRouter/read');
+const readone = require('../superRouter/readone');
+const update = require('../superRouter/update');
 
+//--we are going to skip SuperRouter and thus skip req,res;
 
 ///////////////////////////////////////////////////////////////
     const opt = new SuperRouterOptions();
@@ -24,18 +27,61 @@ const del = require('../superRouter/delete');
     };
 
 ////////////////////////////////////////////////
-async function basicTagTest(data={name:'free-loading',description:'description' , userId : '64202224fd8518cb214bd138'}){
+async function basicTagTest(incommingData={name:'free-loading',description:'description' , userId : '64202224fd8518cb214bd138'}){
 debugger;
     //--creation
-    const itemCreated = await create(data,opt);
+    //--we NEED userId
+    const itemCreated = await create(incommingData,opt);
     if (itemCreated){
-        console.log('item created');
+        console.log('item created' , itemCreated._id);
     }else {
         console.log('failed to create');
     }
-    // DELETE
-    const itemDeleted = del() 
-
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    // update
+    //--we dont need userId since onlt id is used
+    itemCreated.name = 'cg13dcsgddfzzzz';
+    const itemUpdated = await update({item: itemCreated },opt);
+    if (itemUpdated){
+        console.log('item itemUpdated', itemUpdated._id,itemUpdated.name);
+    }else {
+        console.log('failed to update');
+    }
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    // readone
+    //--we NEED userId
+    const itemRead = await read({userId : '64202224fd8518cb214bd138' },opt);
+    if (itemRead){
+        console.log('item itemRead length',itemRead.length);
+    }else {
+        console.log('failed to itemRead');
+    }
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    // readone
+    //--we dont need userId since onlt id is used
+    const itemReadone = await readone({id :itemCreated._id },opt);
+    if (itemReadone){
+        console.log('item readone', itemReadone._id);
+    }else {
+        console.log('failed to readone');
+    }
+    //////////////////////////////////////////////////////////
+    
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    // DELETE 
+    //--we dont need userId since onlt id is used
+    const itemDeleted = await del({id :itemCreated._id },opt);
+    if (itemDeleted){
+        console.log('item deleted',itemDeleted);
+    }else {
+        console.log('failed to delete');
+    }
 }
 
 
