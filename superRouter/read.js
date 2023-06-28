@@ -21,4 +21,4 @@ async function read(data,opt) {
     throw err; 
   }
 }
-module.exports = {read};
+module.exports = read;

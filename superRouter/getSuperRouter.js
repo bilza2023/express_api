@@ -1,7 +1,4 @@
-/** 2023-6-28 
-
-*/
-//////////----dont change these ------//////////////////////////////
+/** 2023-6-28 **/
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const auth = require('../middleware/auth');
@@ -31,7 +28,7 @@ function getSuperRouter(opt){
       const data = getData(req);
       const item = await create(data,opt);
             if (!item){
-                  throw new Error("");
+                  throw new Error("failedToCreate");
             }else {
                   return res.status(200).json({item})
             }
