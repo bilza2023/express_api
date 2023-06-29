@@ -12,7 +12,8 @@ async function read(data,opt) {
                   data,
                   opt.read.backendData
           );
-        //---READONE  
+        //---READONE  --
+        //--user id MUST
         const items = await opt.model.find({"userId" : data.userId})
         return items;
         

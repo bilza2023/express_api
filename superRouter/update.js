@@ -17,7 +17,8 @@ async function update(data,opt) {
      
         return item
         
-  }catch (err) {debugger; 
+  }catch (err) {
+  debugger; 
   
     throw err; 
   }

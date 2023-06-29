@@ -23,7 +23,7 @@ const skillzaErrList = require('../skillzaaError/skillzaaErrList');
 
   } catch (error) {
     //--if you get this error come to this place and no place else
-    throw skillzaErrList.getErr("corruptIncommingData");
+    throw error;
   }
 }
 

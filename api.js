@@ -18,8 +18,8 @@ db.once('open',()=> {
     //////////////////////////////////////////////////////
     console.log("api Tester===>>");
     async function runAll(){
-        await classFn();
         await tagFn();
+        await classFn();
         process.exit(1);
     }
 
