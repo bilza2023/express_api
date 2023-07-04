@@ -1,4 +1,4 @@
-const skillzaErrList = require('../skillzaaError/skillzaaErrList');
+const skillzaErrList = require('../../skillzaaError/skillzaaErrList');
 
 async function runChecks(checks,model,data,backendData){
  try {

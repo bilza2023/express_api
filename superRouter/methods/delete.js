@@ -1,6 +1,6 @@
 
   
-const  runChecks = require('./runChecks');
+const  runChecks = require('../coreFunctions/runChecks');
 
 async function del(data,opt) {
   try{ 

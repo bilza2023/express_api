@@ -1,16 +1,16 @@
 /** 2023-6-28 **/
 require('dotenv').config();
 const bodyParser = require('body-parser');
-const auth = require('../middleware/auth');
-const express = require('express');
+const auth     = require('../middleware/auth');
+const express  = require('express');
 //-methods
-const create = require('./create');
-const read = require('./read');
-const readone = require('./readone');
-const update = require('./update');
-const del = require('./delete');
-const  getData = require('./getData');
-const catchFn = require('./catchFn');
+const create   =  require('./methods/create');
+const read     =  require('./methods/read');
+const readone  =  require('./methods/readone');
+const update   =  require('./methods/update');
+const del      =  require('./methods/delete');
+const getData  =  require('./coreFunctions/getData');
+const catchFn  =  require('./coreFunctions/catchFn');
 //////////----Mongoose Model Object----//////////////////
 /////////////////////////////////////////////////
 
@@ -86,7 +86,7 @@ function getSuperRouter(opt){
             catchFn(err,res);
       }
 });
-
+ 
  ////////////////////////////////////////////////////////
  return superRouter;
  ////////////////////////////////////////////////////////

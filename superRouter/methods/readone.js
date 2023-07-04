@@ -1,6 +1,5 @@
 
-  
-const  runChecks = require('./runChecks');
+const  runChecks = require('../coreFunctions/runChecks');
 
 async function readone(data,opt) {
   try{ 

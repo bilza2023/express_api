@@ -1,1 +1,0 @@
-const businesses = seqItem.map(r => r.toJSON());
