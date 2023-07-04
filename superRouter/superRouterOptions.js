@@ -2,7 +2,7 @@
 class SuperRouterOptions {
     constructor(){
     this.model = null; //mongo model object
-    this.debugMode = false; 
+    // this.debugMode = false; //removed since its problematic
 
 ////////////==============CREATE
     this.create = {};

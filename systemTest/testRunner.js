@@ -5,11 +5,11 @@ const basicTest = require('./basicTest/basicTest.js');
 
 async function runTests(){
     
-console.log("System  Test  Begin..===>>");
+console.log("Test Runner  Begins=>>");
 
      await basicTest();
 
-console.log("System Test  Endes..===>>");
+console.log("Test Runner  Endes=>>");
 } 
 
 //////////////////////////////////////////////

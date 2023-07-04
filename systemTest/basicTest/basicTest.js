@@ -18,10 +18,9 @@ const update = require('../../superRouter/methods/update');
 ////////////////////////////////////////////////
  const opt = new SuperRouterOptions();
     opt.model = TestData;
-    opt.debugMode = false; ///make it false after completion.
     opt.create.getNewObjDataFn = getNewTagData;
     opt.create.checks = [
-        errorOther,
+        // errorOther,
         // errorSkillzaa
     ];
     opt.create.backendData = {       
@@ -33,9 +32,10 @@ const update = require('../../superRouter/methods/update');
 async function basicTest( ){
     const userId='64202224fd8518cb214bd138';
     
-    console.log('\x1b[33m%s\x1b[0m','Base Test');
-    console.log('\x1b[33m%s\x1b[0m',"==========================");
-    console.log('\x1b[34m%s\x1b[0m',"All 5 routes");
+console.log('\x1b[33m%s\x1b[0m',"==========================================");
+console.log('\x1b[33m%s\x1b[0m','Base Test');
+console.log('\x1b[33m%s\x1b[0m',"==========================================");
+console.log('\x1b[34m%s\x1b[0m',"All 5 routes");
     //////////////////////////////////////////////////////////
     try{
     
@@ -59,12 +59,14 @@ async function basicTest( ){
    console.log('\x1b[34m%s\x1b[0m', 'Base Test Ended..===>>');
    
    }catch (e) {
-
-    if (opt.debugMode){
+    
+        if (e.type == 'skillzaaError'){
+        //--skillzaa error
         console.log('\x1b[31m%s\x1b[0m',e.message );
-    }else { 
-        console.log('\x1b[31m%s\x1b[0m','operation failed' );
-    }
+        }else {
+        //system failure
+        console.log('\x1b[31m%s\x1b[0m','system failure' );
+        }
 
    }
 
