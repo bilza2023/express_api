@@ -1,15 +1,20 @@
 
 const getSuperRouter  = require('../superRouter/getSuperRouter');
 const SuperRouterOptions = require('../superRouter/superRouterOptions');
-const {Test} = require("../models/survey/survey");
+const {Test} = require("../models/models");
 const getNewObjDataFn =  require('./testFn/getSurvey');
-
+const checkMax =  require('./checks/checkMax');
+const {MAX_TESTS_ALLOWED} = require('../common/appConfig');
 ////////////////////////////////////////
-    // debugger;
     const opt = new SuperRouterOptions();
     opt.model = Test;
     opt.create.getNewObjDataFn = getNewObjDataFn;
- 
+    opt.create.checks = [
+        checkMax
+    ];
+    opt.create.backendData = {       
+            checkMaxValue : MAX_TESTS_ALLOWED       
+        };
 ///////////////////////////////////////////
 const superTest = getSuperRouter(opt);
 module.exports = superTest;

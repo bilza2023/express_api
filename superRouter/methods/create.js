@@ -1,6 +1,6 @@
 
   
-  const  runChecks = require('../coreFunctions/runChecks');
+const  runChecks = require('../coreFunctions/runChecks');
 
 async function create(data,opt) {
   try{ 

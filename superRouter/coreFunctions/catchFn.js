@@ -3,9 +3,9 @@
 //This is one line but it is very important
 //--Every final error comes here..
 //--return is must
-function catchFn(error,res){
- if (e.type == 'skillzaaError'){
-    return res.status(200).json({message: e.message});
+function catchFn(err,res){
+ if (err.type == 'skillzaaError'){
+    return res.status(400).json({message: err.message});
         }else {
     return res.status(500).json({message: 'operation failed'});
         }

@@ -1,9 +1,9 @@
 require('dotenv').config();
-process.on('uncaughtException', function (err) {
+ process.on('uncaughtException', function (err) {
     console.error((new Date).toUTCString() + ' uncaughtException:', err.message);
     console.error(err.stack);
     process.exit(1);
-});
+ });
 //.......................................................
 const express  =require('express');
 const cors = require('cors');

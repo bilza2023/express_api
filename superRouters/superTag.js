@@ -1,7 +1,7 @@
 
 const getSuperRouter  = require('../superRouter/getSuperRouter');
 const SuperRouterOptions = require('../superRouter/superRouterOptions');
-const {Tag} = require("../models/tag");
+const {Tag} = require("../models/models");
 const getTag =  require('./tagFn/getTag');
 const checkMax =  require('./checks/checkMax');
 const {MAX_TAGS_ALLOWED} = require('../common/appConfig');
@@ -21,20 +21,3 @@ const {MAX_TAGS_ALLOWED} = require('../common/appConfig');
 ///////////////////////////////////////////
 const superTag = getSuperRouter(opt);
 module.exports = superTag;
-//----a demo check function
-// async function checkFunction(model, data, backendData) {
-//   try {
-//     const random = Math.random();
-//     // if (random < 0.5) {
-//     if (true) {
-//       throw new Error('Check failed=====>');
-//     }
-//     // Other check logic
-//   } catch (err) {
-//   debugger;
-//     // Custom error handling or logging
-//     console.error('Error in checkFunction:', err);
-//     // Optionally, rethrow the error to propagate it up
-//     throw err;
-//   }
-// }

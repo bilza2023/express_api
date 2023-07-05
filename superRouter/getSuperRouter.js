@@ -1,16 +1,17 @@
 /** 2023-6-28 **/
 require('dotenv').config();
+
 const bodyParser = require('body-parser');
-const auth     = require('../middleware/auth');
-const express  = require('express');
-//-methods
-const create   =  require('./methods/create');
-const read     =  require('./methods/read');
-const readone  =  require('./methods/readone');
-const update   =  require('./methods/update');
-const del      =  require('./methods/delete');
-const getData  =  require('./coreFunctions/getData');
-const catchFn  =  require('./coreFunctions/catchFn');
+const auth       = require('../middleware/auth');
+const express    = require('express');
+const create     =  require('./methods/create');
+const read       =  require('./methods/read');
+const readone    =  require('./methods/readone');
+const update     =  require('./methods/update');
+const del        =  require('./methods/delete');
+const getData    =  require('./coreFunctions/getData');
+const catchFn    =  require('./coreFunctions/catchFn');
+
 //////////----Mongoose Model Object----//////////////////
 /////////////////////////////////////////////////
 
@@ -33,8 +34,10 @@ function getSuperRouter(opt){
             catchFn(err,res);
       }
 });
+
  ////////////////////////////////////////////////////////
  //////////////////=======DELETE
+
  superRouter.post("/delete",  async function(req, res) { 
       try{
       debugger;
@@ -46,9 +49,9 @@ function getSuperRouter(opt){
             catchFn(err,res);
       }
 });
- ////////////////////////////////////////////////////////
- 
- //////////////////=======UPDATE
+
+///////////////////////////////
+//////////////////=======UPDATE
  superRouter.post("/update",  async function(req, res) { 
       try{
       debugger;
@@ -64,7 +67,7 @@ function getSuperRouter(opt){
  //////////////////=======UPDATE
  superRouter.post("/read",  async function(req, res) { 
       try{
-      // debugger;
+      debugger;
       const data = getData(req);
       const items = await read(data,opt);
            return res.status(200).json({items})    

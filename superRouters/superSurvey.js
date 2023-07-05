@@ -1,29 +1,20 @@
- 
-const getBaseRouter  = require('../baseRouter/BaseRouter');
-const BaseRouterOptions = require('../baseRouter/baseRouterOptions');
-const appConfig = require("../common/appConfig");
-/////////////////////////
-const {Survey} = require("../models/survey/survey");
-//.. change just this line.
-const getNewObjDataFn = require('./testFn/getSurvey');
 
+const getSuperRouter  = require('../superRouter/getSuperRouter');
+const SuperRouterOptions = require('../superRouter/superRouterOptions');
+const {Survey} = require("../models/models");
+const getNewObjDataFn =  require('./surveyFn/getSurvey');
+const checkMax =  require('./checks/checkMax');
+const {MAX_RUNS_ALLOWED} = require('../common/appConfig');
 ////////////////////////////////////////
-//////-custome functionality --checks//
-////////////////////////////////////////
-const checkMax = require('./checks/checkMax');
-////////////////////////////////////////
-
-const opt = new BaseRouterOptions();
+    const opt = new SuperRouterOptions();
     opt.model = Survey;
-    opt.data.create.getNewObjDataFn = getNewObjDataFn;
-    opt.data.create.getDataArray = ['title'];
-    //---checks
-    opt.data.create.checksArray = [
+    opt.create.getNewObjDataFn = getNewObjDataFn;
+    opt.create.checks = [
         checkMax
     ];
-    opt.data.create.backendData = {       
-            checkMaxValue : appConfig.MAX_RUNS_ALLOWED       
+    opt.create.backendData = {       
+            checkMaxValue : MAX_RUNS_ALLOWED       
         };
 ///////////////////////////////////////////
-const superTest = getBaseRouter(opt);
-module.exports = superTest;
+const superSurvey = getSuperRouter(opt);
+module.exports = superSurvey;
