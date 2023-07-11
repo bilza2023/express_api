@@ -24,7 +24,7 @@ const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPass
     "SurveyEmail"   : SurveyEmail
     };
 
-
+// const newQuestions = await ObjToSchema(questions);
  async function ObjToSchema(questions) {
   const newQuestions = [];
 

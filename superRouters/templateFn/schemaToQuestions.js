@@ -25,7 +25,7 @@ const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPass
     };
 
 
- async function ObjToSchema(questions) {
+ async function schemaToQuestions(questions) {
   const newQuestions = [];
 
   try{  
@@ -49,4 +49,4 @@ const {SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPass
 }
 
 //---------------------------
-module.exports = ObjToSchema;
+module.exports = schemaToQuestions;

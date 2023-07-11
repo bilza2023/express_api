@@ -59,7 +59,7 @@ function getSuperRouter(opt){
       const item = await update(data,opt);
            return res.status(200).json({item})
       }catch(err){
-            debugger;
+            // debugger;
             catchFn(err,res);
       }
 });

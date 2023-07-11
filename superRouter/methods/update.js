@@ -14,11 +14,11 @@ async function update(data,opt) {
           );
       const options = { new: true, upsert: true }; 
       const item = await opt.model.findByIdAndUpdate( data.item._id , data.item,options);
-     
+      
         return item
         
   }catch (err) {
-  debugger; 
+  // debugger; 
   
     throw err; 
   }

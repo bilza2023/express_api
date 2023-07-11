@@ -1,3 +1,6 @@
+I am making a node express mongoose api
+
+here is svyQuestion.js (which is the model for question inside survey)
  
 const mongoose = require('mongoose');
 const options = { discriminatorKey: 'kind' };
@@ -220,3 +223,131 @@ const SurveyPassword = SurveyQuestion.discriminator('SurveyPassword',
 //SurveyQuestion dont export since its abstract but 
 module.exports = {svyQuestionSchema,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail};
 
+
+here is survey.js survey model
+
+const mongoose = require('mongoose');
+
+const {memberSchema} = require('./member');
+const {svyQuestionSchema} = require("./svyQuestion");
+const {publishObjSchema} = require("./publishObj");
+
+
+//--user id & 1 question
+const SurveySchema = new mongoose.Schema({
+  title: { 
+    type: String,
+    required: true,
+    // default : ""
+  },
+  userId: {
+    type: String,
+    required: true
+  },
+  saveResponse: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  showIntro: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  introText: {
+    type: String,
+    default : "Welcome",
+    required: false
+  },
+  showResult: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  showfarewellText: {
+    type: Boolean,
+    default : true,
+    required: false
+  },
+  farewellText: {
+    type: String,
+    default : "Goodbye",
+    required: false
+  },
+   createdAt: {
+    type: Date,
+    default: Date.now
+  }, 
+   members: {
+    type: [memberSchema],
+    required: false,
+    default : []
+  },
+  marks: {  //Marks per question
+    type: Number,
+    required: true,
+    default : 10
+  },
+  questions: {
+    type: [svyQuestionSchema],
+    required: false,
+    default : []
+  },
+  publishObj: {
+    type: publishObjSchema,
+    required: false,
+  },
+  tags : {
+      type: [String],
+    required: false,
+    default : []
+  }
+});
+
+////////////////////////////////////////////////////////
+const SurveySchemaExtended = new mongoose.Schema({
+  testId: {
+    type: String,
+    required: true,
+    default: ''
+  }
+});
+
+SurveySchemaExtended.add(SurveySchema);
+
+const Survey = mongoose.model('Survey', SurveySchemaExtended, 'surveys');
+// const Survey = mongoose.model('Survey', SurveySchema,  'surveys');
+const Template = mongoose.model('Template', SurveySchema);
+const Test = mongoose.model('Test', SurveySchema);
+
+module.exports = {Survey , Template , Test} ;
+
+here is the update method
+
+  
+const  runChecks = require('../coreFunctions/runChecks');
+
+async function update(data,opt) {
+  try{ 
+        // debugger;
+         //---RUN CHECKS---AWAIT IS MUST
+         await runChecks(
+                  opt.update.checks,
+                  opt.model, 
+                  data,
+                  opt.update.backendData
+          );
+      const options = { new: true, upsert: true }; 
+      const item = await opt.model.findByIdAndUpdate( data.item._id , data.item,options);
+      
+        return item
+        
+  }catch (err) {
+  debugger; 
+  
+    throw err; 
+  }
+}
+module.exports = update;
+
+THE PRBOLEM IS THAT ONCE SAVED THE "options" array of objects is removed (not saved) in the database.
