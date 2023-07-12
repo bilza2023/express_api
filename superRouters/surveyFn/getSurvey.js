@@ -2,29 +2,10 @@
 //--This will be changed to take in template and convert to test
 
 function getSurvey(data) {
-   const svy = { 
-        userId : data.userId,
-        title : data.title,
-        saveResponse : false,
-        showIntro : true,
-        introText : "Welcome",
-        published : false,
-        showResult : true,
-        showfarewellText : true,
-        farewellText : "Goodbye",
-        publishObj : {
-            publishTechnique:'now' , 
-            unpublishTechnique : 'never',
-            hour:9, 
-            min: 30, 
-            unpublishHour:1,
-            unpublishMin :0,
-            publishDate:null
-            },
-        members : [],
-        questions : []
-   }
- return svy;   
+   const item = data.item;
+      item.userId = data.userId;  
+      item.title = data.item.title;  
+   return item;   
 }
 
 module.exports = getSurvey;
