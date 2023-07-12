@@ -51,7 +51,7 @@ const SurveySchema = new mongoose.Schema({
     default: Date.now
   }, 
    members: {
-    type: [memberSchema],
+    type: [String],
     required: false,
     default : []
   },
