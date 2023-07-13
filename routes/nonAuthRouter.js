@@ -7,13 +7,14 @@ const express = require('express');
 const nonAuthRouter = express.Router();
 const isPublished = require('../globals/isPublished')
 const {Survey} = require("../models/survey/survey");
+const Student = require("../models/student");
 const Subscriber = require("../models/subscriber.js");
 
 /////////////////////////////////////////////////
 
 nonAuthRouter.get("/show/:quizId" , async function(req,res) {
   try {
-  // debugger;
+  debugger;
   const quizId  = req.params.quizId;
   // console.log(quizId)
     const quiz = await Survey.findById( quizId );
@@ -26,7 +27,8 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
       // console.log("isPublished" , pub);
       // return;
       if (pub.publishStatus == 'published'){
-        return res.status(200).json({ quiz, msg: "success" });
+        const students = await Student.find({classId:quiz.members[0]})
+        return res.status(200).json({ quiz,students, msg: "success" });
 
       }else if (pub.publishStatus == 'unpublished') {
           await Survey.deleteOne({_id:quizId});

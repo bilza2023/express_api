@@ -21,6 +21,18 @@ const studentSchema = new Schema({
     type: String,
     required: false
   },
+  //this will be used later when one student can have more than oner class.
+  classes: { 
+    type: [String],
+    required: false,
+    default : []
+  },
+  //--used since for now one student can have just one class
+  classId: { 
+    type: String,
+    required: false,
+    default : ''
+  },
   password: {
     type: String,
     required: false,
