@@ -1,16 +1,17 @@
 /** 2023-6-28 **/
 require('dotenv').config();
 
-const bodyParser = require('body-parser');
-const auth       = require('../middleware/auth');
-const express    = require('express');
-const create     =  require('./methods/create');
-const read       =  require('./methods/read');
-const readone    =  require('./methods/readone');
-const update     =  require('./methods/update');
-const del        =  require('./methods/delete');
-const getData    =  require('./coreFunctions/getData');
-const catchFn    =  require('./coreFunctions/catchFn');
+const bodyParser        = require('body-parser');
+const auth              = require('../middleware/auth');
+const express           = require('express');
+const create            =  require('./methods/create');
+const read              =  require('./methods/read');
+const readone           =  require('./methods/readone');
+const update            =  require('./methods/update');
+const del               =  require('./methods/delete');
+const getData           =  require('./coreFunctions/getData');
+const getDataNonAuth    =  require('./coreFunctions/getDataNonAuth');
+const catchFn           =  require('./coreFunctions/catchFn');
 
 //////////----Mongoose Model Object----//////////////////
 /////////////////////////////////////////////////
@@ -18,7 +19,9 @@ const catchFn    =  require('./coreFunctions/catchFn');
 function getSuperRouter(opt){
 
  const superRouter = express.Router();
- superRouter.use(auth);
+      if (opt.useAuth === true) {
+            superRouter.use(auth);
+      }
 
  superRouter.use(bodyParser.json()); // for parsing application/json
  superRouter.use(bodyParser.urlencoded({ extended: true })); // for parsing 
@@ -26,7 +29,12 @@ function getSuperRouter(opt){
  superRouter.post("/create",  async function(req, res) { 
       try{
       debugger;
-      const data = getData(req);
+      let data;
+      if (opt.useAuth === true) {
+            data = getData(req);
+      }else {
+            data = getDataNonAuth(req);
+      }
       const item = await create(data,opt); 
                   return res.status(200).json({item})
       }catch(err){

@@ -15,7 +15,7 @@ const routerSurvey = require('./superRouters/superSurvey.js');
 const routerTag = require('./superRouters/superTag.js');
 const routerClass = require('./superRouters/superClass.js');
 const routerStudent = require('./superRouters/superStudent.js');
-const resultRouter = require('./routes/resultRouter');
+const resultRouter = require('./superRouters/superResult.js');
 const userRouter = require('./routes/userRouter');
 const nonAuthRouter = require('./routes/nonAuthRouter.js');
 ////////////////////////////////////////////////
