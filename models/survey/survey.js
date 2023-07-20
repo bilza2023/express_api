@@ -46,6 +46,11 @@ const SurveySchema = new mongoose.Schema({
     default : "Goodbye",
     required: false
   },
+  classId: {
+    type: String,
+    default : "",
+    required: true
+  },
    createdAt: {
     type: Date,
     default: Date.now
