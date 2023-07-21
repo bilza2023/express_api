@@ -14,7 +14,6 @@ const {MAX_TAGS_ALLOWED} = require('../common/appConfig');
     opt.create.checks = [
         checkMax
     ];
-    ;
     opt.create.backendData = {       
             checkMaxValue : MAX_TAGS_ALLOWED       
         };

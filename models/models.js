@@ -4,7 +4,7 @@ const { Member}  = require('./survey/member');
 const  ClassObj  = require('./class');
 const  Result  = require('./result');
 const  Student  = require('./student');
-const {Tag}  = require('../systemTest/TestData');
+const Tag  = require('./tag');
 const {svyQuestionSchema,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmai}  = require('./survey/svyQuestion');
 
 
