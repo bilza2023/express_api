@@ -3,8 +3,8 @@
 function getClass(data){
      const cls = { 
         userId : data.userId,
-        name : data.name,
-        description : data.description || ""
+        name : data.item.name,
+        description : data.item.description || ""
    }
  return cls;   
 
