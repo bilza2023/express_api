@@ -2,9 +2,9 @@
 
 function getStudent(data){
      const cls = { 
-        id : data.id,
+        id : data.item.id,
         userId : data.userId,
-        name : data.name
+        name : data.item.name
    }
  return cls;   
 
