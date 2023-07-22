@@ -14,7 +14,7 @@ const Subscriber = require("../models/subscriber.js");
 
 nonAuthRouter.get("/show/:quizId" , async function(req,res) {
   try {
-  // debugger;
+  debugger;
   const quizId  = req.params.quizId;
   // console.log(quizId)
     const quiz = await Survey.findById( quizId );
@@ -27,7 +27,7 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
       // console.log("isPublished" , pub);
       // return;
       if (pub.publishStatus == 'published'){
-        const students = await Student.find({classId:quiz.members[0]})
+        const students = await Student.find({classId:quiz.classId})
         return res.status(200).json({ quiz,students, msg: "success" });
 
       }else if (pub.publishStatus == 'unpublished') {

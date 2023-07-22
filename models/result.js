@@ -52,6 +52,10 @@ const resultSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  password: { 
+    type: String,
+    required: true
+  },
   runId: { 
     type: String,
     required: true
@@ -59,6 +63,18 @@ const resultSchema = new mongoose.Schema({
   runTitle: { 
     type: String,
     required: true
+  },
+  studentId: { 
+    type: Number,
+    required: true,
+  },
+  userId: {  //--creator of the test id
+    type: String,
+    required: true
+  },
+  answers: {
+  type: [answerSchema],
+  required: true
   },
   ip: { 
     type: String,
@@ -70,18 +86,7 @@ const resultSchema = new mongoose.Schema({
     required: false,
     default : ''
   },
-  email: { 
-    type: String,
-    required: true,
-  },
-  userId: {  //--creator of the test id
-    type: String,
-    required: true
-  },
-  answers: {
-  type: [answerSchema],
-  required: true
-  }
+  
 });
 
 const Result = mongoose.model('Result', resultSchema, 'results');

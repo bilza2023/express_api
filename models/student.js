@@ -9,6 +9,10 @@ const studentSchema = new Schema({
     type: Number,
     required: true
   },
+  classId: { //registeration number
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
