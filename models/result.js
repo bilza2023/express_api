@@ -52,10 +52,6 @@ const resultSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  password: { 
-    type: String,
-    required: true
-  },
   runId: { 
     type: String,
     required: true
