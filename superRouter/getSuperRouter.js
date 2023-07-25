@@ -36,9 +36,9 @@ function getSuperRouter(opt){
             data = getDataNonAuth(req);
       }
       const item = await create(data,opt); 
-                  return res.status(200).json({item})
+                  return res.status(200).json({item});
       }catch(err){
-            // debugger;
+            debugger;
             catchFn(err,res);
       }
 });

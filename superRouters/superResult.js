@@ -5,6 +5,7 @@
     const Result = require("../models/result");
     const getResult =  require('./resultFn/getResult');
     const checkMax =  require('./checks/checkMax');
+    const oneReultPerStudent  =  require('./checks/oneReultPerStudent');
     const {MAX_RESPONSES_ALLOWED} = require('../common/appConfig');
 
 ///////////////////////////////////////////////////////
@@ -15,7 +16,8 @@
     opt.model = Result;
     opt.create.getNewObjDataFn = getResult;
     opt.create.checks = [
-        checkMax
+        checkMax,
+        oneReultPerStudent
     ];
 
     opt.create.backendData = {       

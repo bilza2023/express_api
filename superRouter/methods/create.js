@@ -19,8 +19,9 @@ async function create(data,opt) {
         return item
         
   }catch (err) {debugger; 
-  
+    // console.log(err.message);
     throw err; 
+    // return res.status(401).json({message: err.message});
   }
 }
 module.exports = create;

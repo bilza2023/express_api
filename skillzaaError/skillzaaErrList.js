@@ -4,6 +4,7 @@ const skillzaErrList = new SkillzaaErrors();
 
 /////////////////////////////////////////////////////////////////// 
 skillzaErrList.addErr("testError",500,"This is a test error");
+skillzaErrList.addErr("oneResultPerStudent",500,"Only one result per test is allowed");
 /////////////////////////////////////////////////////////////////// 
 skillzaErrList.addErr("loginError",400,"You may not be logged in");
 skillzaErrList.addErr("testHasResponses",400,"This test has responses and can not be deleted");
