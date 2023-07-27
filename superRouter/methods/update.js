@@ -4,7 +4,7 @@ const  runChecks = require('../coreFunctions/runChecks');
 
 async function update(data,opt) {
   try{ 
-        // debugger;
+        debugger;
          //---RUN CHECKS---AWAIT IS MUST
          await runChecks(
                   opt.update.checks,
