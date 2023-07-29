@@ -9,6 +9,7 @@ const read              =  require('./methods/read');
 const readone           =  require('./methods/readone');
 const update            =  require('./methods/update');
 const del               =  require('./methods/delete');
+const where               =  require('./methods/where');
 const getData           =  require('./coreFunctions/getData');
 const getDataNonAuth    =  require('./coreFunctions/getDataNonAuth');
 const catchFn           =  require('./coreFunctions/catchFn');
@@ -71,8 +72,8 @@ function getSuperRouter(opt){
             catchFn(err,res);
       }
 });
- ////////////////////////////////////////////////////////
- //////////////////=======UPDATE
+
+//////////////////=======READ
  superRouter.post("/read",  async function(req, res) { 
       try{
       debugger;
@@ -84,8 +85,8 @@ function getSuperRouter(opt){
             catchFn(err,res);
       }
 });
- ////////////////////////////////////////////////////////
- //////////////////=======UPDATE
+
+////////////// //////////////////=======READONE
  superRouter.post("/readone",  async function(req, res) { 
       try{
       debugger;
@@ -94,6 +95,18 @@ function getSuperRouter(opt){
                    return res.status(200).json({item})
       }catch(err){
             debugger;
+            catchFn(err,res);
+      }
+});
+
+////////////// //////////////////=======WHERE
+ superRouter.post("/where",  async function(req, res) { 
+      try{
+      const data = getData(req); 
+      debugger;
+      const items = await where(data,opt);   
+                   return res.status(200).json({items})
+      }catch(err){
             catchFn(err,res);
       }
 });

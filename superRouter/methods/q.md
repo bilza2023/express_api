@@ -1,353 +1,44 @@
-I am making a node express mongoose api
-
-here is svyQuestion.js (which is the model for question inside survey)
- 
-const mongoose = require('mongoose');
-const options = { discriminatorKey: 'kind' };
- 
-//--This is schema for a base question for a survey
-const svyQuestionSchema = new mongoose.Schema({
-  id: { 
-    type: String,
-    required: true
-  },
-  required: {
-    type: Boolean,
-    required: true,
-    default : false
-  },
-  content: {
-    type: String,
-    required: false
-  },
-  explanation: {
-    type: String,
-    required: false
-  },
-  marks: {
-    type: Number,
-    required: true,
-    default : 0
-  },
-  questionType: {
-    type: String,
-    enum: [ 'SurveyMCQ' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],
-    required: true,
-  },
-  tags : {
-      type: [String],
-    required: false,
-    default : []
-  }
-});
-const SurveyQuestion  = mongoose.model('SurveyQuestion', svyQuestionSchema);
-
-///////////////////////////////////--MCQ--////////////////////////
-//---Options schema for MCQ
-const optionSchema = new mongoose.Schema({
-  id: { 
-    type: String,
-    required: true
-  },
-  content: {
-    type: String,
-    required: true
-  }
-});
-
-//..
-
-const SurveyMCQ = SurveyQuestion.discriminator('SurveyMCQ',
-  new mongoose.Schema({ 
-        multiSelect: {
-          type: Boolean,
-          required: false,
-          default : false
-        },
-        selectedOptions: {
-          type: [String],
-          required: true,
-          default : []
-        },
-        correctOptions: {
-          type: [String],
-          required: true,
-          default : []
-        },
-        displayOptions: {
-          type: String,
-          enum: ["dropdown", "radio", "check" , "bars"],
-          required: true,
-          default : "bars"
-        },
-        options: {
-          type: [optionSchema],
-          required: true
-        }
-  })
-  , options);
-
-///////////////////////////////////--Input --////////////////////////
-
-const SurveyInput = SurveyQuestion.discriminator('SurveyInput',
-  new mongoose.Schema({ 
-        payload: {
-          type: String,
-          required: false,
-          default: "",
-        },
-        minChar: {
-          type: Number,
-          required: false,
-          default : 0
-        },
-        maxChar: {
-          type: Number,
-          required: false,
-          default : 0
-        },
-  })
-  , options);
-
-///////////////////////////////////--Paragrapg --////////////////////////
-
-const SurveyParagraph = SurveyQuestion.discriminator('SurveyParagraph',
-  new mongoose.Schema({ 
-        payload: {
-          type: String,
-          default : "",
-          required: false
-        },
-        minChar: {
-          type: Number,
-          required: false,
-          default : 0
-        },
-        maxChar: {
-          type: Number,
-          required: false,
-          default : 0
-        }
-  })
-  , options);
-
-///////////////////////////////////--Number --////////////////////////
-
-const SurveyNumber = SurveyQuestion.discriminator('SurveyNumber',
-  new mongoose.Schema({ 
-        payload: {
-        type: Number,
-          required: false
-        },
-        minVal: {
-          type: Number,
-          required: false,
-          default : 0
-        },
-        maxVal: {
-          type: Number,
-          required: false,
-          default : 0
-        },
-  })
-  , options);
-
-///////////////////////////////////--Url --////////////////////////
-
-const SurveyUrl = SurveyQuestion.discriminator('SurveyUrl',
-  new mongoose.Schema({ 
-        payload: {
-          type: String,
-          default : "",
-          required: false
-        },
-        check: {
-          type: Boolean,
-          required: false,
-          default : true
-        }
-  })
-  , options);
-
-///////////////////////////////////--email --////////////////////////
-
-const SurveyEmail = SurveyQuestion.discriminator('SurveyEmail',
-  new mongoose.Schema({ 
-        payload: {
-          type: String,
-          default : "",
-          required: false
-        },
-        check: {
-          type: Boolean,
-          required: false,
-          default : true
-        }
-  })
-  , options);
-
-///////////////////////////////////--password --////////////////////////
-
-const SurveyPassword = SurveyQuestion.discriminator('SurveyPassword',
-  new mongoose.Schema({ 
-        payload: {
-          type: String,
-          default : "",
-          required: false
-        },
-        check: {
-          type: Boolean,
-          required: false,
-          default : true
-        },
-        minChar: {
-          type: Number,
-          required: false,
-          default : 0
-        },
-        maxChar: {
-          type: Number,
-          required: false,
-          default : 0
-        }
-  })
-  , options);
+please  look at this node.js code
 
 
-//..Export section
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-//SurveyQuestion dont export since its abstract but 
-module.exports = {svyQuestionSchema,SurveyMCQ , SurveyInput,SurveyParagraph,SurveyNumber,SurveyUrl,SurveyPassword,SurveyEmail};
-
-
-here is survey.js survey model
-
-const mongoose = require('mongoose');
-
-const {memberSchema} = require('./member');
-const {svyQuestionSchema} = require("./svyQuestion");
-const {publishObjSchema} = require("./publishObj");
-
-
-//--user id & 1 question
-const SurveySchema = new mongoose.Schema({
-  title: { 
-    type: String,
-    required: true,
-    // default : ""
-  },
-  userId: {
-    type: String,
-    required: true
-  },
-  saveResponse: {
-    type: Boolean,
-    default : true,
-    required: false
-  },
-  showIntro: {
-    type: Boolean,
-    default : true,
-    required: false
-  },
-  introText: {
-    type: String,
-    default : "Welcome",
-    required: false
-  },
-  showResult: {
-    type: Boolean,
-    default : true,
-    required: false
-  },
-  showfarewellText: {
-    type: Boolean,
-    default : true,
-    required: false
-  },
-  farewellText: {
-    type: String,
-    default : "Goodbye",
-    required: false
-  },
-   createdAt: {
-    type: Date,
-    default: Date.now
-  }, 
-   members: {
-    type: [memberSchema],
-    required: false,
-    default : []
-  },
-  marks: {  //Marks per question
-    type: Number,
-    required: true,
-    default : 10
-  },
-  questions: {
-    type: [svyQuestionSchema],
-    required: false,
-    default : []
-  },
-  publishObj: {
-    type: publishObjSchema,
-    required: false,
-  },
-  tags : {
-      type: [String],
-    required: false,
-    default : []
-  }
-});
-
-////////////////////////////////////////////////////////
-const SurveySchemaExtended = new mongoose.Schema({
-  testId: {
-    type: String,
-    required: true,
-    default: ''
-  }
-});
-
-SurveySchemaExtended.add(SurveySchema);
-
-const Survey = mongoose.model('Survey', SurveySchemaExtended, 'surveys');
-// const Survey = mongoose.model('Survey', SurveySchema,  'surveys');
-const Template = mongoose.model('Template', SurveySchema);
-const Test = mongoose.model('Test', SurveySchema);
-
-module.exports = {Survey , Template , Test} ;
-
-here is the update method
-
-  
 const  runChecks = require('../coreFunctions/runChecks');
 
-async function update(data,opt) {
+async function where(data,opt) {
   try{ 
-        // debugger;
+        debugger
          //---RUN CHECKS---AWAIT IS MUST
          await runChecks(
-                  opt.update.checks,
+                  opt.readone.checks,
                   opt.model, 
                   data,
-                  opt.update.backendData
-          );
-      const options = { new: true, upsert: true }; 
-      const item = await opt.model.findByIdAndUpdate( data.item._id , data.item,options);
+                  opt.readone.backendData
+          ); 
+
+        //---where  
+        const whereItem = data.whereItem;
+        const whereValue = data.whereValue;
+        const items = await opt.model.find({ whereItem : whereValue });
       
-        return item
+        return items;
         
-  }catch (err) {
-  debugger; 
+  }catch (err) {debugger; 
   
     throw err; 
   }
 }
-module.exports = update;
+module.exports = where;
 
-THE PRBOLEM IS THAT ONCE SAVED THE "options" array of objects is removed (not saved) in the database.
+
+
+At this place
+        const whereItem = data.whereItem;
+        const whereValue = data.whereValue;
+        const items = await opt.model.find({ whereItem : whereValue });
+
+the const whereItem = data.whereItem; is a variable
+
+
+Question:
+i do not get any result from the db where as there are documents present in db. there must be some problem here
+        const items = await opt.model.find({ whereItem : whereValue });
+

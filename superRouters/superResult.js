@@ -11,7 +11,7 @@
 ///////////////////////////////////////////////////////
  
     const opt = new SuperRouterOptions();
-    opt.useAuth = false;
+    opt.useAuth = true;
 
     opt.model = Result;
     opt.create.getNewObjDataFn = getResult;
