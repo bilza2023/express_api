@@ -29,7 +29,7 @@ function getSuperRouter(opt){
  //////////////////=======CREATE
  superRouter.post("/create",  async function(req, res) { 
       try{
-      debugger;
+      // debugger;
       let data;
       if (opt.useAuth === true) {
             data = getData(req);

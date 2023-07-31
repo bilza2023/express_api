@@ -5,7 +5,8 @@ function getStudent(data){
         id        : data.item.id,
         name      : data.item.name,
         password  : data.item.password,
-        classId   : data.item.classId
+        classId   : data.item.classId,
+        userId   : data.userId
    }
  return cls;   
 
