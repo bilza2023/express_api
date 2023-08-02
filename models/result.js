@@ -64,6 +64,10 @@ const resultSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  studentName: { 
+    type: String,
+    required: true,
+  },
   userId: {  //--creator of the test id
     type: String,
     required: true
