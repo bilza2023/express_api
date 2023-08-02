@@ -48,7 +48,7 @@ const resultSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  testId: { 
+  classId: { 
     type: String,
     required: true
   },

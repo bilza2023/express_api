@@ -82,20 +82,20 @@ const SurveySchema = new mongoose.Schema({
 });
 
 ////////////////////////////////////////////////////////
-const SurveySchemaExtended = new mongoose.Schema({
-  testId: {
-    type: String,
-    required: true,
-    default: ''
-  }
-});
+// const SurveySchemaExtended = new mongoose.Schema({
+//   testId: {
+//     type: String,
+//     required: true,
+//     default: ''
+//   }
+// });
 
-SurveySchemaExtended.add(SurveySchema);
+// SurveySchemaExtended.add(SurveySchema);
 
-const Survey = mongoose.model('Survey', SurveySchemaExtended, 'surveys');
+// const Survey = mongoose.model('Survey', SurveySchemaExtended, 'surveys');
 // const Survey = mongoose.model('Survey', SurveySchema,  'surveys');
-const Template = mongoose.model('Template', SurveySchema);
+const Survey = mongoose.model('Template', SurveySchema , 'surveys');
 const Test = mongoose.model('Test', SurveySchema);
 
-module.exports = {Survey , Template , Test} ;
+module.exports = {Survey , Test} ;
 

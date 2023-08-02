@@ -9,7 +9,6 @@ const express  =require('express');
 const cors = require('cors');
 const db = require("./mongoDb/mongo.js");
 /////////////////////////////////////////////----->>>>
-const routerTemplate = require('./superRouters/superTemplate.js');
 const routerTest = require('./superRouters/superTest.js');
 const routerSurvey = require('./superRouters/superSurvey.js');
 const routerTag = require('./superRouters/superTag.js');
@@ -39,7 +38,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/",nonAuthRouter);
 app.use("/user",userRouter);
 //---Auth Controllers
-app.use("/template",routerTemplate);
 app.use("/test",routerTest);
 app.use("/run",routerSurvey);
 app.use("/result",resultRouter);
