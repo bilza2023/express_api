@@ -18,7 +18,7 @@ async function create(data,opt) {
         await item.save();
         return item
         
-  }catch (err) {debugger; 
+  }catch (err) {//debugger; 
     throw err; 
   }
 }
