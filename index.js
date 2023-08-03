@@ -10,7 +10,7 @@ const cors = require('cors');
 const db = require("./mongoDb/mongo.js");
 /////////////////////////////////////////////----->>>>
 const routerTest = require('./superRouters/superTest.js');
-const routerSurvey = require('./superRouters/superSurvey.js');
+const routerRun = require('./superRouters/superRun.js');
 const routerTag = require('./superRouters/superTag.js');
 const routerClass = require('./superRouters/superClass.js');
 const routerStudent = require('./superRouters/superStudent.js');
@@ -39,7 +39,7 @@ app.use("/",nonAuthRouter);
 app.use("/user",userRouter);
 //---Auth Controllers
 app.use("/test",routerTest);
-app.use("/run",routerSurvey);
+app.use("/run",routerRun);
 app.use("/result",resultRouter);
 
 app.use("/tag",routerTag);

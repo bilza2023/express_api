@@ -52,7 +52,7 @@ const resultSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  runId: { 
+  runId: {  /// this is ._id of the run and not testId.
     type: String,
     required: true
   },

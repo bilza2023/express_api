@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const nonAuthRouter = express.Router();
 const isPublished = require('../globals/isPublished')
-const {Survey} = require("../models/survey/survey");
+const {Run} = require("../models/survey/survey");
 const Student = require("../models/student");
 const Subscriber = require("../models/subscriber.js");
 
@@ -17,7 +17,7 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
   debugger;
   const quizId  = req.params.quizId;
   // console.log(quizId)
-    const quiz = await Survey.findById( quizId );
+    const quiz = await Run.findById( quizId );
       if (quiz == null){
         return res.status(404).json({ msg: "Item not found" });
       }

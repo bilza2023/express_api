@@ -5,7 +5,7 @@ const {Test} = require("../models/models");
 const getNewObjDataFn =  require('./testFn/getSurvey');
 const checkMax =  require('./checks/checkMax'); 
 const {MAX_TESTS_ALLOWED} = require('../common/appConfig');
-const ApplySchemaToQuestions = require('./templateFn/ApplySchemaToQuestions.js');
+const ApplySchemaToQuestions = require('./templateFn_old/ApplySchemaToQuestions.js');
 ////////////////////////////////////////
     const opt = new SuperRouterOptions();
     opt.model = Test;
