@@ -4,6 +4,7 @@ const SuperRouterOptions = require('../superRouter/superRouterOptions');
 const {Run} = require("../models/survey/survey");
 const getNewObjDataFn =  require('./runFn/getSurvey');
 const checkMax =  require('./checks/checkMax');
+const ApplySchemaToQuestions = require('./templateFn_old/ApplySchemaToQuestions.js');
 const {MAX_RUNS_ALLOWED} = require('../common/appConfig');
 ////////////////////////////////////////
     const opt = new SuperRouterOptions();
@@ -11,6 +12,9 @@ const {MAX_RUNS_ALLOWED} = require('../common/appConfig');
     opt.create.getNewObjDataFn = getNewObjDataFn;
     opt.create.checks = [
         checkMax
+    ];
+    opt.create.checks = [
+        ApplySchemaToQuestions
     ];
     opt.create.backendData = {       
             checkMaxValue : MAX_RUNS_ALLOWED       
