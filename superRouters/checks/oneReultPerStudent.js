@@ -7,7 +7,7 @@ async function oneReultPerStudent (mdl,data,backendData){
     try{    
     // debugger; 
     const item = data.item; 
-      const rez = await mdl.count({runId :item.runId , studentId :item.studentId});
+    const rez = await mdl.count({runId :item.runId , studentId :item.studentId});
       if (rez >  0){
          const Err = skillzaErrList.getErr("oneResultPerStudent");
         throw Err;

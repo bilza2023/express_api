@@ -4,6 +4,7 @@ const SuperRouterOptions = require('../superRouter/superRouterOptions');
 const ClassObj = require("../models/class");
 const getClass =  require('./classFn/getClass');
 const checkMax =  require('./checks/checkMax');
+const classHasResult =  require('./classFn/classHasResult');
 const {MAX_CLASSES_ALLOWED} = require('../common/appConfig');
 ////////////////////////////////////////
     // debugger;
@@ -11,9 +12,9 @@ const {MAX_CLASSES_ALLOWED} = require('../common/appConfig');
     opt.model = ClassObj;
     opt.debugMode = true; ///make it false after completion.
     opt.create.getNewObjDataFn = getClass;
-    opt.create.checks = [
-        checkMax
-    ];
+    opt.create.checks = [ checkMax ];
+    opt.delete.checks = [ classHasResult ];
+
     opt.create.backendData = {       
             checkMaxValue : MAX_CLASSES_ALLOWED       
         };        
