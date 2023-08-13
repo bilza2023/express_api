@@ -11,7 +11,6 @@ const Student = require("../models/student");
 const Subscriber = require("../models/subscriber.js");
 
 /////////////////////////////////////////////////
-
 nonAuthRouter.get("/show/:quizId" , async function(req,res) {
   try {
   debugger;
@@ -38,6 +37,23 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
         return res.status(404).json({ msg: "This Test is in Waiting",pub});
         
       }
+  } catch(error) {
+    return res.status(400).json({msg : 'unknown error!'  });
+  }
+});
+/////////////////////////////////////////////////
+nonAuthRouter.get("/publicTests" , async function(req,res) {
+  try {
+      const userId = "64202224fd8518cb214bd138";
+      const items = await Run.find({ userId: userId,private:false })
+      .sort({ createdAt: -1 }) // Sort by createdAt in descending order
+      .limit(10); // Limit to 10 results
+      if (items == null){
+        return res.status(404).json({ message: "Items not found" });
+      }else {
+       return res.status(200).json({ items });
+      }
+      
   } catch(error) {
     return res.status(400).json({msg : 'unknown error!'  });
   }
