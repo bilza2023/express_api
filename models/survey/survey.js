@@ -64,6 +64,10 @@ const SurveySchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  private: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const Run = mongoose.model('Run', SurveySchema);
