@@ -1,21 +1,22 @@
  
 const mongoose = require('mongoose');
 const options = { discriminatorKey: 'kind' };
- 
+const ContentSchema = require('./content');
+
 //--This is schema for a base question for a survey
 const svyQuestionSchema = new mongoose.Schema({
   id: { 
     type: String,
     required: true
   },
+  content: {
+    type: [ContentSchema],
+    required: true
+  },
   required: {
     type: Boolean,
     required: true,
     default : false
-  },
-  content: {
-    type: String,
-    required: false
   },
   explanation: {
     type: String,
