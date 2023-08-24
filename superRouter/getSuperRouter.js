@@ -76,7 +76,7 @@ function getSuperRouter(opt){
 //////////////////=======READ
  superRouter.post("/read",  async function(req, res) { 
       try{
-      debugger;
+      // debugger;
       const data = getData(req);
       const items = await read(data,opt);
            return res.status(200).json({items})    
@@ -89,7 +89,7 @@ function getSuperRouter(opt){
 ////////////// //////////////////=======READONE
  superRouter.post("/readone",  async function(req, res) { 
       try{
-      debugger;
+      // debugger;
       const data = getData(req); 
       const item = await readone(data,opt);   
                    return res.status(200).json({item})

@@ -86,7 +86,7 @@ const TableSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    content: {
+    payload: {
         type: [[String]],
         required: true,
     },
@@ -165,7 +165,7 @@ const DivSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    content: {
+    payload: {
         type: String,
         required: true,
     },
@@ -242,9 +242,9 @@ const DivSchema = new mongoose.Schema({
 const ContentSchema = new mongoose.Schema({
     divs: [DivSchema],
     images: [DivSchema],
-    lists: [ListSchema],
+    lists: [DivSchema], 
     pres: [DivSchema],
-    tables: [TableSchema],
+    tables: [TableSchema], //different
     youtubes: [DivSchema],
     sortOrder: [String]
 });

@@ -10,7 +10,7 @@ const svyQuestionSchema = new mongoose.Schema({
     required: true
   },
   content: {
-    type: [ContentSchema],
+    type: ContentSchema,
     required: true
   },
   required: {

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { svyQuestionSchema } = require('./svyQuestion');
 const { publishObjSchema } = require('./publishObj');
+
 const SurveySchema = new mongoose.Schema({
   title: {
     type: String,
