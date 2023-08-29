@@ -37,7 +37,7 @@ const answerSchema = new mongoose.Schema({
   },
   questionType: {
     type: String,
-    enum: [ 'SurveyMCQ' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],
+    enum: [ 'mcq' , 'SurveyInput' ,'SurveyParagraph' , 'SurveyNumber' ,'SurveyUrl' , 'SurveyPassword' , 'SurveyEmail' ],
     required: true,
   }
 });
