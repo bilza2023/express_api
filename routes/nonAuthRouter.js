@@ -9,6 +9,7 @@ const isPublished = require('../globals/isPublished')
 const {Run} = require("../models/survey/survey");
 const Student = require("../models/student");
 const Subscriber = require("../models/subscriber.js");
+const MathQuestion = require("../models/mathQuestion.js");
 
 /////////////////////////////////////////////////
 nonAuthRouter.get("/show/:quizId" , async function(req,res) {
@@ -42,6 +43,23 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
   }
 });
 /////////////////////////////////////////////////
+/////////////////////////////////////////////////
+nonAuthRouter.get("/math" , async function(req,res) {
+  try {
+  debugger;
+  const quizId  = req.query.id;
+  
+    const mathQuestion = await MathQuestion.findById( quizId );
+      if (mathQuestion == null){
+        return res.status(404).json({ msg: "Item not found" });
+      }      
+      return res.status(200).json({ mathQuestion, msg: "success" });
+
+  } catch(error) {
+    return res.status(400).json({msg : 'unknown error!'  });
+  }
+});
+/////////////////////////////////////////////////
 nonAuthRouter.get("/publicTests" , async function(req,res) {
   try {
       const userId = "64202224fd8518cb214bd138";
@@ -57,6 +75,26 @@ nonAuthRouter.get("/publicTests" , async function(req,res) {
   } catch(error) {
     return res.status(400).json({msg : 'unknown error!'  });
   }
+});
+///////////////////////////////////////////////////////////////////////
+nonAuthRouter.post("/uploadMath" , async function(req,res) {
+
+try{
+
+    debugger;
+    const question = req.body.question;
+    const mathQuestion = new MathQuestion(question); 
+    const q = await mathQuestion.save();
+    return res.status(200).json({status : "ok"});
+            // console.log(subscribers);
+}catch(error){
+        // console.log(error.code);
+        if (error.code == 11000){
+        return res.status(400).json({status : "error" , msg:"Question Upload failed"  });
+        }else {
+        return res.status(400).json({status : "error" , msg:"failed to register please try later."   });
+        }
+}
 });
 ///////////////////////////////////////////////////////////////////////
 nonAuthRouter.post("/register" , async function(req,res) {
