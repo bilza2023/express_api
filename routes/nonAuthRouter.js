@@ -81,7 +81,7 @@ nonAuthRouter.post("/uploadMath" , async function(req,res) {
 
 try{
 
-    debugger;
+    // debugger;
     const question = req.body.question;
     // const mathQuestion = new MathQuestion(question); 
     // const q = await mathQuestion.update();
