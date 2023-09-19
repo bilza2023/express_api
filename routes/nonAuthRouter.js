@@ -46,7 +46,7 @@ nonAuthRouter.get("/show/:quizId" , async function(req,res) {
 /////////////////////////////////////////////////
 nonAuthRouter.get("/math" , async function(req,res) {
   try {
-  debugger;
+  // debugger;
   const quizId  = req.query.id;
   
     const mathQuestion = await MathQuestion.findById( quizId );
@@ -83,8 +83,11 @@ try{
 
     debugger;
     const question = req.body.question;
-    const mathQuestion = new MathQuestion(question); 
-    const q = await mathQuestion.save();
+    // const mathQuestion = new MathQuestion(question); 
+    // const q = await mathQuestion.update();
+    const options = { new: true, upsert: true }; 
+      const item = await MathQuestion.findByIdAndUpdate( question._id ,question,options);
+
     return res.status(200).json({status : "ok"});
             // console.log(subscribers);
 }catch(error){
