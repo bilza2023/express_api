@@ -88,18 +88,9 @@ const MathSchema = new Schema({
 	eqs:{
 	type:[eqSchema] ,
 	required:true ,
-	} 
-    // ,
-	// permContent:{// Array of permContent objects 
-	// type:[permContentSchema] ,
-	// required:true ,
-	// default :[]
-	// },
-	// spContent:{// Array of spContent objects 
-	// type:[spContentSchema] ,
-	// required:true ,
-	// default :[]
-	// }
+	default :[]
+  } 
+  
 });
 
 const MathQuestion = mongoose.model('Math', MathSchema);
