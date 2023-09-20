@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const spSchema = new Schema({
+const spfsItem = new Schema({
   code: { // Code string
     type: String,
     required: true,
@@ -19,23 +19,52 @@ const eqSchema = new Schema({
     type: Number,
     required: true
   },
-  code: { // Code string
-    type: String,
-    required: true
-  },
-  time: { // Time number
-    type: Number,
-    required: false,
-    default :0
-  },
   type: { // Type of content, can be 'text' or 'code'
     type: String,
     enum: ['text', 'code'],
     required: true,
     default: 'code'
   },
+  code: { // Code string
+    type: String,
+    required: true
+  },
+  showSPinFS: { // Code string
+    type: Boolean,
+    required: false
+  },
+  MPWidth: { // Code string
+    type: Number,
+    required: true,
+    default : 8
+  },
+  eqStartTime: { // Time number
+    type: Number,
+    required: false,
+    default :0
+  },
+  eqEndTime: { // Time number
+    type: Number,
+    required: false,
+    default :0
+  },
+  fsStartTime: { // Time number
+    type: Number,
+    required: true,
+    default :0
+  },
+  fsEndTime: { // Time number
+    type: Number,
+    required: true,
+    default :0
+  },
   sp:{
-	type:[spSchema] ,
+	type:[spfsItem] ,
+	required:true ,
+	default :[]
+	}, 
+  fs:{
+	type:[spfsItem] ,
 	required:true ,
 	default :[]
 	} 
@@ -93,5 +122,5 @@ const MathSchema = new Schema({
   
 });
 
-const MathQuestion = mongoose.model('Math', MathSchema);
+const MathQuestion = mongoose.model('Math', MathSchema,"matht");
 module.exports = MathQuestion;
