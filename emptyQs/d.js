@@ -1,6 +1,3 @@
-const { FBISE9th } = require('../models/mathQuestion');
-const FBISE9thData = require('./FBISE9th'); // Import your data
-
 async function insertMathQuestions() {
   try {
     for (let i = 0; i < FBISE9thData.chapters.length; i++) {
@@ -29,8 +26,18 @@ async function insertMathQuestions() {
 
             question.filename = `${question.board.toLowerCase()}_cl_${question.class}_ch_${question.chapter}_ex_${question.exercise}_q_${question.questionNo}_pt_${question.part}`;
 
-            await FBISE9th.create(question);
-            console.log(`${question.filename} inserted successfully.`);
+            // Check if the document already exists
+            const existingQuestion = await MathQuestion.findOne({
+              filename: question.filename,
+            });
+
+            if (!existingQuestion) {
+              // Insert the document if it doesn't exist
+              await MathQuestion.create(question);
+              console.log(`${question.filename} inserted successfully.`);
+            } else {
+              console.log(`${question.filename} already exists.`);
+            }
           }
         }
       }
@@ -41,5 +48,4 @@ async function insertMathQuestions() {
 }
 
 // Call the function to insert the data
-// insertMathQuestions();
-module.exports = insertMathQuestions;
+insertMathQuestions();

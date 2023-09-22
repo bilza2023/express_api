@@ -1,6 +1,6 @@
 require('dotenv').config();
 const db = require("./mongoDb/mongo.js");
-const faker = require("./emptyQs/emptyQs.js");
+const setAllFreeFalse = require("./emptyQs/setAllFreeFalse.js");
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
 db.once('open',()=> {
@@ -9,7 +9,7 @@ db.once('open',()=> {
     console.log('\x1b[34m%s\x1b[0m' ,"Creating Questions... ===>>");
 
     async function run(){
-        await faker();
+        await setAllFreeFalse();
         process.exit(1);
     }
 

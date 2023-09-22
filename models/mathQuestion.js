@@ -99,10 +99,12 @@ const MathSchema = new Schema({
 	type:String ,
 	required:true ,
 	},
-	finalized:{// Part string 
-	  type: Boolean ,
+	status:{// Part string 
+	  type: String ,
 	  required:true ,
-    defaul : false
+    enum: ['empty', 'fill', 'final'],
+    required: true,
+    default : 'empty'
 	},
 	free:{// Part string 
 	  type: Boolean ,
@@ -123,4 +125,6 @@ const MathSchema = new Schema({
 });
 
 const MathQuestion = mongoose.model('Math', MathSchema,"matht");
-module.exports = MathQuestion;
+const FBISE9th = mongoose.model('Math', MathSchema,"fbise9th");
+
+module.exports = {MathQuestion,FBISE9th};
