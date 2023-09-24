@@ -71,7 +71,7 @@ const eqSchema = new Schema({
 });
 
 ///////////////////////////////////////////
-const MathSchema = new Schema({
+const FBISE9thSchema = new Schema({
   board: { // Board name, can be one of the specified values
     type: String,
     enum: ['Punjab', 'Pakhtoonkhwa', 'Sind', 'Balochistan', 'FBISE'],
@@ -106,6 +106,10 @@ const MathSchema = new Schema({
     required: true,
     default : 'empty'
 	},
+	filledBy:{// Part string 
+	  type: String ,
+	  required:false ,
+	},
 	free:{// Part string 
 	  type: Boolean ,
 	  required:true ,
@@ -124,7 +128,6 @@ const MathSchema = new Schema({
   
 });
 
-const MathQuestion = mongoose.model('Math', MathSchema,"matht");
-const FBISE9th = mongoose.model('Math', MathSchema,"fbise9th");
+const FBISE9th = mongoose.model('FBISE9th', FBISE9thSchema,"fbise9th");
 
-module.exports = {MathQuestion,FBISE9th};
+module.exports = FBISE9th;

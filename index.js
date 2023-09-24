@@ -9,14 +9,7 @@ const express  =require('express');
 const cors = require('cors');
 const db = require("./mongoDb/mongo.js");
 /////////////////////////////////////////////----->>>>
-const routerTest = require('./superRouters/superTest.js');
-const routerRun = require('./superRouters/superRun.js');
-const routerTag = require('./superRouters/superTag.js');
-const routerClass = require('./superRouters/superClass.js');
-const routerStudent = require('./superRouters/superStudent.js');
-const resultRouter = require('./superRouters/superResult.js');
-const userRouter = require('./routes/userRouter');
-const nonAuthRouter = require('./routes/nonAuthRouter.js');
+const mainRouter = require('./routes/mainRouter.js');
 ////////////////////////////////////////////////
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 80;
@@ -35,16 +28,7 @@ app.use(cors( )); //working
 app.use(express.urlencoded({ extended: true }));
 
 //.. Route middlewares--/////////////////////////////////////
-app.use("/",nonAuthRouter);
-app.use("/user",userRouter);
-//---Auth Controllers
-app.use("/test",routerTest);
-app.use("/run",routerRun);
-app.use("/result",resultRouter);
-
-app.use("/tag",routerTag);
-app.use("/class",routerClass);
-app.use("/student",routerStudent);
+app.use("/",mainRouter);
 
 ///////////////////////////Routes////////////////////////
 app.get('/', async (req, res) =>{
