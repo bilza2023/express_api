@@ -50,7 +50,7 @@ const password = await bcrypt.hash(passwordPlain,3);
 ////////////////////////////////////////////////////////////////////
 mainRouter.post("/login", async function (req, res) {
   try {
-  // debugger;
+  debugger;
     const email = req.body.email;
     const passwordPlain = req.body.password;
     if (!email || !passwordPlain) {
@@ -61,12 +61,12 @@ mainRouter.post("/login", async function (req, res) {
     if (user == null) {
       return res.status(404).json({ msg: "User not found" });
     }
-
+    const accountType = user.accountType;
     if (await bcrypt.compare(passwordPlain, user.password)) {
       const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
       res.set("Authorization", `Bearer ${token}`);
-      return res.status(200).json({ msg: "Login successful", token: token });
+      return res.status(200).json({ msg: "Login successful", token: token,accountType });
     } else {
       return res.status(401).json({  msg: "Invalid email or password" });
     }
