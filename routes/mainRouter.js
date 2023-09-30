@@ -83,7 +83,7 @@ mainRouter.post("/fbise_math_9th_course", async function (req, res) {
 ////////////////////////////////////////////////////////
 mainRouter.post("/get_question", async function (req, res) {
   try {
-  // debugger;
+  debugger;
   const verifiedUser = verify(req);
   const questionId  = req.body.id;
   
@@ -96,7 +96,7 @@ mainRouter.post("/get_question", async function (req, res) {
       return res.status(200).json({ mathQuestion, msg: "success" });
       }else {
           if (!verifiedUser || verifiedUser.accountType == 'unpaid' ){
-          return res.status(200).json({  msg: "This content is not free" });
+          return res.status(200).json({  msg: "This content is not free" ,errorCode : "notFree" });
           }else {
           return res.status(200).json({ mathQuestion, msg: "success" });
           }
@@ -106,6 +106,8 @@ mainRouter.post("/get_question", async function (req, res) {
     return res.status(400).json({msg : 'unknown error!'  });
   }
 });
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
@@ -121,6 +123,25 @@ try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded.user; // Add user to request object
     return { user: decoded.user };
+  } catch (error) {
+    return false;
+  }
+}
+
+function verifyAdmin(req) {
+try {
+   debugger;
+    const token = req.headers.authorization.split(" ")[1]; // Extract the token from the 'Authorization' header
+    if (!token) {
+      return false;
+    }
+    const decodedUser = jwt.verify(token, process.env.JWT_SECRET);
+    if ( decodedUser.status !== "admin" ){
+      return false;
+    }else {
+      return decodedUser;
+    }
+  ///////////////////////  
   } catch (error) {
     return false;
   }

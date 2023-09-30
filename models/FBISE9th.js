@@ -74,7 +74,7 @@ const eqSchema = new Schema({
 const FBISE9thSchema = new Schema({
   board: { // Board name, can be one of the specified values
     type: String,
-    enum: ['Punjab', 'Pakhtoonkhwa', 'Sind', 'Balochistan', 'FBISE'],
+    enum: ['Punjab', 'Pukhtoonkhwa', 'Sind', 'Balochistan', 'FBISE'],
     required: true
   },
   class: { // Class number
@@ -113,7 +113,7 @@ const FBISE9thSchema = new Schema({
 	free:{// Part string 
 	  type: Boolean ,
 	  required:true ,
-    defaul : true //change it to false later
+    default : true //change it to false later
 	},
 	filename: {
     type: String,
