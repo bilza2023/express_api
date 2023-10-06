@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const User = require("../models/user.js");
 const FBISE9th = require("../models/FBISE9th.js");
+const {MathFull} = require("../models/mathFull.js");
+const {Eqs,Grid} = require("../models/mathFullEmbededSchemas.js");
 
 /////////////////////////////////////////////////
 const mainRouter = express.Router();
@@ -32,21 +34,6 @@ const password = await bcrypt.hash(passwordPlain,3);
         }
 }
 });
-///////////////////////////////////////////////////////////////////////
-// mainRouter.post("/verify", async function (req, res) {
-//   try {
-//    debugger;
-//     const token = req.headers.authorization.split(" ")[1]; // Extract the token from the 'Authorization' header
-//     if (!token) {
-//       return res.status(403).json({ msg: "A token is required for authentication" });
-//     }
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//     req.user = decoded.user; // Add user to request object
-//     return res.status(200).json({ msg: "Token is valid", user: decoded.user });
-//   } catch (error) {
-//     return res.status(401).json({ msg: "Invalid token" });
-//   }
-// });
 ////////////////////////////////////////////////////////////////////
 mainRouter.post("/login", async function (req, res) {
   try {
@@ -83,24 +70,21 @@ mainRouter.post("/fbise_math_9th_course", async function (req, res) {
 ////////////////////////////////////////////////////////
 mainRouter.post("/get_question", async function (req, res) {
   try {
-  debugger;
-  const verifiedUser = verify(req);
+  // debugger;
+  // const verifiedUser = verify(req);
   const questionId  = req.body.id;
-  
-    const mathQuestion = await FBISE9th.findById( questionId );
-      if (mathQuestion == null){
-        return res.status(404).json({ msg: "Item not found" });
+    const question = await MathFull.findById( questionId );
+      if (question !== null && question.questionType == 'eqs'  ){
+          const eqs = await Eqs.findById( question.ref );
+          // question.eqs = eqs;
+        return res.status(200).json({ question,eqs, msg: "success" });
       }      
-      //--------------------------------
-      if (mathQuestion.free){
-      return res.status(200).json({ mathQuestion, msg: "success" });
-      }else {
-          if (!verifiedUser || verifiedUser.accountType == 'unpaid' ){
-          return res.status(200).json({  msg: "This content is not free" ,errorCode : "notFree" });
-          }else {
-          return res.status(200).json({ mathQuestion, msg: "success" });
-          }
-      }
+      if (question !== null && question.questionType == 'grid'  ){
+          const grid = await Grid.findById( question.ref );
+          // question.grid = grid;
+        return res.status(200).json({ question,grid, msg: "success" });
+      }      
+   
 
   } catch(error) {
     return res.status(400).json({msg : 'unknown error!'  });
